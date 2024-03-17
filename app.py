@@ -24,7 +24,7 @@ def showIndex():
 
 @app.route('/read-form', methods=['POST']) 
 def read_form():
-    l=[]
+    
     #client = MongoClient('localhost', 27017)
     selectedDB = request.form.get('selectedDB')
     #DbNameOnly = request.form.get('DBname')
@@ -41,12 +41,16 @@ def read_form():
     app.config['MONGO_URI']=selectedDB
     global mongodb
     mongodb=PyMongo(app).db
+    global cols
     cols=mongodb.list_collection_names()
     # Get the form data as Python ImmutableDict datatype  
     data = request.form
     
     
     return render_template('selectCol.html',cols=cols)
+
+def showData():
+     pass
 
 
 @app.route("/api/all",methods=['GET'])
