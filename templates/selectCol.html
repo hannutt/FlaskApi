@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <body>
+          
+          <select name="cols" id="cols">
+
+            <option value="default" selected>Select Collection</option>
+            <!--
+          <option value="mongodb://localhost:27017/quizDB">quizDB</option>-->
+            {% for c in cols %}
+            <option value="mongodb://localhost:27017/{{each}}">{{c}}</option>
+            {% endfor %}
+
+        </select>
+        </body>
+    </head>
+</html>

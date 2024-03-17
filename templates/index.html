@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Flask-APi</title>
+</head>
+
+<body onload="getDbs()">
+    <h3>Flask API</h3>
+    <p id="dbL">
+
+
+
+    </p>
+    <h3>Select database</h3>
+    <div class="hideAll">
+        <p id="selection" class="selection"></p>
+
+        <button hidden id="hideBtn">Hide</button>
+    </div>
+    <label for="dbs">Choose a database:</label>
+    <form action="{{ url_for('read_form')}}" method="post">
+        <select name="dbs" id="dbs" onchange="selected();getSelectedText(this)">
+
+            <option value="default" selected>Select Database</option>
+            <!--
+          <option value="mongodb://localhost:27017/quizDB">quizDB</option>-->
+            {% for each in dbsList %}
+            <option value="mongodb://localhost:27017/{{each}}">{{each}}</option>
+            {% endfor %}
+
+        </select>
+
+        <script>
+
+            function selected() {
+                var sel = document.getElementById('dbs').value
+
+              
+                document.getElementById("selectedDB").value = sel
+                console.log(sel)
+                localStorage.setItem("db",sel)
+                document.getElementById("selection").innerHTML = "Your selected: " + sel
+                //button elementti pitää olla valmiina, muuten jquery hide ei toimi eli
+                //tässä muutetaan buttoni näkyväksi
+                document.getElementById("hideBtn").hidden = false
+               
+
+            }
+            function getSelectedText(sel) {
+                document.getElementById("DBname").value=sel.options[sel.selectedIndex].text
+                
+            }
+            $("#hideBtn").click(function () {
+                $(".hideAll").hide("slow");
+            });
+
+            function getDbs() {
+                var l = []
+                items = document.getElementById("dbL").innerHTML
+                for (var i = 0; i < items.lenght; i++) {
+                    l.push(items[i])
+                }
+                console.log(l)
+                /*
+                var selectElement = document.getElementById('dbs');
+                selectElement.add(new Option(l));
+                
+              
+                
+                var selectElement = document.getElementById('dbs');
+                var selec=""
+                for (var i=0; i<items.length;i++)
+                {
+                    selec += items[i]
+                    selectElement.add(new Option(selec));
+
+                }
+
+                
+                
+                console.log(l)*/
+            }
+        </script>
+
+        <input type="text" name="selectedDB" id="selectedDB">
+        <input type="text" name="DBname" id="DBname">
+        <button>Select</button>
+    </form>
+
+</body>
+
+</html>
