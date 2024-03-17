@@ -3,9 +3,9 @@
 
 <head>
 
-<body onload="getLocalStorage()">
+<body>
 
-  <select name="cols" id="cols" onchange="getSelection(this)">
+  <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 
     <option value="default" selected>Select Collection</option>
     <!--
@@ -15,24 +15,26 @@
     {% endfor %}
   </select>
   <script>
-    function getLocalStorage() {
-
-      var path = localStorage.getItem('db')
-      console.log("path is: " + path)
-      document.getElementById("path").innerHTML = path
-
-    }
-
-    function getSelection(sel) {
-      alert(sel.options[sel.selectedIndex].text);
-      document.getElementById("sel").innerHTML = sel.options[sel.selectedIndex].text
-    }
    
+
+    function GetSelectionFromSelect(sel) {
+      var path = localStorage.getItem('db')
+      //alert(sel.options[sel.selectedIndex].text);
+      document.getElementById("path").innerHTML = path+"/"+ sel.options[sel.selectedIndex].text
+      document.getElementById("DBpath").value= path
+    }
   </script>
 
 
   <p id="path"></p>
-  <p id="sel"></p>
+
+ <form action="{{ url_for('show_data')}}" method="post">
+  <input type="text" name="DBpath" id="DBpath">
+  <button>Show</button>
+{% for r in l %}
+{{r}}
+{%endfor%}
+ </form>
 </body>
 </head>
 

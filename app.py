@@ -22,6 +22,20 @@ def showIndex():
     
      return render_template('index.html',dbsList=dbsList)
 
+@app.route("/show-form",methods=['POST'])
+def show_data():
+    l=[]
+    path = request.form.get('DBpath')
+    app.config['MONGO_URI']=path
+    global mongodb
+    mongodb=PyMongo(app).db
+    
+    results=mongodb.results.find({},)
+    for res in results:
+        l.append(res) 
+        print(res)
+    return render_template("selectCol.html",l=l)
+
 @app.route('/read-form', methods=['POST']) 
 def read_form():
     
@@ -49,8 +63,7 @@ def read_form():
     
     return render_template('selectCol.html',cols=cols)
 
-def showData():
-     pass
+
 
 
 @app.route("/api/all",methods=['GET'])
