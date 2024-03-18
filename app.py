@@ -28,6 +28,7 @@ def showIndex():
 @app.route("/show-form",methods=['POST'])
 def show_data():
     l=[]
+    dbKeys=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     dataBaseName=request.form.get("selecDB")
     dataBaseNameStr = str(dataBaseName)
@@ -38,9 +39,13 @@ def show_data():
     
     dbname=client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
-    result= collection.find({},{ "_id": 1, "name": 1,"points":1})
+    result= collection.find()
     for i in result: 
-        print(i)    
+        print(i)
+        l.append(i)
+        print(i.keys())
+        
+        
    
     
     '''
@@ -56,7 +61,7 @@ def show_data():
         l.append(res) 
         print(res)
     '''
-    return render_template("selectCol.html",result=result)
+    return render_template("selectCol.html",l=l,dict_keys=i.keys())
 
 @app.route('/read-form', methods=['POST']) 
 def read_form():
@@ -91,11 +96,12 @@ def read_form():
 
 
 
-
+#api-kutsu
 @app.route("/api/all",methods=['GET'])
 def read():
     try:
-
+        app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+        mongodb=PyMongo(app).db
         item=[]
         results = mongodb.results.find({},)
         #keyLen=len(res.keys())
