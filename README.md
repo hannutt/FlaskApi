@@ -1,6 +1,6 @@
 Python Flask and JavaScript REST API with MongoDB.
 This has been done mainly for my own purposes, i.e. testing my MongoDB databases.
-The main idea is that you can access multiple mongoDB databases with a single program
+The main idea is that you can access multiple mongoDB databases with a single program using api calls or an html interface.
 
 Main features
 The program can search all mongodb databases on a computer and display them in a simple HTML-based interface.

@@ -4,7 +4,8 @@
 <head>
 
 <body>
-
+ 
+  <input type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 
     <option value="default" selected>Select Collection</option>
@@ -21,14 +22,18 @@
       var path = localStorage.getItem('db')
       //alert(sel.options[sel.selectedIndex].text);
       document.getElementById("path").innerHTML = path+"/"+ sel.options[sel.selectedIndex].text
+      document.getElementById("colname").value=sel.options[sel.selectedIndex].text
       document.getElementById("DBpath").value= path
     }
   </script>
 
-
+  
   <p id="path"></p>
 
  <form action="{{ url_for('show_data')}}" method="post">
+  <input type="text" name="selecDB" value="{{selectedDB}}">
+  <input type="text" id="colname" name="colname">
+  <!---->
   <input type="text" name="DBpath" id="DBpath">
   <button>Show</button>
 {% for r in l %}

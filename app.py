@@ -2,6 +2,9 @@
 from http.client import InvalidURL
 from flask import Flask, request, json, Response,jsonify,render_template
 from flask_pymongo import PyMongo,MongoClient
+from string import Template
+
+import pymongo
 
 
 app = Flask(__name__)
@@ -25,22 +28,45 @@ def showIndex():
 @app.route("/show-form",methods=['POST'])
 def show_data():
     l=[]
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    dataBaseName=request.form.get("selecDB")
+    dataBaseNameStr = str(dataBaseName)
+    print("db name ",dataBaseNameStr)
+    collectionName = request.form.get("colname")
+    collectionNameStr=str(collectionName)
+    print("collection name ",collectionNameStr)
+    
+    dbname=client[dataBaseNameStr]
+    collection=dbname[collectionNameStr]
+    result= collection.find({},{ "_id": 1, "name": 1,"points":1})
+    for i in result: 
+        print(i)    
+   
+    
+    '''
+    l=[]
     path = request.form.get('DBpath')
     app.config['MONGO_URI']=path
     global mongodb
+    col="results"
     mongodb=PyMongo(app).db
     
     results=mongodb.results.find({},)
     for res in results:
         l.append(res) 
         print(res)
-    return render_template("selectCol.html",l=l)
+    '''
+    return render_template("selectCol.html",result=result)
 
 @app.route('/read-form', methods=['POST']) 
 def read_form():
-    
+ 
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
     #client = MongoClient('localhost', 27017)
-    selectedDB = request.form.get('selectedDB')
+    selectedDB = request.form.get('DBname')
+    print(selectedDB)
+    dbname=client[selectedDB]
+    #print(dbname)
     #DbNameOnly = request.form.get('DBname')
     #mydatabase = client.DbNameOnly
     #collections = mydatabase.list_collection_names()
@@ -52,16 +78,16 @@ def read_form():
     
     #print(selectedDB)
 
-    app.config['MONGO_URI']=selectedDB
-    global mongodb
+    app.config['MONGO_URI']='mongodb://localhost:27017/'+selectedDB
+    #global mongodb
     mongodb=PyMongo(app).db
-    global cols
+    #global cols
     cols=mongodb.list_collection_names()
     # Get the form data as Python ImmutableDict datatype  
     data = request.form
     
     
-    return render_template('selectCol.html',cols=cols)
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB)
 
 
 
