@@ -9,24 +9,45 @@ import pymongo
 
 app = Flask(__name__)
 
-
+showdata = False
 @app.route("/")
 
 
 def showIndex():
      dbsList = []
+     sizes=[]
      dbs=MongoClient().list_database_names()
      client = MongoClient('localhost', 27017)
-     mydatabase = client.quizDB
-     collections = mydatabase.list_collection_names()
-     print(collections)
+     selection = request.form.get("DBname")
+     #mydatabase = client.quizDB
+     #collections = mydatabase.list_collection_names()
+     #print(collections)
      for i in dbs:
           dbsList.append(i)
     
+          print(i)
+     
+          db=client[i]
+          call = db.command("dbstats")
+          datasize = call['dataSize'] / 1024
+          collections = call['collections']
+          print('Collections:', str(collections))
+          print('Size:', str(datasize) + 'Mb')
+
+     
+     #dbcom=mydatabase.command("dbstats")
+     #print(dbcom)
+     #print(selection)
+    
+          
+    
      return render_template('index.html',dbsList=dbsList)
 
+#näyttää kaiken datan kokoelmasta
 @app.route("/show-form",methods=['POST'])
 def show_data():
+    global showdata
+    showdata=True
     l=[]
     dbKeys=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -43,7 +64,8 @@ def show_data():
     for i in result: 
         print(i)
         l.append(i)
-        print(i.keys())
+    #lasketaan kokoelman kenttien määrä
+    keysTotal = len(i.keys())
         
         
    
@@ -61,7 +83,7 @@ def show_data():
         l.append(res) 
         print(res)
     '''
-    return render_template("selectCol.html",l=l,dict_keys=i.keys())
+    return render_template("selectCol.html",l=l,dict_keys=i.keys(),showdata=showdata,keysTotal=keysTotal)
 
 @app.route('/read-form', methods=['POST']) 
 def read_form():

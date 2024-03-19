@@ -6,63 +6,113 @@
 </head>
 
 <body>
- 
+
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 
     <option value="default" selected>Select Collection</option>
     <!--
           <option value="mongodb://localhost:27017/quizDB">quizDB</option>-->
-    
+
     {% for c in cols %}
     <option value="mongodb://localhost:27017/{{each}}">{{c}}</option>
     {% endfor %}
   </select>
   <script>
-    
-   
+
+
 
     function GetSelectionFromSelect(sel) {
       var path = localStorage.getItem('db')
       //alert(sel.options[sel.selectedIndex].text);
-      document.getElementById("path").innerHTML = path+"/"+ sel.options[sel.selectedIndex].text
-      document.getElementById("colname").value=sel.options[sel.selectedIndex].text
-      document.getElementById("DBpath").value= path
+      document.getElementById("path").innerHTML = path + "/" + sel.options[sel.selectedIndex].text
+      document.getElementById("colname").value = sel.options[sel.selectedIndex].text
+      document.getElementById("DBpath").value = path
     }
   </script>
 
-  
-  <p id="path"class="path"></p>
 
- <form action="{{ url_for('show_data')}}" method="post">
-  <input type="text" name="selecDB" value="{{selectedDB}}">
-  <input type="text" id="colname" name="colname">
-  <!--
-  <input type="text" name="DBpath" id="DBpath">-->
-  <button>Show</button>
-  <p>{{dict_keys}}</p>
-{% for r in l %}
+  <p id="path" class="path"></p>
 
-<p id="oid" class="oid">{{r._id}}</p>
-<p>{{r}}</p>
+  <form action="{{ url_for('show_data')}}" method="post">
+    <input type="text" name="selecDB" value="{{selectedDB}}">
+    <input type="text" id="colname" name="colname">
 
-<!--
+    <input type="text" name="DBpath" id="DBpath">
+
+    <button>Show</button>
+    <p>{{dict_keys}}</p>
+    <!--kokoelman kenttien kokonaismäärä-->
+    <p id="keystotal">{{keysTotal}}</p>
+    {% for r in l %}
+
+    <p id="oid" class="oid">{{r._id}}</p>
+    <p>{{r}}</p>
+
+    <!--
   
 
 <p>{{r.name}} | {{r.points}}</p>-->
-{%endfor%}
- </form>
+    {%endfor%}
+  </form>
 </body>
 <script>
-  //jquery funktio näyttää jokaisen _id-arvon kun sitä klikkaa hiirellä.
-  jQuery(".oid").click(function() {
-   event.preventDefault();
-   var text = jQuery(this).text();
-   console.log(text.trim());
-   alert(text.trim());
- });
- 
- </script>
+  //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
+  jQuery(".oid").click(function () {
+    event.preventDefault();
+    var text = jQuery(this).text();
+    console.log(text.trim());
+    document.getElementById('objId').value = text
+  });
+
+</script>
+<!--showdata muuttujan alkuarvo on false, jolloin ei näytetä allaolevaa html-koodia, funktiossa show_data
+arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
+{% if showdata==True %}
+<h4>Delete document</h4>
+<p>Object id:</p>
+<input type="text" id="objId" name="objId">
+<button>Delete</button>
+<input type="checkbox" name="edit" id="edit" onclick="createEdit()">
+<label for="edit">Edit?</label>
+<script>
+  function createEdit() {
+    var fieldsTotal = document.getElementById("keystotal").innerHTML
+    var fieldsTotalInt = Number(fieldsTotal)
+    console.log(typeof fieldsTotalInt)
+    var cb = document.getElementById("edit")
+    var editBtn = document.createElement("BUTTON")
+    editBtn.id = "editBtn"
+    editBtn.textContent = "Edit"
+    //jos checkbox on klikattu, luodaan edit painike, muussa tapauksessa tuhotaan painike
+    if (cb.checked == true) {
+      document.body.appendChild(editBtn)
+      //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
+      for (var i=0; i<fieldsTotalInt;i++)
+      {
+        var inpField = document.createElement("INPUT");
+        //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
+        inpField.id=i
+        inpField.setAttribute("type", "text");
+        document.body.appendChild(inpField);
+      }
+    }
+    else {
+      document.getElementById("editBtn").remove()
+      //input-kenttien tuhoamisessa käytetään myös silmukkaa ja fieldstotal muuttujaa
+      for (var i=0;i<fieldsTotalInt;i++)
+      {
+        document.getElementById(i).remove()
+
+      }
+    }
+
+  }
+</script>
+
+{% else %}
+<p></p>
+{% endif %}
 
 
 
