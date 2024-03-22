@@ -15,16 +15,23 @@ showdata = False
 
 def showIndex():
      dbsList = []
-     sizes=[]
+     global statsNames
+     statsNames=[]
+     global statsNums
+     statsNums=[]
+     global allStats
+     allStats=[]
+
+     
      dbs=MongoClient().list_database_names()
      client = MongoClient('localhost', 27017)
-     selection = request.form.get("DBname")
+   
      #mydatabase = client.quizDB
      #collections = mydatabase.list_collection_names()
      #print(collections)
      for i in dbs:
           dbsList.append(i)
-    
+        
           print(i)
      
           db=client[i]
@@ -33,19 +40,35 @@ def showIndex():
           collections = call['collections']
           print('Collections:', str(collections))
           print('Size:', str(datasize) + 'Mb')
+          roundedSize = round(datasize,2)
+          #statsNames.append('Name: ')
+          statsNames.append(i)
+          #statsNames.append("collections: ")
+         # statsNames.append(collections)
+          #statsNums.append("Size: ")
+          statsNums.append(roundedSize)
+          allStats.append(i)
+          allStats.append(datasize)
+    #listan alkioiden muunto int-tyyppiseksi
+     for j in range(0, len(statsNums)):
+
+    
+        statsNums[j] = int(statsNums[j])
 
      
      #dbcom=mydatabase.command("dbstats")
      #print(dbcom)
      #print(selection)
+     
     
           
     
-     return render_template('index.html',dbsList=dbsList)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats)
 
 #näyttää kaiken datan kokoelmasta
 @app.route("/show-form",methods=['POST'])
 def show_data():
+    print('show func')
     global showdata
     showdata=True
     l=[]
@@ -67,7 +90,7 @@ def show_data():
     #lasketaan kokoelman kenttien määrä
     keysTotal = len(i.keys())
         
-        
+
    
     
     '''
@@ -85,14 +108,29 @@ def show_data():
     '''
     return render_template("selectCol.html",l=l,dict_keys=i.keys(),showdata=showdata,keysTotal=keysTotal)
 
+@app.route("/statistic",methods=['POST'])
+def DB_Statistics():
+    print(statsNames)
+
+    return render_template('index.html',stats=statsNames)
+
 @app.route('/read-form', methods=['POST']) 
 def read_form():
- 
+    print('read func')
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     #client = MongoClient('localhost', 27017)
     selectedDB = request.form.get('DBname')
     print(selectedDB)
+   
+    
+    #db-statistiikka koodi, collectionien määrä, koko jne.
     dbname=client[selectedDB]
+    call = dbname.command("dbstats")
+    datasize = call['dataSize'] / 1024
+    datasizeRound=round(datasize,2)
+    collections = call['collections']
+    objects = call['objects']
+   
     #print(dbname)
     #DbNameOnly = request.form.get('DBname')
     #mydatabase = client.DbNameOnly
@@ -114,7 +152,7 @@ def read_form():
     data = request.form
     
     
-    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB)
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
 
 

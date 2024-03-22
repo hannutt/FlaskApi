@@ -3,15 +3,139 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+                
+
+ 
     <title>Flask-APi</title>
 
 <body>
+   
     <h3>Flask API</h3>
     <p id="dbL">
-
-
-
     </p>
+    {% for j in stats %}
+   <p  hidden id="stats" class="statsNames">{{j}}</p>
+   {%endfor%}
+   {% for i in statsNums %}
+   <div id="statsNums" class="statsNums">{{i}}</div>
+   {% endfor %}
+   <p class="allStat">{{allStats}}</p>
+  
+   <script>
+    var arrNums=[]
+    var arrNames=[]
+    var allStats=[]
+function getNameValues(){
+    var nameValues = document.getElementsByClassName("statsNames")
+
+    for (i=0;i<7;i++)
+    {
+        arrNames.push(nameValues[i].innerHTML)
+    }
+
+}
+getNameValues()
+var maxVal=0
+var minVal=0
+function getNumValues() {
+  var numValues = document.getElementsByClassName("statsNums")
+  
+  
+ 
+  
+for (i=0;i<7;i++)
+{
+    arrNums.push(parseInt(numValues[i].innerHTML))
+    
+
+}
+minVal=Math.min(...arrNums)
+maxVal=Math.max(...arrNums)
+//suurimman numeron indeksipaikka arrNums listassa. talletetaan se muuttujaan, koska arrNames ja arrNums ovat samankokoisia listoja ja
+// listan järjestys on sama, näin saadaan käyttöön chartJs:ssä suurin kannan koko ja sen nimi
+indexNum=arrNums.indexOf(maxVal)
+indexNumMin = arrNums.indexOf(4)
+console.log(indexNum)
+console.log(maxVal)
+console.log(minVal)
+}
+getNumValues()
+function getAllValues() 
+{
+    var all = document.getElementsByClassName("allStat")
+    for (j=0;j<14;j++)
+{
+    allStats.push(all[j].innerHTML)
+}
+
+}
+
+
+
+
+
+
+var secondMaxIndex=0
+var secondBiggest=0
+function findSecondLargestUsingIteration() { 
+    let firstMax = -Infinity; 
+    let secondMax = -Infinity; 
+   
+    
+  
+    for (let num of arrNums) { 
+        if (num > firstMax) { 
+            secondMax = firstMax; 
+            firstMax = num; 
+        } else if (num > secondMax && num !== firstMax) { 
+            secondMax = num; 
+        }
+    
+    } 
+  
+    if (secondMax === -Infinity) { 
+        return "No second largest element exists"; 
+    } 
+    
+    secondBiggest=secondMax
+    secondMaxIndex=arrNums.indexOf(secondBiggest)
+    
+    return secondMaxIndex
+} 
+
+
+
+findSecondLargestUsingIteration()
+
+var thirdMaxVar
+//kolmanneksi suurin numero listan läpikäynnillä, huomaa ehtolause
+function thirdMax() {
+    for(var num of arrNums)
+    {
+        if (num<secondBiggest && num>0)
+        {
+            thirdMaxVar=num
+            console.log(thirdMaxVar)
+            
+
+        }
+        
+    }
+}
+thirdIndex = arrNums.indexOf(thirdMaxVar)
+
+thirdMax()
+
+
+
+
+
+
+
+   </script>
+   <p id="demo"></p>
     <h3>Select database</h3>
     <div class="hideAll">
         <p id="selection" class="selection"></p>
@@ -31,7 +155,28 @@
 
         </select>
 
+        
+            
+
+       
+
         <script>
+            var clicks=0
+            function stats()
+            {
+                clicks=clicks+1
+                if (clicks % 1 == 0)
+                {
+                    document.getElementById("stats").hidden=false
+                }
+                if (clicks % 2 ==0)
+                {
+                    document.getElementById("stats").hidden=true
+
+                }
+            }
+           
+            
 
             function selected() {
                 var sel = document.getElementById('dbs').value
@@ -67,10 +212,43 @@
       
         <input type="text" name="DBname" id="DBname">
         
-    </form>
+    
         <button>Select</button>
     </form>
+    <button onclick="stats()">Stats</button>
+    <canvas id="myChart" style="width:100%;max-width:400px"></canvas>
+    <script>
+       
 
+
+var xValues = [arrNames[indexNum],arrNames[secondMaxIndex]];
+var yValues = [maxVal,secondBiggest];
+
+
+
+var barColors = ["red", "green","blue","orange","brown"];
+
+new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    title: {
+      display: true,
+      text: "Biggest size"
+    }
+  }
+});
+
+
+    </script>
+   
 </body>
 
 </html>

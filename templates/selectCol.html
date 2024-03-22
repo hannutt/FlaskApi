@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+<p>{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db: {{objects}}</p>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 
@@ -17,6 +17,7 @@
     {% for c in cols %}
     <option value="mongodb://localhost:27017/{{each}}">{{c}}</option>
     {% endfor %}
+   
   </select>
   <script>
 
