@@ -1,0 +1,11 @@
+.DBinfo {
+    background-color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+.CBforTable {
+    background-color: gray;
+}
+.dbTable {
+    background-color: gray;
+}

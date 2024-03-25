@@ -5,6 +5,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
                 
 
  
@@ -12,11 +14,15 @@
 
 <body>
    
-    <h3>Flask API</h3>
+    <h3 id="apiName">Flask API</h3>
+    <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
+    {% block content %}
+    {% endblock %}-->
+    
     <p id="dbL">
     </p>
     {% for j in stats %}
-   <p  hidden id="stats" class="statsNames">{{j}}</p>
+   <p id="stats" class="statsNames">{{j}}</p>
    {%endfor%}
    {% for i in statsNums %}
    <div id="statsNums" class="statsNums">{{i}}</div>
@@ -24,6 +30,16 @@
    <p class="allStat">{{allStats}}</p>
   
    <script>
+    //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
+    $(document).ready(function() {
+  $( "#apiName" ).animate({
+    width: "70%",
+    opacity: 0.4,
+    marginLeft: "0.6in",
+    fontSize: "3em",
+    borderWidth: "10px"
+  }, 1500 );
+});
     var arrNums=[]
     var arrNames=[]
     var allStats=[]
@@ -34,6 +50,7 @@ function getNameValues(){
     {
         arrNames.push(nameValues[i].innerHTML)
     }
+    console.log(arrNames)
 
 }
 getNameValues()
@@ -110,6 +127,7 @@ function findSecondLargestUsingIteration() {
 findSecondLargestUsingIteration()
 
 var thirdMaxVar
+var thirdIndex
 //kolmanneksi suurin numero listan läpikäynnillä, huomaa ehtolause
 function thirdMax() {
     for(var num of arrNums)
@@ -117,14 +135,17 @@ function thirdMax() {
         if (num<secondBiggest && num>0)
         {
             thirdMaxVar=num
-            console.log(thirdMaxVar)
+            thirdIndex=arrNums.indexOf(thirdMaxVar)
+            console.log('third: ',thirdMaxVar)
+            console.log('index',thirdIndex)
             
 
         }
         
     }
+   
 }
-thirdIndex = arrNums.indexOf(thirdMaxVar)
+
 
 thirdMax()
 
@@ -154,49 +175,11 @@ thirdMax()
             {% endfor %}
 
         </select>
-
-        
-            
-
        
 
         <script>
-            var clicks=0
-            function stats()
-            {
-                clicks=clicks+1
-                if (clicks % 1 == 0)
-                {
-                    document.getElementById("stats").hidden=false
-                }
-                if (clicks % 2 ==0)
-                {
-                    document.getElementById("stats").hidden=true
 
-                }
-            }
-           
-            
-
-            function selected() {
-                var sel = document.getElementById('dbs').value
-
-              
-                document.getElementById("selectedDB").value = sel
-                console.log(sel)
-                localStorage.setItem("db",sel)
-                document.getElementById("selection").innerHTML = "Your selected: " + sel
-                //button elementti pitää olla valmiina, muuten jquery hide ei toimi eli
-                //tässä muutetaan buttoni näkyväksi
-                document.getElementById("hideBtn").hidden = false
-                
-               
-
-            }
-            function getSelectedText(sel) {
-                document.getElementById("DBname").value=sel.options[sel.selectedIndex].text
-                
-            }
+            //jquery-funktio buttonin piilottamiseen
             $("#hideBtn").click(function () {
                 $(".hideAll").hide("slow");
             });
@@ -215,14 +198,16 @@ thirdMax()
     
         <button>Select</button>
     </form>
-    <button onclick="stats()">Stats</button>
+    <button id="statsBtn" onclick="stats()">Stats</button>
+    <div hidden id="chart">
     <canvas id="myChart" style="width:100%;max-width:400px"></canvas>
+</div>
     <script>
        
 
 
-var xValues = [arrNames[indexNum],arrNames[secondMaxIndex]];
-var yValues = [maxVal,secondBiggest];
+var xValues = [arrNames[indexNum],arrNames[secondMaxIndex],arrNames[thirdIndex]];
+var yValues = [maxVal,secondBiggest,thirdMaxVar];
 
 
 
@@ -241,7 +226,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "Biggest size"
+      text: "the three largest databases"
     }
   }
 });

@@ -1,12 +1,19 @@
+
+<!--index.html sivulta haetaan siellä määritelty sisältö-->
 <!DOCTYPE html>
 <html>
 
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
 </head>
 
 <body>
-<p>{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db: {{objects}}</p>
+  <div class="DBinfo">
+    <p>{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
+      {{objects}}</p>
+  </div>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 
@@ -17,8 +24,11 @@
     {% for c in cols %}
     <option value="mongodb://localhost:27017/{{each}}">{{c}}</option>
     {% endfor %}
-   
-  </select>
+
+ 
+</select>
+
+
   <script>
 
 
@@ -42,20 +52,69 @@
     <input type="text" name="DBpath" id="DBpath">
 
     <button>Show</button>
-    <p>{{dict_keys}}</p>
+    {% for d in dbKeysList %}
+    <div id="dict" class="dict">{{d}}</div>
+    {%endfor%}
     <!--kokoelman kenttien kokonaismäärä-->
     <p id="keystotal">{{keysTotal}}</p>
+    <table id="dbTable" class="dbTable border="1">
     {% for r in l %}
+    <tr>
+      <!--_id omalla rivillään, että jquery funktio osaa poimia vain id numeron-->
+    <td id="oid" class="oid">{{r._id}}</td>
+    <td id="data">{{r}}</td>
+  </tr>
 
-    <p id="oid" class="oid">{{r._id}}</p>
-    <p>{{r}}</p>
-
-    <!--
-  
-
-<p>{{r.name}} | {{r.points}}</p>-->
+   
     {%endfor%}
+   
+  </table>
   </form>
+ 
+  
+ <br>
+ <h4>Customization options</h4>
+ <div class="CBforTable">
+  <label id="tableCBLbl" for="tableCB">Remove table borders</label>
+  <input type="checkbox" name="tableCB" id="tableCB" onclick="removeTable()">
+</div>
+<select id="colors"class="colors" onchange="changeBGcolor(this)">
+  <option value="default">Select table bgcolor</option>
+  <option value="lightblue">Lightblue</option>
+  </select> 
+
+  <select id="font"class="font" onchange="changeFont(this)">
+    <option value="default">Select font size</option>
+    <option value="small">Small</option>
+    <option value="medium">medium</option>
+    <option value="large">Large</option>
+    </select> 
+
+  <script>
+    //funktiolla poistetaan/näytetään checkboksin statesta(checked) riippuen table elementtied tietokannan datan
+    //ympärillä 
+    function removeTable() {
+      var tableCB=document.getElementById("tableCB")
+      if (tableCB.checked==true)
+      {
+        
+        document.getElementById('dbTable').border=0
+        document.getElementById("tableCBLbl").innerText='Show table borders'
+
+      }
+      if (tableCB.checked==false)
+      {
+        document.getElementById('dbTable').border=1
+        document.getElementById("tableCBLbl").innerText='Remove table borders'
+      }
+      
+
+    }
+  </script>
+ 
+ 
+
+
 </body>
 <script>
   //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
@@ -77,7 +136,27 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 <input type="checkbox" name="edit" id="edit" onclick="createEdit()">
 <label for="edit">Edit?</label>
 <script>
+
+  var valuesList=[]
+  function getDBFields()
+  {
+
+    var values = document.getElementsByClassName("dict")
+    console.log(values)
+    
+    var j = document.getElementById("keystotal").innerHTML
+    
+    for (var i=0;i<j;i++)
+    {
+     
+      valuesList.push(values[i].innerHTML)
+    }
+    console.log(valuesList)
+   
+  }
+  getDBFields()
   function createEdit() {
+   
     var fieldsTotal = document.getElementById("keystotal").innerHTML
     var fieldsTotalInt = Number(fieldsTotal)
     console.log(typeof fieldsTotalInt)
@@ -89,20 +168,23 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
     if (cb.checked == true) {
       document.body.appendChild(editBtn)
       //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
-      for (var i=0; i<fieldsTotalInt;i++)
-      {
+      for (var i = 0; i < fieldsTotalInt; i++) {
         var inpField = document.createElement("INPUT");
         //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
-        inpField.id=i
+        inpField.id = i
         inpField.setAttribute("type", "text");
         document.body.appendChild(inpField);
+        //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
+        //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
+        //oikeaan input-kenttään
+        document.getElementById(i).placeholder=valuesList[i]
       }
+      
     }
     else {
       document.getElementById("editBtn").remove()
       //input-kenttien tuhoamisessa käytetään myös silmukkaa ja fieldstotal muuttujaa
-      for (var i=0;i<fieldsTotalInt;i++)
-      {
+      for (var i = 0; i < fieldsTotalInt; i++) {
         document.getElementById(i).remove()
 
       }
