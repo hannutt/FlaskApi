@@ -3,15 +3,15 @@ from http.client import InvalidURL
 from flask import Flask, request, json, Response,jsonify,render_template
 from flask_pymongo import PyMongo,MongoClient
 from string import Template
-
+from bson.objectid import ObjectId
 import pymongo
 
 
 app = Flask(__name__)
 
 showdata = False
-@app.route("/")
 
+@app.route("/")
 
 def showIndex():
      dbsList = []
@@ -64,6 +64,8 @@ def showIndex():
           
     
      return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats)
+
+
 
 @app.route("/statistic",methods=['POST'])
 def DB_Statistics():
@@ -169,6 +171,7 @@ def show_data():
 def read():
     try:
         app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+        #global mongodb
         mongodb=PyMongo(app).db
         item=[]
         results = mongodb.results.find({},)
@@ -194,9 +197,13 @@ def read():
     return "SELECT DATABASE!"
 #tässä haetaan nimen perusteella mongokannasta <name> on parametri johon kirjoitetaan haetun käyttäjän nimi, esim.
 #http://127.0.0.1:5000/findName/keijo
-@app.route("/findName/<name>")
+@app.route("/api/findName/<name>")
 def searchByname(name):
+    app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+        #global mongodb
+    mongodb=PyMongo(app).db
     user = mongodb.results.find_one({"name": name})
+    print("user variable ",user)
     #jos nimi löytyy, items sanakirja-olioon talletetaan user eli löydetyn nimen id,nimi ja pisteet
     if user:
             userinfo={
@@ -208,12 +215,80 @@ def searchByname(name):
      
     return jsonify({'userinfo':userinfo})
 
+@app.route("/api/findPoints/<name>")
+def searchAndShowPointsOnly(name):
+    app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+        #global mongodb
+    mongodb=PyMongo(app).db
+
+    user = mongodb.results.find_one({"name":name})
+    if user:
+            userinfo={
+
+            "points":str(user['points']),
+        }
+     
+    return jsonify({'userinfo':userinfo})
+
 @app.route('/deleteName/<name>')
 def delByname(name):
+     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+        #global mongodb
+     mongodb=PyMongo(app).db
      user = mongodb.results.find_one({"name": name})
      if user:
           mongodb.results.delete_one({"name":name})
           return 'DELETED'
+@app.route('/api/editName/<name>/<newname>')
+
+
+#nimen päivitys apikutsuna vanhanimi+uusinimi
+def editName(name,newname):
+     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+     mongodb=PyMongo(app).db
+     user = mongodb.results.find_one({"name":name})
+     if user:
+        
+          newvalues = {"$set" : {'name':newname}}
+          mongodb.results.update_one(user,newvalues)
+          return 'Name UPDATED'
+
+@app.route('/api/editPoints/<id>/<points>')
+def editPoints(id,points):
+      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+      mongodb=PyMongo(app).db
+      #db.mycollection.update({'_id': ObjectId("55d49338b9796c337c894df3")},  {'$set': {"details.model": "14Q22"}})
+      mongodb.results.update_one({"_id":ObjectId(id)},{"$set":{"points":points}})
+      return "ID "+id +" points updated"
+
+#uuden tietueen lisäys kantaan
+@app.route('/api/createNew/<name>/<points>')
+def createRecord(name,points):
+      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+      mongodb=PyMongo(app).db
+      mongodb.results.insert_one({"name":name,"points":points})
+      return "name " +name +" points "+ points +" added to database"
+
+@app.route("/api/maxpoints")
+def getMaxPoints():
+      maxpoint=[]
+      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+      mongodb=PyMongo(app).db
+    
+      result=mongodb.results.find_one({"points": {"$exists": True}},sort=[("points",-1)])
+      maxpoint.append(result['name'])
+      maxpoint.append(result['points'])
+      print(result['name'])
+    
+    
+     
+      return jsonify(maxpoint)
+    
+      
+  
+  
+         
+        
      
     
 if __name__ == '__main__':

@@ -36,14 +36,69 @@ function getSelectedText(sel) {
     document.getElementById("DBname").value=sel.options[sel.selectedIndex].text
     
 }
-
+//table elementin taustavärin vaihto
 function changeBGcolor(sel) {
     var col =  sel.options[sel.selectedIndex].value
     console.log(col)
     document.getElementById("dbTable").style.backgroundColor=col
 }
-
+//table elementin fontin koon vaihto
 function changeFont(sel) {
     var size = sel.options[sel.selectedIndex].value
     document.getElementById("dbTable").style.fontSize=size
+}
+
+
+//funktiolla poistetaan/näytetään checkboksin statesta(checked) riippuen table elementtied tietokannan datan
+//ympärillä    
+
+function removeTable() {
+    var tableCB=document.getElementById("tableCB")
+    if (tableCB.checked==true)
+    {
+      
+      document.getElementById('dbTable').border=0
+      document.getElementById("tableCBLbl").innerText='Show table borders'
+
+    }
+    if (tableCB.checked==false)
+    {
+      document.getElementById('dbTable').border=1
+      document.getElementById("tableCBLbl").innerText='Remove table borders'
+    }
+    
+
+  }
+
+  var words=[]
+//tekstin haku html-sivulta
+  function search(text,bgcol) {
+    words.push(text)
+    console.log(words)
+    document.getElementById("words").innerHTML='previous searches: '+words
+
+    if (window.find && window.getSelection) {
+
+
+      document.designMode = "on";
+      //getselection on käyttäjän valitsema tekstialue / tai tekstin sijainti
+
+      var sel = window.getSelection();
+      sel.collapse(document.body, 0);
+      while (window.find(text)) {
+            document.execCommand("HiliteColor", false, bgcol);
+            sel.collapseToEnd();
+    }
+    
+  }
+  document.designMode = "off";
+}
+
+function wordStatistic() {
+    return words.reduce(function (a, b) {
+        var shortest= a.length < b.length ? a : b;
+        var longest=a.length > b.length ? a : b;
+        document.getElementById("longest").innerHTML='Longest word: ' +longest + " length: "+longest.length
+        document.getElementById("shortest").innerHTML='Shortest word: '+shortest + " length: "+shortest.length
+    });
 }

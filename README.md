@@ -20,5 +20,8 @@ The Python function counts the number of fields in the MongoDB collection and th
 Database statistics, see the number of collections, sizes of collections and databases, etc.
 Some of the database statistics are now available graphically. Made with the ChartJS library.
 
-Customization options, in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed
+Customization options, in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
+
+JavaScript search function. The function uses the window.find method and highlights the found words in yellow. the function also stores the searched words in a table and displays them to the user.
+The function also shows some statistics about the searched words, for example the number of characters of the longest and shortest words and the number of characters of both words
 

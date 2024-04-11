@@ -22,12 +22,12 @@
     <p id="dbL">
     </p>
     {% for j in stats %}
-   <p id="stats" class="statsNames">{{j}}</p>
+   <p id="stats" hidden class="statsNames">{{j}}</p>
    {%endfor%}
    {% for i in statsNums %}
-   <div id="statsNums" class="statsNums">{{i}}</div>
+   <div id="statsNums" hidden class="statsNums">{{i}}</div>
    {% endfor %}
-   <p class="allStat">{{allStats}}</p>
+   <p hidden class="allStat">{{allStats}}</p>
   
    <script>
     //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
@@ -65,6 +65,7 @@ function getNumValues() {
 for (i=0;i<7;i++)
 {
     arrNums.push(parseInt(numValues[i].innerHTML))
+    console.log(arrNums)
     
 
 }
@@ -206,12 +207,12 @@ thirdMax()
        
 
 
-var xValues = [arrNames[indexNum],arrNames[secondMaxIndex],arrNames[thirdIndex]];
-var yValues = [maxVal,secondBiggest,thirdMaxVar];
+var xValues = [arrNames[0],arrNames[1],arrNames[2],arrNames[3],arrNames[4],arrNames[5],arrNames[6]];
+var yValues = [arrNums[0],arrNums[1],arrNums[2],arrNums[3],arrNums[4],arrNums[5],arrNums[6]];
 
 
 
-var barColors = ["red", "green","blue","orange","brown"];
+var barColors = ["red", "green","blue","orange","brown",];
 
 new Chart("myChart", {
   type: "bar",
@@ -226,7 +227,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "the three largest databases"
+      text: "Your databases"
     }
   }
 });
