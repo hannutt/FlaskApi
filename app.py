@@ -41,11 +41,9 @@ def showIndex():
           print('Collections:', str(collections))
           print('Size:', str(datasize) + 'Mb')
           roundedSize = round(datasize,2)
-          #statsNames.append('Name: ')
+        
           statsNames.append(i)
-          #statsNames.append("collections: ")
-         # statsNames.append(collections)
-          #statsNums.append("Size: ")
+      
           statsNums.append(roundedSize)
           allStats.append(i)
           allStats.append(datasize)
@@ -147,22 +145,6 @@ def show_data():
     #lasketaan kokoelman kenttien määrä
     keysTotal = len(i.keys())
         
-
-   
-    
-    '''
-    l=[]
-    path = request.form.get('DBpath')
-    app.config['MONGO_URI']=path
-    global mongodb
-    col="results"
-    mongodb=PyMongo(app).db
-    
-    results=mongodb.results.find({},)
-    for res in results:
-        l.append(res) 
-        print(res)
-    '''
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB)
 
 
@@ -173,6 +155,7 @@ def read():
         app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
         #global mongodb
         mongodb=PyMongo(app).db
+
         item=[]
         results = mongodb.results.find({},)
         #keyLen=len(res.keys())
@@ -199,151 +182,57 @@ def read():
 #http://127.0.0.1:5000/findName/keijo
 
 #endpoint jossa käyttäjän antama tietokannan nimi parametrina.
-@app.route("/api/db/<name>",methods=['GET'])
-def readDB(name):
+@app.route("/api/db/<name>/<col>",methods=['GET'])
+def readDB(name,col):
     print(name)
     try:
         app.config['MONGO_URI']='mongodb://localhost:27017/'+name
         #global mongodb
         mongodb=PyMongo(app).db
         item=[]
-        results = mongodb.results.find({},)
+        
+        
+        #asetetaan collection nimi, eli parametrina tuleva col ja haetaan collectionista
+        #data
+        results = mongodb[col].find({},)
         dbKeys=[]
-        #keyLen=len(res.keys())
-        #print("keylen: ",keyLen)
-         #  for i in result: 
-       # print(i)
-       # l.append(i)
-        #tietokannan kenttien nimet muunnetaan listamuotoon.
-       # dbKeysList=list(i.keys())
 
     
     #lasketaan kokoelman kenttien määrä
     #keysTotal = len(i.keys())
         for res in results:
          
-           
+           #lasketaan ja tietokannan kokoelman kenttien määrä ja lisätään se listaan
             dbKeysList=list(res.keys())
             keysTotal = len(res.keys())
-            print(keysTotal)
-
-    
-  
-    
+            print(dbKeysList)
 
             items={
-
-                "id":str(res[dbKeysList[0]]),
-                "name":str(res[dbKeysList[1]]),
-                "points":res[dbKeysList[2]],
+                #käytetään kenttiä tiedon näyttämisessä.
+                dbKeysList[0]:str(res),
+               
             }
             
             item.append(items)
-            
-           
-        
+            print(item)
+                    
         return jsonify(item)
     except:InvalidURL
     return "SELECT DATABASE!"
 
-@app.route("/api/findName/<name>",methods=['GET'])
-def searchByname(name):
-    app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-        #global mongodb
-    mongodb=PyMongo(app).db
-    user = mongodb.results.find_one({"name": name})
-    print("user variable ",user)
-    #jos nimi löytyy, items sanakirja-olioon talletetaan user eli löydetyn nimen id,nimi ja pisteet
-    if user:
-            userinfo={
-
-            "id":str(user['_id']),
-            "name":str(user['name']),
-            "points":user['points'],
-        }
-     
-    return jsonify({'userinfo':userinfo})
-
-@app.route("/api/findPoints/<name>",methods=['GET'])
-def searchAndShowPointsOnly(name):
-    app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-        #global mongodb
-    mongodb=PyMongo(app).db
-
-    user = mongodb.results.find_one({"name":name})
-    if user:
-            userinfo={
-
-            "points":str(user['points']),
-        }
-     
-    return jsonify({'userinfo':userinfo})
-
-@app.route('/api/deleteName/<name>',methods=['GET','DELETE'])
-def delByname(name):
-     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
+@app.route('/api/delete/<db>/<col>/<iid>',methods=['GET','DELETE'])
+def delByname(db,col,iid):
+     print("id ",iid)
+     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'+db
         #global mongodb
      mongodb=PyMongo(app).db
-     user = mongodb.results.find_one({"name": name})
-     if user:
-          mongodb.results.delete_one({"name":name})
-          return 'DELETED'
-     
-
-@app.route('/api/editName/<name>/<newname>',methods=['GET','PUT'])
+     #removeId = mongodb[col].find_one({"_id":iid})
+     #if removeId:
+     delquery={"word":iid}
+     mongodb[col].delete_one(delquery)
+     return "deleted"
 
 
-#nimen päivitys apikutsuna vanhanimi+uusinimi
-def editName(name,newname):
-     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-     mongodb=PyMongo(app).db
-     user = mongodb.results.find_one({"name":name})
-     if user:
-        
-          newvalues = {"$set" : {'name':newname}}
-          mongodb.results.update_one(user,newvalues)
-          return 'Name UPDATED'
-
-@app.route('/api/editPoints/<name>/<points>',methods=['GET','PUT'])
-def editPoints(name,points):
-      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-      mongodb=PyMongo(app).db
-      filter = {'name':name}
-     
-      newvalues = {"$set" : {'points':points}}
-      #db.mycollection.update({'_id': ObjectId("55d49338b9796c337c894df3")},  {'$set': {"details.model": "14Q22"}})
-      mongodb.results.update_one(filter,newvalues)
-      return name + " points updated"
-
-#uuden tietueen lisäys kantaan
-@app.route('/api/createNew/<name>/<points>', methods=['GET', 'POST'])
-def createRecord(name,points):
-      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-      mongodb=PyMongo(app).db
-      mongodb.results.insert_one({"name":name,"points":points})
-      return "name " +name +" points "+ points +" added to database"
-#maksimipisteiden haku
-@app.route("/api/maxpoints",methods=['GET'])
-def getMaxPoints():
-      maxpoint=[]
-      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-      mongodb=PyMongo(app).db
-    
-      result=mongodb.results.find_one({"points": {"$exists": True}},sort=[("points",-1)])
-      maxpoint.append(result['name'])
-      maxpoint.append(result['points'])
-      print(result['name'])
-    
-    
-     
-      return jsonify(maxpoint)
-    
-      
-  
-  
-         
-        
-     
     
 if __name__ == '__main__':
     app.run(debug=True)

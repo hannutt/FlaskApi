@@ -1,8 +1,7 @@
 Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML
 
 Python Flask and JavaScript REST API with MongoDB.
-This has been done mainly for my own purposes, i.e. testing my MongoDB databases.
-The main idea is that you can access multiple mongoDB databases with a single program using api calls or an html interface.
+The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface.
 
 Main features
 
@@ -28,9 +27,8 @@ The function also shows some statistics about the searched words, for example th
 
 ACCESS THE DATABASE using API endpoint
 
-using api/db/<name> where the parameter <name> is the name of the database.
-This will display all the database information on the screen. A Python function counts the number of database fields and uses it in a for loop. This is how all fields and field information are displayed.
+using api/db/<name>/<column> where the parameter <name> is the name of the desired database and col is the name of the desired collection. This will display all the database information on the screen.
 
-Various API calls like search or delete by id, name, etc. are also available, 
+Various API calls like search or delete by id, name, etc. are also available.
 
 
