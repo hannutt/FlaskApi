@@ -102,6 +102,7 @@
     var text = jQuery(this).text();
     console.log(text.trim());
     document.getElementById('objId').value = text
+    document.getElementById('objId2').value = text
   });
 
 </script>
@@ -112,7 +113,7 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 <p>Object id:</p>
 
 
-<form action="{{ url_for('delRecord')}}" method="post">
+<form action="{{ url_for('cruds.delRecord')}}" method="post">
 <input type="text" name="DB" value="{{selectedDB}}">
 <input type="text" id="col" name="col" value="{{collectionNameStr}}">
 <input type="text" id="objId" name="objId">
@@ -177,19 +178,25 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
       var fieldsTotalInt = Number(fieldsTotal)
       console.log(typeof fieldsTotalInt)
       var cb = document.getElementById("edit")
+      
       var editBtn = document.createElement("BUTTON")
       editBtn.id = "editBtn"
       editBtn.textContent = "Edit"
       //jos checkbox on klikattu, luodaan edit painike, muussa tapauksessa tuhotaan painike
       if (cb.checked == true) {
-        document.body.appendChild(editBtn)
+        //document.body.appendChild(editBtn)
+        
         //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
         for (var i = 0; i < fieldsTotalInt; i++) {
           var inpField = document.createElement("INPUT");
           //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
           inpField.id = i
+          inpField.name= i
           inpField.setAttribute("type", "text");
-          document.body.appendChild(inpField);
+          //document.body.appendChild(inpField);
+          document.getElementById("editing").appendChild(editBtn)
+          document.getElementById("editing").appendChild(inpField)
+
           //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
           //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
           //oikeaan input-kenttään
@@ -208,6 +215,14 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 
     }
 </script>
+<form action="{{ url_for('cruds.editRecords')}}" method="post">
+<input  type="text" id="objId2" name="objId2">
+<input hidden type="text" name="DB" value="{{selectedDB}}">
+<input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">
+<div id="editing">
+</form>
+
+</div>
 
 {% else %}
 <p></p>

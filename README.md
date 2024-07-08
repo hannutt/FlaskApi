@@ -1,7 +1,7 @@
 Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML
 
 Python Flask and JavaScript REST API with MongoDB.
-The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface.
+The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. the code is split into multiple files using the Blueprint library.
 
 Main features
 

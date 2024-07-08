@@ -5,9 +5,12 @@ from flask_pymongo import PyMongo,MongoClient
 from string import Template
 from bson.objectid import ObjectId
 import pymongo
-
+from cruds import cruds
+from apiCalls import apiCalls
 
 app = Flask(__name__)
+app.register_blueprint(cruds,url_prefix='')
+app.register_blueprint(apiCalls,url_prefix='')
 
 showdata = False
 
@@ -92,17 +95,6 @@ def read_form():
     global objects
     objects = call['objects']
    
-    #print(dbname)
-    #DbNameOnly = request.form.get('DBname')
-    #mydatabase = client.DbNameOnly
-    #collections = mydatabase.list_collection_names()
-    #print(collections)
-    #collections=mydatabase.list_collection_names()
-    #collections = mydatabase.list_collection_names()
-    #print(collections)
-   
-    
-    #print(selectedDB)
 
     app.config['MONGO_URI']='mongodb://localhost:27017/'+selectedDB
     #global mongodb
@@ -143,25 +135,14 @@ def show_data():
 
     
     #lasketaan kokoelman kenttien määrä
+    global keysTotal
     keysTotal = len(i.keys())
         
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr)
 
-@app.route("/del-record",methods=['POST'])
-def delRecord():
-    client = pymongo.MongoClient('mongodb://localhost:27017/')
-    collection = request.form.get('col')
-    Dbase= request.form.get('DB')
-    iid = request.form.get('objId')
-    db=client[Dbase]
-    col=db[collection]
-    delquery={"_id":ObjectId(iid)}
-    col.delete_one(delquery)
-    
-   
-   
-    print(iid,Dbase,collection)
-    return render_template('index.html')
+
+
+
 
 #api-kutsu
 @app.route("/api/all",methods=['GET'])
@@ -196,46 +177,7 @@ def read():
 #tässä haetaan nimen perusteella mongokannasta <name> on parametri johon kirjoitetaan haetun käyttäjän nimi, esim.
 #http://127.0.0.1:5000/findName/keijo
 
-#endpoint jossa käyttäjän antama tietokannan nimi parametrina.
-@app.route("/api/db/<name>/<col>",methods=['GET'])
-def readDB(name,col):
-    print(name)
-    try:
-        app.config['MONGO_URI']='mongodb://localhost:27017/'+name
-        #global mongodb
-        mongodb=PyMongo(app).db
-        item=[]
-        
-        
-        #asetetaan collection nimi, eli parametrina tuleva col ja haetaan collectionista
-        #data
-        results = mongodb[col].find({},)
-        dbKeys=[]
 
-    
-    #lasketaan kokoelman kenttien määrä
-    #keysTotal = len(i.keys())
-        for res in results:
-         
-           #dbkeylistiin talletetaan kokoelman kentän eli _id jne
-            dbFields=list(res.keys())
-            keysTotal = len(res.keys())
-            print("dbkeylist ",dbFields)
-
-            items={
-                #dictionaryn avain-arvo pari
-                dbFields[0]:str(res),
-                
-              
-               
-            }
-            
-            item.append(items)
-            
-                    
-        return jsonify(item)
-    except:InvalidURL
-    return "SELECT DATABASE!"
 
 @app.route('/api/delete/<db>/<iid>',methods=['GET','DELETE'])
 def delByname(db,iid):
