@@ -49,9 +49,9 @@
 
   <form action="{{ url_for('show_data')}}" method="post">
     <input type="text" name="selecDB" value="{{selectedDB}}">
-    <input type="text" id="colname" name="colname">
+    <input type="text" id="colname" name="colname" value="{{collectionNameStr}}">
 
-    <input type="text" name="DBpath" id="DBpath">
+    <input type="text" name="DBpath" id="DBpath"> 
 
     <button>Show</button>
     {% for d in dbKeysList %}
@@ -110,8 +110,15 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 {% if showdata==True %}
 <h4>Delete document</h4>
 <p>Object id:</p>
+
+
+<form action="{{ url_for('delRecord')}}" method="post">
+<input type="text" name="DB" value="{{selectedDB}}">
+<input type="text" id="col" name="col" value="{{collectionNameStr}}">
 <input type="text" id="objId" name="objId">
+
 <button>Delete</button>
+</form>
 <input type="checkbox" name="edit" id="edit" onclick="createEdit()">
 <label for="edit">Edit?</label>
 <input type="checkbox" name="search" id="search" onchange="showSearchOptions()">

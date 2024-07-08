@@ -145,8 +145,23 @@ def show_data():
     #lasketaan kokoelman kenttien määrä
     keysTotal = len(i.keys())
         
-    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB)
+    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr)
 
+@app.route("/del-record",methods=['POST'])
+def delRecord():
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    collection = request.form.get('col')
+    Dbase= request.form.get('DB')
+    iid = request.form.get('objId')
+    db=client[Dbase]
+    col=db[collection]
+    delquery={"_id":ObjectId(iid)}
+    col.delete_one(delquery)
+    
+   
+   
+    print(iid,Dbase,collection)
+    return render_template('index.html')
 
 #api-kutsu
 @app.route("/api/all",methods=['GET'])
@@ -202,35 +217,46 @@ def readDB(name,col):
     #keysTotal = len(i.keys())
         for res in results:
          
-           #lasketaan ja tietokannan kokoelman kenttien määrä ja lisätään se listaan
-            dbKeysList=list(res.keys())
+           #dbkeylistiin talletetaan kokoelman kentän eli _id jne
+            dbFields=list(res.keys())
             keysTotal = len(res.keys())
-            print(dbKeysList)
+            print("dbkeylist ",dbFields)
 
             items={
-                #käytetään kenttiä tiedon näyttämisessä.
-                dbKeysList[0]:str(res),
+                #dictionaryn avain-arvo pari
+                dbFields[0]:str(res),
+                
+              
                
             }
             
             item.append(items)
-            print(item)
+            
                     
         return jsonify(item)
     except:InvalidURL
     return "SELECT DATABASE!"
 
-@app.route('/api/delete/<db>/<col>/<iid>',methods=['GET','DELETE'])
-def delByname(db,col,iid):
+@app.route('/api/delete/<db>/<iid>',methods=['GET','DELETE'])
+def delByname(db,iid):
      print("id ",iid)
      app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'+db
-        #global mongodb
      mongodb=PyMongo(app).db
-     #removeId = mongodb[col].find_one({"_id":iid})
+     delete = mongodb.words.find_one({"_id":ObjectId(iid)})
+     if delete:
+          mongodb.words.delete_one({"_id":ObjectId(iid)})
+          return 'DELETED'
+        #global mongodb
+     else:
+         return "something went wrong"
+
+     
+    
+   
      #if removeId:
-     delquery={"word":iid}
-     mongodb[col].delete_one(delquery)
-     return "deleted"
+     #delquery={"word":iid}
+     #mongodb[col].delete_one({":_id":ObjectId(iid)})
+     #return "deleted"
 
 
     

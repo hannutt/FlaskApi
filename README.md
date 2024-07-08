@@ -7,11 +7,11 @@ Main features
 
 ACCESS TO DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
 
-The program can search all mongodb databases and their collections on the computer. After the search, the user can select them for use via the HTML user interface.
-you can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the dropdown menu and click the Select button
+The program can search for all mongodb databases and their collections on the computer using MongoDB's list_database_names method. After the search, the user can select them for use via the HTML interface.
+You can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the dropdown menu and click the Select button
 You can choose whether you want to see the data in json format or in text format on the html page.
 
-JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database
+JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
 
 Python and JavaScript collaboration, among others:
 
@@ -29,6 +29,5 @@ ACCESS THE DATABASE using API endpoint
 
 using api/db/<name>/<column> where the parameter <name> is the name of the desired database and col is the name of the desired collection. This will display all the database information on the screen.
 
-Various API calls like search or delete by id, name, etc. are also available.
 
 
