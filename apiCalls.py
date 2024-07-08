@@ -49,3 +49,14 @@ def readDB(name,col):
         return jsonify(item)
     except:InvalidURL
     return "SELECT DATABASE!"
+
+@apiCalls.route("/api/delete/<db>/<col>/<iid>")
+def deleteRecord(db,col,iid):
+
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    db=client[db]
+    collection=db[col]
+    #poisto id:n perusteella saman kuin sql WHERE
+    delquery={"_id":ObjectId(iid)}
+    collection.delete_one(delquery)
+    return "Record deleted"

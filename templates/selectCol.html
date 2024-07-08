@@ -13,8 +13,8 @@
     <button>frontpage</button>
   </form>
   <div class="DBinfo">
-    <p>{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
-      {{objects}}</p>
+    <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
+      {{objects}}</p> <p hidden id="total"> {{objects}}</p>
   </div>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
@@ -79,6 +79,8 @@
   <div class="CBforTable">
     <label id="tableCBLbl" for="tableCB">Remove table borders</label>
     <input type="checkbox" name="tableCB" id="tableCB" onclick="removeTable()">
+    <label id="tableCBLbltxt" for="prettytxtCB">Pretty text</label>
+    <input type="checkbox" name="prettytxtCB" id="tableCB" onclick="prettyText()">
   </div>
   <select id="colors" class="colors" onchange="changeBGcolor(this)">
     <option value="default">Select table bgcolor</option>

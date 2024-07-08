@@ -127,6 +127,7 @@ def show_data():
     dbname=client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
     result= collection.find()
+    count = collection.find().count()
     for i in result: 
         print(i)
         l.append(i)
@@ -138,7 +139,7 @@ def show_data():
     global keysTotal
     keysTotal = len(i.keys())
         
-    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr)
+    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
 
 
 

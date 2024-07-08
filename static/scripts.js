@@ -70,6 +70,25 @@ function removeTable() {
 
   }
 
+  function prettyText() {
+    var total=document.getElementById("total").innerHTML
+    var records = Number(total)
+    console.log(typeof(records))
+    console.log('pretty text')
+    //for-silmukan avulla käydään koko taulukon tekstisisältö läpi ja poistetaan määritellyt merkit
+    //replace metodilla. records on näytettävien dokumenttien määrä ja se saadaan alunperin pyMongo count
+    //metodilla, joka suoritetaan python funktiossa ja lähetetään html-sivulle ja otetaan käyttöön
+    //javascriptissä total ja records muuttujissa.
+    for (var i=0;i<records;i++)
+    {
+      var txt=document.getElementById("dbTable").innerHTML.replace('{','',).replace("}","").replace('ObjectId',"")
+      document.getElementById("dbTable").innerHTML=txt
+      
+
+    }
+   
+  }
+
   var words=[]
 //tekstin haku html-sivulta
   function search(text,bgcol) {

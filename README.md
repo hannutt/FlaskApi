@@ -22,12 +22,20 @@ Some of the database statistics are now available graphically. Made with the Cha
 
 Customization options, in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
 
+Make the text more readable. Normally, MongoDB displays characters like { }, () etc. next to the data.
+The checkbox option pretty text removes these characters using a for-loop and a javaScript replace methods
+
 JavaScript search function. The function uses the window.find method and highlights the found words in yellow. the function also stores the searched words in a table and displays them to the user.
 The function also shows some statistics about the searched words, for example the number of characters of the longest and shortest words and the number of characters of both words
 
-ACCESS THE DATABASE using API endpoint
+ACCESS THE DATABASE USING API ENDPOINT
 
 using api/db/<name>/<column> where the parameter <name> is the name of the desired database and col is the name of the desired collection. This will display all the database information on the screen.
+
+DELETE RECORDS USING API ENDPOINT
+
+Deleting a record using the api endpoint is done with the /api/delete/<database>/<collection>/<id> command
+this will remove the record whose id it receives as a parameter from the named database's collection.
 
 
 
