@@ -71,6 +71,12 @@ function removeTable() {
   }
 
   function prettyText() {
+    var table=document.getElementById("dbTable")
+    var originalText = table.innerHTML
+   
+    var txtCB = document.getElementById("prettytxtCB")
+    
+
     var total=document.getElementById("total").innerHTML
     var records = Number(total)
     console.log(typeof(records))
@@ -79,15 +85,31 @@ function removeTable() {
     //replace metodilla. records on näytettävien dokumenttien määrä ja se saadaan alunperin pyMongo count
     //metodilla, joka suoritetaan python funktiossa ja lähetetään html-sivulle ja otetaan käyttöön
     //javascriptissä total ja records muuttujissa.
-    for (var i=0;i<records;i++)
+    if (txtCB.checked==true)
     {
-      var txt=document.getElementById("dbTable").innerHTML.replace('{','',).replace("}","").replace('ObjectId',"")
-      document.getElementById("dbTable").innerHTML=txt
+      for (var i=0;i<records;i++)
+        {
+          //tämän avulla teksti voidaan palauttaa alkuperäiseen muotoon
+          table.setAttribute('data-orig', originalText);
+          var prettytxt=document.getElementById("dbTable").innerHTML.replace('{','',).replace("}","").replace('ObjectId',"").replace("(","").replace(")","")
+          document.getElementById("dbTable").innerHTML=prettytxt
+          
+    
+        }
+    }
+    if (txtCB.checked==false)
+    {
+        var table = document.getElementById("dbTable")
+        //palauteteaan alkuperäinen teksti
+        var originalText=table.getAttribute('data-orig');
+        table.innerHTML=originalText
+
+      }
       
 
     }
-   
-  }
+ 
+
 
   var words=[]
 //tekstin haku html-sivulta

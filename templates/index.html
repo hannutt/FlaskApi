@@ -12,7 +12,7 @@
  
     <title>Flask-APi</title>
 
-<body>
+<body class="indexbody">
    
     <h3 id="apiName">Flask API</h3>
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
@@ -21,6 +21,7 @@
     
     <p id="dbL">
     </p>
+    <!--kokoelmien nimi,koko yms tietojen läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
     {% for j in stats %}
    <p id="stats" hidden class="statsNames">{{j}}</p>
    {%endfor%}
@@ -34,7 +35,7 @@
     $(document).ready(function() {
   $( "#apiName" ).animate({
     width: "70%",
-    opacity: 0.4,
+    opacity: 0.9,
     marginLeft: "0.6in",
     fontSize: "3em",
     borderWidth: "10px"
@@ -43,6 +44,7 @@
     var arrNums=[]
     var arrNames=[]
     var allStats=[]
+    //kokoelmien nimien läpikäynti
 function getNameValues(){
     var nameValues = document.getElementsByClassName("statsNames")
 
@@ -158,19 +160,21 @@ thirdMax()
 
    </script>
    <p id="demo"></p>
-    <h3>Select database</h3>
+   
     <div class="hideAll">
         <p id="selection" class="selection"></p>
 
         <button hidden id="hideBtn">Hide</button>
     </div>
-    <label for="dbs">Choose a database:</label>
+    <label class="dbsLbl" for="dbs">Choose a database:</label>
+    <br><br>
     <form action="{{ url_for('read_form')}}" method="post">
         <select name="dbs" id="dbs" onchange="selected();getSelectedText(this)">
 
             <option value="default" selected>Select Database</option>
             <!--
-          <option value="mongodb://localhost:27017/quizDB">quizDB</option>-->
+          <option value="mongodb://localhost:27017/quizDB">quizDB</option>
+          kokoelmien nimien lisäys pudotusvalikkoon-->
             {% for each in dbsList %}
             <option value="mongodb://localhost:27017/{{each}}">{{each}}</option>
             {% endfor %}
@@ -199,9 +203,10 @@ thirdMax()
     
         <button>Select</button>
     </form>
+    <br><br>
     <button id="statsBtn" onclick="stats()">Stats</button>
     <div hidden id="chart">
-    <canvas id="myChart" style="width:100%;max-width:400px"></canvas>
+    <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
 </div>
     <script>
        

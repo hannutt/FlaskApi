@@ -8,10 +8,12 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
 </head>
 
-<body>
+<body class="formPageBody">
+  <nav>
   <form action="{{ url_for('showIndex')}}" method="post">
-    <button>frontpage</button>
+    <button class="fpBtn">Front page</button> |
   </form>
+</nav>
   <div class="DBinfo">
     <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
       {{objects}}</p> <p hidden id="total"> {{objects}}</p>
@@ -54,8 +56,10 @@
     <input type="text" name="DBpath" id="DBpath"> 
 
     <button>Show</button>
+    <!--DBkeyslist sisältää mongo-kokoelman kenttien nimet-->
     {% for d in dbKeysList %}
     <div id="dict" class="dict">{{d}}</div>
+    <input id="{{d}}" name="{{d}}" type="text" value="{{d}}">
     {%endfor%}
     <!--kokoelman kenttien kokonaismäärä-->
     <p id="keystotal">{{keysTotal}}</p>
@@ -80,7 +84,7 @@
     <label id="tableCBLbl" for="tableCB">Remove table borders</label>
     <input type="checkbox" name="tableCB" id="tableCB" onclick="removeTable()">
     <label id="tableCBLbltxt" for="prettytxtCB">Pretty text</label>
-    <input type="checkbox" name="prettytxtCB" id="tableCB" onclick="prettyText()">
+    <input type="checkbox" name="prettytxtCB" id="prettytxtCB" onclick="prettyText()">
   </div>
   <select id="colors" class="colors" onchange="changeBGcolor(this)">
     <option value="default">Select table bgcolor</option>
@@ -116,8 +120,8 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 
 
 <form action="{{ url_for('cruds.delRecord')}}" method="post">
-<input type="text" name="DB" value="{{selectedDB}}">
-<input type="text" id="col" name="col" value="{{collectionNameStr}}">
+<input hidden type="text" name="DB" value="{{selectedDB}}">
+<input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">
 <input type="text" id="objId" name="objId">
 
 <button>Delete</button>
@@ -126,6 +130,8 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 <label for="edit">Edit?</label>
 <input type="checkbox" name="search" id="search" onchange="showSearchOptions()">
 <label for="search">Search</label>
+<input type="checkbox" name="add" id="add" onclick="createEdit()">
+<label for="add">Add new</label>
 <div class="searchOptions" id="searchOptions" hidden>
   <input type="text" id="src">
   <button onclick="search(document.getElementById('src').value,'yellow')">Search</button>
@@ -155,12 +161,13 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 
   var valuesList = []
   function getDBFields() {
-
+    //kenttien nimet tulee python funktiosta ja ne näytetää dict nimisessä elementissä
     var values = document.getElementsByClassName("dict")
     console.log(values)
-
+    //mongo kokoelman kenttien määrä
     var j = document.getElementById("keystotal").innerHTML
 
+    //tallennetaan kaikki kenttien nimet listaan, j on kokonaismäärä kenttiä
     for (var i = 0; i < j; i++) {
 
       valuesList.push(values[i].innerHTML)
@@ -180,6 +187,7 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
       var fieldsTotalInt = Number(fieldsTotal)
       console.log(typeof fieldsTotalInt)
       var cb = document.getElementById("edit")
+      var addCB = document.getElementById("add")
       
       var editBtn = document.createElement("BUTTON")
       editBtn.id = "editBtn"
@@ -202,9 +210,40 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
           //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
           //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
           //oikeaan input-kenttään
-          document.getElementById(i).placeholder = valuesList[i]
+          document.getElementById(i).value = valuesList[i]
         }
 
+      }
+      else if(addCB.checked==true)
+      {
+        var addBtn = document.createElement("BUTTON")
+        addBtn.id = "Add"
+        editBtn.textContent = "Add"
+        //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
+        for (var i = 1; i < fieldsTotalInt; i++) {
+          var inpField = document.createElement("INPUT");
+          var fieldValues = document.createElement("INPUT");
+          //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
+          inpField.id = i
+          inpField.name= i
+          fieldValues.name="field"+i
+          fieldValues.id="field"+i
+          fieldValues.hidden=true
+          fieldValues.setAttribute("type","text")
+          inpField.setAttribute("type", "text");
+          //luodut syötentät ja painkkeet sijoitetaan addNew diviin
+          document.getElementById("addNew").appendChild(inpField)
+          document.getElementById("addNew").appendChild(editBtn)
+          document.getElementById("addNew").appendChild(fieldValues)
+
+          //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
+          //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
+          //oikeaan input-kenttään
+          document.getElementById(i).placeholder = valuesList[i]
+          document.getElementById("field"+i).value=valuesList[i]
+          
+
+        }
       }
       else {
         document.getElementById("editBtn").remove()
@@ -218,13 +257,21 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
     }
 </script>
 <form action="{{ url_for('cruds.editRecords')}}" method="post">
-<input  type="text" id="objId2" name="objId2">
+<input hidden  type="text" id="objId2" name="objId2">
 <input hidden type="text" name="DB" value="{{selectedDB}}">
 <input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">
 <div id="editing">
 </form>
 
 </div>
+
+<form action="{{ url_for('cruds.addRecord')}}" method="post">
+<div id="addNew">
+<input hidden type="text" name="DB" value="{{selectedDB}}">
+<input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">
+
+</div>
+</form>
 
 {% else %}
 <p></p>

@@ -10,3 +10,25 @@
 .infoParagraph {
 white-space: nowrap;
 }
+
+.fpBtn {
+    background-color: white;
+    border: white;
+    color: blue;
+}
+.indexbody {
+    background-image:  url('/static/images/pexelsBG.jpg');
+    color: white;
+}
+
+.apiName {
+    color: white;
+}
+.myChart {
+    background-color: lightblue;
+}
+
+.dbsLbl {
+    font-weight: bold;
+    font-size: larger;
+}

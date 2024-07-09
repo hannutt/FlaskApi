@@ -14,7 +14,7 @@ app.register_blueprint(apiCalls,url_prefix='')
 
 showdata = False
 
-@app.route("/")
+@app.route("/",methods=['GET','POST'])
 
 def showIndex():
      dbsList = []
@@ -74,7 +74,7 @@ def DB_Statistics():
 
     return render_template('index.html',stats=statsNames)
 
-@app.route('/read-form', methods=['POST']) 
+@app.route('/read-form', methods=['POST','GET']) 
 def read_form():
     print('read func')
     client = pymongo.MongoClient('mongodb://localhost:27017/')
