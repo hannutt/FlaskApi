@@ -24,6 +24,7 @@ def showIndex():
      statsNums=[]
      global allStats
      allStats=[]
+     txt='hello'
 
      
      dbs=MongoClient().list_database_names()
@@ -63,7 +64,7 @@ def showIndex():
      
     
           
-    
+     
      return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats)
 
 
@@ -111,6 +112,7 @@ def read_form():
 #näyttää kaiken datan kokoelmasta
 @app.route("/show-form",methods=['POST'])
 def show_data():
+    
     print('show func')
     global showdata
     showdata=True
@@ -138,6 +140,7 @@ def show_data():
     #lasketaan kokoelman kenttien määrä
     global keysTotal
     keysTotal = len(i.keys())
+    
         
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
 

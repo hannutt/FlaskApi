@@ -62,7 +62,7 @@
     <input id="{{d}}" name="{{d}}" type="text" value="{{d}}">
     {%endfor%}
     <!--kokoelman kenttien kokonaismäärä-->
-    <p id="keystotal">{{keysTotal}}</p>
+    <p id="keystotal" name="keystotal">{{keysTotal}}</p>
     <table id="dbTable" class="dbTable" border="1">
       {% for r in l %}
       <tr>
@@ -219,10 +219,14 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
         var addBtn = document.createElement("BUTTON")
         addBtn.id = "Add"
         editBtn.textContent = "Add"
+        fieldTotal=document.createElement("INPUT")
+        fieldTotal.id="fieldtotal"
+        fieldTotal.name="fieldtotal"
         //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
         for (var i = 1; i < fieldsTotalInt; i++) {
           var inpField = document.createElement("INPUT");
           var fieldValues = document.createElement("INPUT");
+
           //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
           inpField.id = i
           inpField.name= i
@@ -231,19 +235,23 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
           fieldValues.hidden=true
           fieldValues.setAttribute("type","text")
           inpField.setAttribute("type", "text");
+          
           //luodut syötentät ja painkkeet sijoitetaan addNew diviin
           document.getElementById("addNew").appendChild(inpField)
           document.getElementById("addNew").appendChild(editBtn)
           document.getElementById("addNew").appendChild(fieldValues)
-
           //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
           //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
           //oikeaan input-kenttään
           document.getElementById(i).placeholder = valuesList[i]
           document.getElementById("field"+i).value=valuesList[i]
           
+          document.getElementById("addNew").appendChild(fieldTotal)
+          document.getElementById("fieldtotal").value=fieldsTotalInt
 
         }
+        
+        
       }
       else {
         document.getElementById("editBtn").remove()

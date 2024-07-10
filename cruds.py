@@ -41,23 +41,19 @@ def delRecord():
 
 @cruds.route("/add-record",methods=['POST'])
 def addRecord():
-    word = request.form.get('field1')
-    '''
+    fieldsTotal=request.form.get("fieldtotal")
+    
+    fieldName1 = request.form.get('field1')
+    valueToDb1=request.form.get("1")
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     collection = request.form.get('col')
     Dbase= request.form.get('DB')
     db=client[Dbase]
     col=db[collection]
     #kokoelman kenttien nimien haku
-    cursor = db[collection].find({})
-    for document in cursor: 
-        fields.append(document.keys())
-        print(fields) 
-
-    value=request.form.get("0")
-    value2=request.form.get("1")
-    addQuery={str(word):value}
+    
+    addQuery={fieldName1:valueToDb1}
     col.insert_one(addQuery)
-    '''
-    print(word)
+    
+    print("fields ",fieldsTotal)
     return render_template("selectCol.html")
