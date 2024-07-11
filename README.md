@@ -1,7 +1,8 @@
-Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML
+Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML, MongoDB Cloud Atlas
 
-Python Flask and JavaScript REST API with MongoDB.
-The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. The code is split into multiple files using the Blueprint library.
+Python Flask REST API with JavaScript and MongoDB.
+The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. for now user has access to local Mongodb databases, but access to MongoDB cloud Atlas databases is under development.
+
 
 Main features
 

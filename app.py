@@ -7,10 +7,12 @@ from bson.objectid import ObjectId
 import pymongo
 from cruds import cruds
 from apiCalls import apiCalls
+from cloudConnection import cloudConnection
 
 app = Flask(__name__)
 app.register_blueprint(cruds,url_prefix='')
 app.register_blueprint(apiCalls,url_prefix='')
+app.register_blueprint(cloudConnection,url_prefix='')
 
 showdata = False
 

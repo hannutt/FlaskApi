@@ -1,3 +1,26 @@
+//elementit luodaan tässä mutta niitä käytetään
+//vasta createatlas funktiossa. näin piilotus/näyttö saadaan toimiaan klikkauksella oikein.
+var uriInput=document.createElement("INPUT")
+var pswInput=document.createElement("INPUT")
+var userInput=document.createElement("INPUT")
+uriInput.placeholder="Atlas URI"
+pswInput.placeholder="Password"
+userInput.placeholder="Username"
+function createAtlas() {
+  var atlasCB=document.getElementById("atlas")
+  if (atlasCB.checked==true)
+  {
+   
+    document.getElementById("atlasForm").appendChild(uriInput)
+    document.getElementById("atlasForm").appendChild(pswInput)
+    document.getElementById("atlasForm").appendChild(userInput)
+    document.getElementById("atlasForm").hidden=false
+    
+  }
+  else if(atlasCB.checked==false){
+    document.getElementById("atlasForm").hidden=true
+  }
+}
 function createEdit() {
 
     var fieldsTotal = document.getElementById("keystotal").innerHTML
