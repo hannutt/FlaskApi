@@ -4,11 +4,20 @@
         <title>Cloud</title>
     </head>
     <body>
-        <h3>Cloud db</h3>
+        <h3>You are viewing database named: {{DBName}} and collection named: {{colName}}</h3>
+        <table border="1">
+
         {% for i in l %}
-        <p>{{i}}
+        <tr>
+        <td>{{i}}
+        </tr>
             
-        </p>
+    </td>
         {%endfor%}
+        {% for i in dbList %}
+        {{i}}
+        {%endfor%}
+
+    </table>
     </body>
 </html>

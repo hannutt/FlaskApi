@@ -26,6 +26,7 @@ def connectAtlas():
     colName=request.form.get('colname')
 # Create a new client and connect to the server
     client = MongoClient(uri,server_api=ServerApi('1'))
+    dbList=client.list_database_names()
     dbName=client[DBname]
     collection=dbName[colName]
 
@@ -35,11 +36,11 @@ def connectAtlas():
         print("Pinged your deployment. You successfully connected to MongoDB!")
         res=collection.find()
         for i in res:
-            print(i)
             l.append(i)
     
     except Exception as e:
         print(e)
     
-    print(username,password)
-    return render_template('cloud.html',l=l)
+    
+    return render_template('cloud.html',l=l,DBName=DBname,colName=colName,dbList=dbList)
+

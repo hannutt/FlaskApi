@@ -30,7 +30,7 @@
    <div id="statsNums" hidden class="statsNums">{{i}}</div>
    {% endfor %}
    <p hidden class="allStat">{{allStats}}</p>
-  
+   
    <script>
     //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
     $(document).ready(function() {
@@ -179,7 +179,12 @@ thirdMax()
             {% for each in dbsList %}
             <option value="mongodb://localhost:27017/{{each}}">{{each}}</option>
             {% endfor %}
-
+        </select>
+        <select hidden name="atlasDB"id="atlasDB">
+            {% for i in dbsAtlas %}
+            <option value="">{{i}}</option>
+            {%endfor%}
+            
         </select>
        
 

@@ -5,20 +5,36 @@ from flask_pymongo import PyMongo,MongoClient
 from string import Template
 from bson.objectid import ObjectId
 import pymongo
+from pymongo.server_api import ServerApi
+
 from cruds import cruds
 from apiCalls import apiCalls
 from cloudConnection import cloudConnection
-
+import urllib
 app = Flask(__name__)
 app.register_blueprint(cruds,url_prefix='')
 app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
 
 showdata = False
+def listDataBases():
+    psw='FullFlavor'
+    user='admin'
+    username = urllib.parse.quote(str(user))
+    password = urllib.parse.quote(str(psw))
+    uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
+    client = MongoClient(uri,server_api=ServerApi('1'))
+    dbList=client.list_database_names()
+    return dbList
 
 @app.route("/",methods=['GET','POST'])
 
 def showIndex():
+     listDataBases()
+     dbsAtlas=listDataBases()
+     print("atlas db")
+     print(dbsAtlas)
+     
      dbsList = []
      global statsNames
      statsNames=[]
@@ -26,7 +42,7 @@ def showIndex():
      statsNums=[]
      global allStats
      allStats=[]
-     txt='hello'
+    
 
      
      dbs=MongoClient().list_database_names()
@@ -67,7 +83,7 @@ def showIndex():
     
           
      
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas)
 
 
 
@@ -108,7 +124,7 @@ def read_form():
     data = request.form
     
     
-    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound)
 
 
 #näyttää kaiken datan kokoelmasta

@@ -16,17 +16,6 @@ db and col are the parameters of the database name and the collection, the conte
 
 JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
 
-ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
-
-This feature is still under construction and for now it works as described below:
-
-On the home page, select the checkbox called Access to the Atlas database. 
-After clicking, the program executes a javascript function that dynamically creates fields for username, password, database name and collection name.
-
-The values ​​of the input fields are obtained by the request.form.get method and stored in variables that are passed to the Python function that communicates with MongoDB Cloud Atlas.
-
-fill in the input fields and click the Connect button, and the Python function will send the username and password to the uri variable. if they match the IDs of Cloud Atlas, the user will see the contents of the collection they are looking for on a new html page.
-
 Python and JavaScript collaboration, among others:
 
 The Python function counts the number of fields in the MongoDB collection and the Javascript function creates the same number of input fields (with the createElement method) in the html user interface. the end result is the right number of input fields for adding a new record or editing an old record.
@@ -42,7 +31,18 @@ Make the text more readable. Normally, MongoDB displays characters like { }, () 
 The checkbox option pretty text removes these characters using a for-loop and a javaScript replace methods
 
 JavaScript search function. The function uses the window.find method and highlights the found words in yellow. the function also stores the searched words in a table and displays them to the user.
-The function also shows some statistics about the searched words, for example the number of characters of the longest and shortest words and the number of characters of both words
+The function also shows some statistics about the searched words, for example the number of characters of the longest and shortest words and the number of characters of both words.
+
+ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
+
+This feature is still under construction and for now it works as described below:
+
+On the home page, select the checkbox called Access to the Atlas database. 
+After clicking, the program executes a javascript function that dynamically creates fields for username, password. Available databases and collections are automatically retrieved using the list_database_names method and placed in the drop-down menu.
+
+The values ​​of the input fields are obtained by the request.form.get method and stored in variables that are passed to the Python function that communicates with MongoDB Cloud Atlas.
+
+fill in the input fields and click the Connect button, and the Python function will send the username and password to the uri variable. if they match the IDs of Cloud Atlas, the user will see the contents of the collection they are looking for on a new html page.
 
 ACCESS THE DATABASE USING API ENDPOINT
 

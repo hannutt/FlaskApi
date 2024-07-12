@@ -21,6 +21,8 @@ function createAtlas() {
   var atlasCB=document.getElementById("atlas")
   if (atlasCB.checked==true)
   {
+    var atlas = document.getElementById("atlasDB")
+    
    
     //document.getElementById("atlasForm").appendChild(uriInput)
     document.getElementById("atlasForm").appendChild(pswInput)
@@ -32,9 +34,11 @@ function createAtlas() {
     document.getElementById("atlasForm").appendChild(linebreak)
 
     
-    document.getElementById("atlasForm").appendChild(DBname)
+    //document.getElementById("atlasForm").appendChild(DBname)
     document.getElementById("atlasForm").appendChild(collectionName)
     document.getElementById("atlasForm").appendChild(conn)
+    atlas.hidden=false
+    document.getElementById("atlasForm").appendChild(atlas)
     document.getElementById("atlasForm").hidden=false
     
   }
@@ -42,6 +46,11 @@ function createAtlas() {
     document.getElementById("atlasForm").hidden=true
   }
 }
+
+function createDBlist() {
+
+}
+
 function createEdit() {
 
     var fieldsTotal = document.getElementById("keystotal").innerHTML
@@ -83,6 +92,7 @@ function createEdit() {
       fieldTotal=document.createElement("INPUT")
       fieldTotal.id="fieldtotal"
       fieldTotal.name="fieldtotal"
+      
       //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
       for (var i = 1; i < fieldsTotalInt; i++) {
         var inpField = document.createElement("INPUT");
@@ -96,11 +106,13 @@ function createEdit() {
         fieldValues.hidden=true
         fieldValues.setAttribute("type","text")
         inpField.setAttribute("type", "text");
+       
         
         //luodut syötentät ja painkkeet sijoitetaan addNew diviin
         document.getElementById("addNew").appendChild(inpField)
         document.getElementById("addNew").appendChild(editBtn)
         document.getElementById("addNew").appendChild(fieldValues)
+        document.getElementById("addNew").appendChild(atlas)
         //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
         //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
         //oikeaan input-kenttään
