@@ -3,9 +3,14 @@
 var uriInput=document.createElement("INPUT")
 var pswInput=document.createElement("INPUT")
 var userInput=document.createElement("INPUT")
+var conn = document.createElement("BUTTON")
+conn.TEXT_NODE='Connect'
 uriInput.placeholder="Atlas URI"
 pswInput.placeholder="Password"
 userInput.placeholder="Username"
+uriInput.name='uri'
+pswInput.name='psw'
+userInput.name='user'
 function createAtlas() {
   var atlasCB=document.getElementById("atlas")
   if (atlasCB.checked==true)
@@ -14,6 +19,7 @@ function createAtlas() {
     document.getElementById("atlasForm").appendChild(uriInput)
     document.getElementById("atlasForm").appendChild(pswInput)
     document.getElementById("atlasForm").appendChild(userInput)
+    document.getElementById("atlasForm").appendChild(conn)
     document.getElementById("atlasForm").hidden=false
     
   }

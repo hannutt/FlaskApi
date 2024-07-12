@@ -203,14 +203,17 @@ thirdMax()
         
     
         <button>Select</button>
-    </form>
+    </form> 
     <label for="atlas" >Access to Atlas DB</label>
-    <form action=""
+    <form action= "{{ url_for('cloudConnection.connectAtlas')}}" method="post">
     <div class="atlasForm" id="atlasForm">
 
     </div>
     <input type="checkbox" id="atlas" name="atlas" onclick="createAtlas()">
+</form>
     <br><br>
+
+
     <button id="statsBtn" onclick="stats()">Stats</button>
     <div hidden id="chart">
     <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
