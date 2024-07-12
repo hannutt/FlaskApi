@@ -6,7 +6,7 @@ The main idea is that you can access multiple mongoDB databases with a single pr
 
 Main features
 
-ACCESS TO DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
+ACCESS TO LOCAL DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
 
 The program can search for all mongodb databases and their collections on the computer using MongoDB's list_database_names method. After the search, the user can select them for use via the HTML interface.
 You can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the html dropdown menu and click the Select button.
@@ -15,6 +15,17 @@ The connection between the mongo databases and the program is made using the Mon
 db and col are the parameters of the database name and the collection, the contents of which are obtained from the user's selections in the drop-down menu.
 
 JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
+
+ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
+
+This feature is still under construction and for now it works as described below:
+
+On the home page, select the checkbox called Access to the Atlas database. 
+After clicking, the program executes a javascript function that dynamically creates fields for username, password, database name and collection name.
+
+The values ​​of the input fields are obtained by the request.form.get method and stored in variables that are passed to the Python function that communicates with MongoDB Cloud Atlas.
+
+fill in the input fields and click the Connect button, and the Python function will send the username and password to the uri variable. if they match the IDs of Cloud Atlas, the user will see the contents of the collection they are looking for on a new html page.
 
 Python and JavaScript collaboration, among others:
 

@@ -14,17 +14,16 @@ cloudConnection = Blueprint('cloudConnection',__name__,static_folder='static',te
 @cloudConnection.route('/cloud',methods=['POST','GET'])
 def connectAtlas():
     l=[]
-    uri=request.form.get('uri')
     psw=request.form.get('psw')
     user=request.form.get('user')
-    username = urllib.parse.quote_plus(user)
-    password = urllib.parse.quote_plus(psw)
+    username = urllib.parse.quote(str(user))
+    password = urllib.parse.quote(str(psw))
 
-
+    
     uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
 
-    DBname='quizDataBase'
-    colName='quizResults'
+    DBname=request.form.get('dbname')
+    colName=request.form.get('colname')
 # Create a new client and connect to the server
     client = MongoClient(uri,server_api=ServerApi('1'))
     dbName=client[DBname]
@@ -42,4 +41,5 @@ def connectAtlas():
     except Exception as e:
         print(e)
     
+    print(username,password)
     return render_template('cloud.html',l=l)

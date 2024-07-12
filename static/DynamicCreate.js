@@ -1,24 +1,39 @@
 //elementit luodaan tässä mutta niitä käytetään
 //vasta createatlas funktiossa. näin piilotus/näyttö saadaan toimiaan klikkauksella oikein.
-var uriInput=document.createElement("INPUT")
+//var uriInput=document.createElement("INPUT")
 var pswInput=document.createElement("INPUT")
 var userInput=document.createElement("INPUT")
+var DBname=document.createElement("INPUT")
+var collectionName=document.createElement("INPUT")
 var conn = document.createElement("BUTTON")
-conn.TEXT_NODE='Connect'
-uriInput.placeholder="Atlas URI"
+linebreak = document.createElement("br");
+conn.textContent='Connect'
+//uriInput.placeholder="Atlas URI"
 pswInput.placeholder="Password"
 userInput.placeholder="Username"
+DBname.placeholder='Database name'
+collectionName.placeholder='Collection name'
 uriInput.name='uri'
-pswInput.name='psw'
-userInput.name='user'
+
+DBname.name='dbname'
+collectionName.name='collection'
 function createAtlas() {
   var atlasCB=document.getElementById("atlas")
   if (atlasCB.checked==true)
   {
    
-    document.getElementById("atlasForm").appendChild(uriInput)
+    //document.getElementById("atlasForm").appendChild(uriInput)
     document.getElementById("atlasForm").appendChild(pswInput)
+    pswInput.setAttribute('name','psw')
+    userInput.setAttribute('name','user')
+    DBname.setAttribute('name','dbname')
+    collectionName.setAttribute('name','colname')
     document.getElementById("atlasForm").appendChild(userInput)
+    document.getElementById("atlasForm").appendChild(linebreak)
+
+    
+    document.getElementById("atlasForm").appendChild(DBname)
+    document.getElementById("atlasForm").appendChild(collectionName)
     document.getElementById("atlasForm").appendChild(conn)
     document.getElementById("atlasForm").hidden=false
     
