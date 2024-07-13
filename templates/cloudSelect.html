@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>COllection select</title>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
+    </head>
+    <body>
+        <form action="{{ url_for('cloudConnection.getDataFromAtlas')}}" method="post">
+        <input type="text" name="atlasDBName" id="atlasDBName" value="{{name}}">
+        <input type="text" name="atlasCollection" id="atlasCollection">
+        <button>Show</button>
+    </form>
+       
+        <select name="names" id="names "onchange="getCollectionName(this)">
+            <option value="default">Select</option>
+            {% for c in collections %}
+            <option value="">{{c}}</option>
+            {%endfor%}
+        </select>
+        {% for i in l %}
+        <p>{{i}}</p>
+        {%endfor%}
+
+       
+    </body>
+</html>

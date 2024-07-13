@@ -12,7 +12,7 @@ function stats()
     {
         document.getElementById("stats").hidden=true
         document.getElementById("chart").hidden=true
-        document.getElementById("statsBtn").textContent='Stats'
+        document.getElementById("statsBtn").textContent='Database Statistics'
 
     }
 }
@@ -35,6 +35,14 @@ function selected() {
 function getSelectedText(sel) {
     document.getElementById("DBname").value=sel.options[sel.selectedIndex].text
     
+}
+//valikosta valitun tekstin näyttö selectionfordb tagissa
+function getSelectedDataBase(select) {
+  document.getElementById("nameOfDb").value=select.options[select.selectedIndex].text
+}
+
+function getCollectionName(col) {
+  document.getElementById("atlasCollection").value=col.options[col.selectedIndex].text
 }
 //table elementin taustavärin vaihto
 function changeBGcolor(sel) {

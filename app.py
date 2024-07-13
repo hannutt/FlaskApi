@@ -6,6 +6,8 @@ from string import Template
 from bson.objectid import ObjectId
 import pymongo
 from pymongo.server_api import ServerApi
+import os
+from dotenv import load_dotenv
 
 from cruds import cruds
 from apiCalls import apiCalls
@@ -15,13 +17,18 @@ app = Flask(__name__)
 app.register_blueprint(cruds,url_prefix='')
 app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
-
+load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 def listDataBases():
-    psw='FullFlavor'
-    user='admin'
-    username = urllib.parse.quote(str(user))
-    password = urllib.parse.quote(str(psw))
+    
+    
+    #salasana ja käyttäjätunnus on tallenettu .env ympäristömuuttujatiedostoon.
+    #tässä ne haetaan avain-arvopareina, eli my_psw on avain ja env tiedostossa sen jälkeinen merkkijono
+    #on arvo eli salasana
+    my_psw=os.getenv('my_psw')
+    my_user=os.getenv('my_user')
+    username = urllib.parse.quote(str(my_user))
+    password = urllib.parse.quote(str(my_psw))
     uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
     client = MongoClient(uri,server_api=ServerApi('1'))
     dbList=client.list_database_names()
@@ -33,7 +40,6 @@ def showIndex():
      listDataBases()
      dbsAtlas=listDataBases()
      print("atlas db")
-     print(dbsAtlas)
      
      dbsList = []
      global statsNames
@@ -124,7 +130,7 @@ def read_form():
     data = request.form
     
     
-    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound)
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
 
 #näyttää kaiken datan kokoelmasta

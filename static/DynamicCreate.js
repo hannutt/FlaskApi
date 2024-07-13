@@ -1,22 +1,26 @@
 //elementit luodaan tässä mutta niitä käytetään
 //vasta createatlas funktiossa. näin piilotus/näyttö saadaan toimiaan klikkauksella oikein.
 //var uriInput=document.createElement("INPUT")
-var pswInput=document.createElement("INPUT")
-var userInput=document.createElement("INPUT")
+//var pswInput=document.createElement("INPUT")
+var nameOfDb=document.createElement("INPUT")
+nameOfDb.id="nameOfDb"
+nameOfDb.setAttribute('name','nameOfDb')
 var DBname=document.createElement("INPUT")
-var collectionName=document.createElement("INPUT")
+//var collectionName=document.createElement("INPUT")
 var conn = document.createElement("BUTTON")
 linebreak = document.createElement("br");
-conn.textContent='Connect'
+var selected = document.createElement("p")
+selected.setAttribute('id','selectionForDB')
+conn.textContent='Select'
 //uriInput.placeholder="Atlas URI"
-pswInput.placeholder="Password"
-userInput.placeholder="Username"
+//pswInput.placeholder="Password"
+//userInput.placeholder="Username"
 DBname.placeholder='Database name'
-collectionName.placeholder='Collection name'
+//collectionName.placeholder='Collection name'
 uriInput.name='uri'
 
 DBname.name='dbname'
-collectionName.name='collection'
+//collectionName.name='collection'
 function createAtlas() {
   var atlasCB=document.getElementById("atlas")
   if (atlasCB.checked==true)
@@ -24,21 +28,23 @@ function createAtlas() {
     var atlas = document.getElementById("atlasDB")
     
    
-    //document.getElementById("atlasForm").appendChild(uriInput)
-    document.getElementById("atlasForm").appendChild(pswInput)
-    pswInput.setAttribute('name','psw')
-    userInput.setAttribute('name','user')
+    document.getElementById("atlasForm").appendChild(nameOfDb)
+    document.getElementById("atlasForm").appendChild(conn)
+    //document.getElementById("atlasForm").appendChild(pswInput)
+   // pswInput.setAttribute('name','psw')
+    //userInput.setAttribute('name','user')
     DBname.setAttribute('name','dbname')
-    collectionName.setAttribute('name','colname')
-    document.getElementById("atlasForm").appendChild(userInput)
+    //collectionName.setAttribute('name','colname')
+    //document.getElementById("atlasForm").appendChild(userInput)
+    
     document.getElementById("atlasForm").appendChild(linebreak)
 
-    
-    //document.getElementById("atlasForm").appendChild(DBname)
-    document.getElementById("atlasForm").appendChild(collectionName)
-    document.getElementById("atlasForm").appendChild(conn)
     atlas.hidden=false
     document.getElementById("atlasForm").appendChild(atlas)
+    //document.getElementById("atlasForm").appendChild(DBname)
+    //document.getElementById("atlasForm").appendChild(collectionName)
+    document.getElementById("atlasForm").appendChild(conn)
+    document.getElementById("atlasForm").appendChild(selected)
     document.getElementById("atlasForm").hidden=false
     
   }
@@ -47,9 +53,7 @@ function createAtlas() {
   }
 }
 
-function createDBlist() {
 
-}
 
 function createEdit() {
 

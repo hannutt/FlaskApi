@@ -32,3 +32,15 @@ white-space: nowrap;
     font-weight: bold;
     font-size: larger;
 }
+
+.statsBtn {
+    position: absolute;
+    top:450px;
+}
+.accessDiv {
+    position: absolute;
+    top:300px;
+}
+.atlasLbl {
+    text-transform: uppercase;
+}

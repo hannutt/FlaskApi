@@ -7,26 +7,46 @@ import pymongo
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import urllib.parse
+import os
+from dotenv import load_dotenv
+load_dotenv("c:/codes/Python/FlaskApi/.env")
 
 
 cloudConnection = Blueprint('cloudConnection',__name__,static_folder='static',template_folder='templates')
 
-@cloudConnection.route('/cloud',methods=['POST','GET'])
-def connectAtlas():
-    l=[]
-    psw=request.form.get('psw')
-    user=request.form.get('user')
-    username = urllib.parse.quote(str(user))
-    password = urllib.parse.quote(str(psw))
+@cloudConnection.route("/readAtlasDB",methods=['POST','GET'])
+def readAtlasDB():
+    
+    my_psw=os.getenv('my_psw')
+    my_user=os.getenv('my_user')
+    username = urllib.parse.quote(str(my_user))
+    password = urllib.parse.quote(str(my_psw))
+    uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
+    client = MongoClient(uri,server_api=ServerApi('1'))
+    name=request.form.get('nameOfDb')
+    dbName=client[name]
+    collections=dbName.list_collection_names()
+    print(name)
+    print(collections)
+    return render_template('cloudSelect.html',name=name,collections=collections)
 
+@cloudConnection.route('/cloud',methods=['POST','GET'])
+
+def getDataFromAtlas():
+    l=[]
+    my_psw=os.getenv('my_psw')
+    my_user=os.getenv('my_user')
+    username = urllib.parse.quote(str(my_user))
+    password = urllib.parse.quote(str(my_psw))
     
     uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
 
-    DBname=request.form.get('dbname')
-    colName=request.form.get('colname')
+    DBname=request.form.get('atlasDBName')
+    colName=request.form.get('atlasCollection')
 # Create a new client and connect to the server
+    
     client = MongoClient(uri,server_api=ServerApi('1'))
-    dbList=client.list_database_names()
+   # dbList=client.list_database_names()
     dbName=client[DBname]
     collection=dbName[colName]
 
@@ -42,5 +62,6 @@ def connectAtlas():
         print(e)
     
     
-    return render_template('cloud.html',l=l,DBName=DBname,colName=colName,dbList=dbList)
+    
+    return render_template('cloudSelect.html',l=l)
 

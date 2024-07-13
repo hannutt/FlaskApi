@@ -3,6 +3,9 @@ Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML, MongoDB Cl
 Python Flask REST API with JavaScript and MongoDB.
 The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases and MongoDB Atlas databases.
 
+The username and password are stored in the .env environment file and retrieved with the os.getenv function.
+The .env file is in gitignore mode for security reasons
+
 
 Main features
 
@@ -20,10 +23,9 @@ Python and JavaScript collaboration, among others:
 
 The Python function counts the number of fields in the MongoDB collection and the Javascript function creates the same number of input fields (with the createElement method) in the html user interface. the end result is the right number of input fields for adding a new record or editing an old record.
 
-Database statistics, see the number of collections, sizes of collections and databases, etc.
-Some of the database statistics are now available graphically. This is Made with the JavaScript ChartJS library.
+Database statistics, using the JavaScript ChartJS library, this feature displays databases in a bar chart based on their size. Database statistics are obtained from a Python function and delivered to an html page where a JavaScript function grabs the values ​​and makes Bar chart graphs with the values.
 
-Database statistics are obtained from a Python function and delivered to an html page where a JavaScript function grabs the values ​​and makes graphs with the values.
+The statistical chart works on the hide/show principle. one click shows the chart div, i.e. one click sets the hidden attribute to true and another click sets it to false and the chart div is hidden.
 
 Customization options, in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
 
@@ -35,10 +37,9 @@ The function also shows some statistics about the searched words, for example th
 
 ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
 
-This feature is still under construction and for now it works as described below:
 
 On the home page, select the checkbox called Access to the Atlas database. 
-After clicking, the program executes a javascript function that dynamically creates fields for username, password. Available databases and collections are automatically retrieved using the list_database_names method and placed in the drop-down menu.
+After clicking, the program executes a javascript function that dynamically creates fields for username, password. Available databases and collections are automatically retrieved using the list_database_names and list_collection_names methods and placed in the drop-down menu.
 
 The values ​​of the input fields are obtained by the request.form.get method and stored in variables that are passed to the Python function that communicates with MongoDB Cloud Atlas.
 
