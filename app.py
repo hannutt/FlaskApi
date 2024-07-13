@@ -19,7 +19,7 @@ app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
-def listDataBases():
+def listAtlasDataBases():
     
     
     #salasana ja käyttäjätunnus on tallenettu .env ympäristömuuttujatiedostoon.
@@ -32,13 +32,14 @@ def listDataBases():
     uri = "mongodb+srv://{}:{}@cluster0.gfnzlpq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0".format(username, password)
     client = MongoClient(uri,server_api=ServerApi('1'))
     dbList=client.list_database_names()
+    #palautetaan dbslist, että sitä voidaan käyttää seuraavassa funktiossa
     return dbList
 
 @app.route("/",methods=['GET','POST'])
 
 def showIndex():
-     listDataBases()
-     dbsAtlas=listDataBases()
+     listAtlasDataBases()
+     dbsAtlas=listAtlasDataBases()
      print("atlas db")
      
      dbsList = []
@@ -75,6 +76,8 @@ def showIndex():
           statsNums.append(roundedSize)
           allStats.append(i)
           allStats.append(datasize)
+          amountOfdb=len(dbsList)
+        
     #listan alkioiden muunto int-tyyppiseksi
      for j in range(0, len(statsNums)):
 
@@ -88,8 +91,8 @@ def showIndex():
      
     
           
-     
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas)
+     print(amountOfdb)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb)
 
 
 
@@ -219,14 +222,6 @@ def delByname(db,iid):
         #global mongodb
      else:
          return "something went wrong"
-
-     
-    
-   
-     #if removeId:
-     #delquery={"word":iid}
-     #mongodb[col].delete_one({":_id":ObjectId(iid)})
-     #return "deleted"
 
 
     

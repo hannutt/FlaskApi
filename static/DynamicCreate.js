@@ -1,23 +1,20 @@
 //elementit luodaan tässä mutta niitä käytetään
 //vasta createatlas funktiossa. näin piilotus/näyttö saadaan toimiaan klikkauksella oikein.
-//var uriInput=document.createElement("INPUT")
-//var pswInput=document.createElement("INPUT")
+
 var nameOfDb=document.createElement("INPUT")
 nameOfDb.id="nameOfDb"
+//lisätään name attribuutti
 nameOfDb.setAttribute('name','nameOfDb')
 var DBname=document.createElement("INPUT")
-//var collectionName=document.createElement("INPUT")
+
 var conn = document.createElement("BUTTON")
 linebreak = document.createElement("br");
 var selected = document.createElement("p")
 selected.setAttribute('id','selectionForDB')
 conn.textContent='Select'
-//uriInput.placeholder="Atlas URI"
-//pswInput.placeholder="Password"
-//userInput.placeholder="Username"
 DBname.placeholder='Database name'
-//collectionName.placeholder='Collection name'
-uriInput.name='uri'
+
+
 
 DBname.name='dbname'
 //collectionName.name='collection'
@@ -27,22 +24,18 @@ function createAtlas() {
   {
     var atlas = document.getElementById("atlasDB")
     
-   
+   //append childillä lisätään atlas form diviin uusi elementti, eli tässä
+   //tapauksessa nameofdb input kenttä
     document.getElementById("atlasForm").appendChild(nameOfDb)
     document.getElementById("atlasForm").appendChild(conn)
-    //document.getElementById("atlasForm").appendChild(pswInput)
-   // pswInput.setAttribute('name','psw')
-    //userInput.setAttribute('name','user')
+   
     DBname.setAttribute('name','dbname')
-    //collectionName.setAttribute('name','colname')
-    //document.getElementById("atlasForm").appendChild(userInput)
     
     document.getElementById("atlasForm").appendChild(linebreak)
 
     atlas.hidden=false
     document.getElementById("atlasForm").appendChild(atlas)
-    //document.getElementById("atlasForm").appendChild(DBname)
-    //document.getElementById("atlasForm").appendChild(collectionName)
+    
     document.getElementById("atlasForm").appendChild(conn)
     document.getElementById("atlasForm").appendChild(selected)
     document.getElementById("atlasForm").hidden=false

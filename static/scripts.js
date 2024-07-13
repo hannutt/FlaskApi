@@ -6,13 +6,17 @@ function stats()
     {
         document.getElementById("stats").hidden=false
         document.getElementById("chart").hidden=false
-        document.getElementById("statsBtn").textContent='Hide'
+        document.getElementById("statsBtn").textContent='Hide chart'
+        //muutetaan buttonin tyyliluokka määrettä
+        document.getElementById("statsBtn").setAttribute("class",'statsBtnHide')
+        
     }
     if (clicks % 2 ==0)
     {
         document.getElementById("stats").hidden=true
         document.getElementById("chart").hidden=true
         document.getElementById("statsBtn").textContent='Database Statistics'
+        document.getElementById("statsBtn").setAttribute("class",'statsBtn')
 
     }
 }

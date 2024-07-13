@@ -37,13 +37,16 @@ The function also shows some statistics about the searched words, for example th
 
 ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
 
-
 On the home page, select the checkbox called Access to the Atlas database. 
-After clicking, the program executes a javascript function that dynamically creates fields for username, password. Available databases and collections are automatically retrieved using the list_database_names and list_collection_names methods and placed in the drop-down menu.
+After clicking, the program executes a javascript function that dynamically creates a drop-down menu and retrieves the available databases using the list_database_names method.
+the databases are placed in a drop-down menu from which the user selects the desired database.
 
-The values ​​of the input fields are obtained by the request.form.get method and stored in variables that are passed to the Python function that communicates with MongoDB Cloud Atlas.
+The selected value of the dropdown is obtained by the request.form.get method and stored in a variable that is passed to the Python function that communicates with MongoDB Cloud Atlas.
 
-fill in the input fields and click the Connect button, and the Python function will send the username and password to the uri variable. if they match the IDs of Cloud Atlas, the user will see the contents of the collection they are looking for on a new html page.
+After selecting a database, click the selection button and the program will go to a new html page, where the available collections are from the drop-down menu. select a collection and click the View button to see the contents of the collection.
+The available collections are retrieved using the list_collection_names method
+
+
 
 ACCESS THE DATABASE USING API ENDPOINT
 

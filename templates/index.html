@@ -19,13 +19,14 @@
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
     {% endblock %}-->
-    
-    <p id="dbL">
+    <p hidden id="dbTotal">{{amountOfdb}}</p>
+    <p hidden id="dbL">
     </p>
     <!--kokoelmien nimi,koko yms tietojen läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
     {% for j in stats %}
-   <p id="stats" hidden class="statsNames">{{j}}</p>
+   <p hidden id="stats" class="statsNames">{{j}}</p>
    {%endfor%}
+   <!--tietokantojen koot-->
    {% for i in statsNums %}
    <div id="statsNums" hidden class="statsNums">{{i}}</div>
    {% endfor %}
@@ -47,9 +48,14 @@
     var allStats=[]
     //kokoelmien nimien läpikäynti
 function getNameValues(){
+    //haetaan tietokantojen kokonaismäärän kertova luku dbTotal tagista
+    var total=document.getElementById("dbTotal").innerHTML
+    //muunnetaan luvuksi
+    var intTotal = parseInt(total)
+    console.log(typeof(intTotal))
     var nameValues = document.getElementsByClassName("statsNames")
 
-    for (i=0;i<7;i++)
+    for (i=0;i<intTotal;i++)
     {
         arrNames.push(nameValues[i].innerHTML)
     }
@@ -163,11 +169,11 @@ thirdMax()
    <p id="demo"></p>
    
     <div class="hideAll">
-        <p id="selection" class="selection"></p>
+        <p id="selection"  class="selection"></p>
 
         <button hidden id="hideBtn">Hide</button>
     </div>
-    <label class="dbsLbl" for="dbs">Choose a database:</label>
+    <label class="dbsLbl" for="dbs">Access to local database:</label>
     <br><br>
     <form action="{{ url_for('read_form')}}" method="post">
         <select name="dbs" id="dbs" onchange="getSelectedText(this)">
