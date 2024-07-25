@@ -33,14 +33,40 @@ white-space: nowrap;
     font-size: larger;
 }
 
+.selectBtn {
+    background-color: lightblue;
+    padding: 6px 4px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.selectBtn:hover {
+    background-color: yellow;
+}
+
 .statsBtn {
+    padding: 12px 8px;
+    border-radius: 12px;
     position: absolute;
+    font-weight: bold;
+    background-color: lightblue;
     top:450px;
 }
 
+.statsBtn:hover {
+    background-color: yellow;
+}
+
 .statsBtnHide {
+    padding: 12px 8px;
+    border-radius: 12px;
     position: absolute;
+    background-color: lightblue;
     top:330px;
+}
+
+.statsBtnHide:hover {
+    background-color: yellow;
 }
 .accessDiv {
     position: absolute;

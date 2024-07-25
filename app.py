@@ -19,6 +19,7 @@ app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
+connect=False
 def listAtlasDataBases():
     
     
@@ -35,12 +36,14 @@ def listAtlasDataBases():
     #palautetaan dbslist, että sitä voidaan käyttää seuraavassa funktiossa
     return dbList
 
+
 @app.route("/",methods=['GET','POST'])
 
 def showIndex():
      listAtlasDataBases()
      dbsAtlas=listAtlasDataBases()
-     print("atlas db")
+   
+    
      
      dbsList = []
      global statsNames

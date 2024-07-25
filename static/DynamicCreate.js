@@ -7,13 +7,13 @@ nameOfDb.id="nameOfDb"
 nameOfDb.setAttribute('name','nameOfDb')
 var DBname=document.createElement("INPUT")
 
+var select = document.createElement("BUTTON")
 var conn = document.createElement("BUTTON")
 linebreak = document.createElement("br");
 var selected = document.createElement("p")
 selected.setAttribute('id','selectionForDB')
-conn.textContent='Select'
+select.textContent='Select'
 DBname.placeholder='Database name'
-
 
 
 DBname.name='dbname'
@@ -27,7 +27,8 @@ function createAtlas() {
    //append childillä lisätään atlas form diviin uusi elementti, eli tässä
    //tapauksessa nameofdb input kenttä
     document.getElementById("atlasForm").appendChild(nameOfDb)
-    document.getElementById("atlasForm").appendChild(conn)
+    document.getElementById("atlasForm").appendChild(select)
+    
    
     DBname.setAttribute('name','dbname')
     
@@ -36,7 +37,7 @@ function createAtlas() {
     atlas.hidden=false
     document.getElementById("atlasForm").appendChild(atlas)
     
-    document.getElementById("atlasForm").appendChild(conn)
+    document.getElementById("atlasForm").appendChild(select)
     document.getElementById("atlasForm").appendChild(selected)
     document.getElementById("atlasForm").hidden=false
     
