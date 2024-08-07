@@ -20,6 +20,7 @@ app.register_blueprint(cloudConnection,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 connect=False
+
 def listAtlasDataBases():
     
     
@@ -154,12 +155,21 @@ def show_data():
     print("db name ",dataBaseNameStr)
     collectionName = request.form.get("colname")
     collectionNameStr=str(collectionName)
+    findLimit = request.form.get("DBlimit")
     print("collection name ",collectionNameStr)
-    
+   
+        
+
     dbname=client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
-    result= collection.find()
-    count = collection.find().count()
+    #jos dblimit syötekntän arvo on muu kuin tyhjä, käytetään haussa limit metodia.
+    if findLimit !="":
+        findLimitInt=int(findLimit)
+        result= collection.find().limit(findLimitInt)
+        count = collection.find().count()
+    else:
+        result=collection.find()
+        count = collection.find().count()
     for i in result: 
         print(i)
         l.append(i)
@@ -168,12 +178,11 @@ def show_data():
 
     
     #lasketaan kokoelman kenttien määrä
-    global keysTotal
-    keysTotal = len(i.keys())
+        global keysTotal
+        keysTotal = len(i.keys())
     
         
-    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,collections=collections,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
-
+    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
 
 
 

@@ -12,6 +12,11 @@ Example view from the front page, where the user can choose the local database o
 
 ![alt text](flaskapi.png)
 
+Example view when I select a database named DBoardDB and a BannedIps collection from the database. 
+The view also uses customization, the font size is set to medium, the background color of the table is light blue, and extra characters are removed from the database text
+
+![alt text](selection.png)
+
 
 Main features
 
@@ -19,6 +24,9 @@ ACCESS TO LOCAL DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
 
 The program can search for all mongodb databases and their collections on the computer using MongoDB's list_database_names method. After the search, the user can select them for use via the HTML interface.
 You can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the html dropdown menu and click the Select button.
+
+Limiting the search; The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
+This feature is made using the PyMongo constraint method. the limit method receives the values ​​entered by the user as parameter.
 
 The connection between the mongo databases and the program is made using the Mongo URI. in this case the Mongo uri starts with mongodb://localhost:27017/(db)/(col).
 db and col are the parameters of the database name and the collection, the contents of which are obtained from the user's selections in the drop-down menu.

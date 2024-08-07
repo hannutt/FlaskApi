@@ -12,7 +12,7 @@ white-space: nowrap;
 }
 
 .fpBtn {
-    background-color: white;
+    background-color: lightgray;
     border: white;
     color: blue;
 }
@@ -79,3 +79,7 @@ white-space: nowrap;
     text-transform: uppercase;
     font-weight: bold;
 }
+.formPageBody {
+    background-image:  url('/static/images/flaskapiBG.jpg');
+}
+
