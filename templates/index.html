@@ -15,7 +15,7 @@
 
 <body class="indexbody">
    
-    <h3 id="apiName">Flask API</h3>
+    <h4 id="apiName">MongoDB management tool</h4>
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
     {% endblock %}-->
@@ -174,7 +174,7 @@ thirdMax()
         <button hidden id="hideBtn">Hide</button>
     </div>
     <label class="dbsLbl" for="dbs">Access to local database:</label>
-    <br><br>
+    
     <form action="{{ url_for('read_form')}}" method="post">
         <select name="dbs" id="dbs" onchange="getSelectedText(this)">
 
@@ -212,17 +212,21 @@ thirdMax()
     </form> 
     <br><br>
     <label for="atlas" class="atlasLbl" >Access to Atlas DB</label>
+    
     <form action= "{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
     <div class="atlasForm" id="atlasForm">
 
     </div>
     <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
+    
 </form>
-    <br><br>
+
+    
     </div>
 
 
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
+    <br><br>
     <div hidden id="chart">
     <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
 </div>
@@ -250,7 +254,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "Your databases"
+      text: "Your databases and their sizes"
     }
   }
 });

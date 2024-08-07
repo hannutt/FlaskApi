@@ -1,12 +1,16 @@
 Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML, MongoDB Cloud Atlas
 
-![alt text](flaskapi.png)
+
 
 Python Flask REST API with JavaScript and MongoDB.
 The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases and MongoDB Atlas databases.
 
 The username and password are stored in the .env environment file and retrieved with the os.getenv function.
 The .env file is in gitignore mode for security reasons
+
+Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed
+
+![alt text](flaskapi.png)
 
 
 Main features

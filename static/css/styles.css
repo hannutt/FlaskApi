@@ -17,7 +17,7 @@ white-space: nowrap;
     color: blue;
 }
 .indexbody {
-    background-image:  url('/static/images/pexelsBG.jpg');
+    background-image:  url('/static/images/flaskapiBG.jpg');
     color: white;
 }
 
@@ -31,6 +31,7 @@ white-space: nowrap;
 .dbsLbl {
     font-weight: bold;
     font-size: larger;
+    color: black;
 }
 
 .selectBtn {
@@ -50,7 +51,7 @@ white-space: nowrap;
     position: absolute;
     font-weight: bold;
     background-color: lightblue;
-    top:450px;
+    top:410px;
 }
 
 .statsBtn:hover {
@@ -62,7 +63,8 @@ white-space: nowrap;
     border-radius: 12px;
     position: absolute;
     background-color: lightblue;
-    top:330px;
+    top:335px;
+    left:330px;
 }
 
 .statsBtnHide:hover {
@@ -73,5 +75,7 @@ white-space: nowrap;
     top:300px;
 }
 .atlasLbl {
+    color: black;
     text-transform: uppercase;
+    font-weight: bold;
 }
