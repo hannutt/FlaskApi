@@ -15,6 +15,11 @@
   <form action="{{ url_for('showIndex')}}" method="post">
     <button class="fpBtn">Front page</button> |
   </form>
+  <!--paluu takaisin kokoelman valintanäkymään-->
+  <form action="{{ url_for('BackToReadForm')}}" method="post">
+    <input hidden type="text" name="rememberSelect" id="rememberSelect" value="{{selectedDB}}">
+    <button id="backtoSel" class="fpBtn">Back to collection select</button> |
+  </form>
 </nav>
   <div class="DBinfo">
     <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
@@ -51,9 +56,11 @@
 
   <p id="path" class="path"></p>
 
+
   <form action="{{ url_for('show_data')}}" method="post">
-    <input type="text" name="selecDB" value="{{selectedDB}}">
+    <input type="text" name="selecDB" id="selecDB" value="{{selectedDB}}">
     <input type="text" id="colname" name="colname" value="{{collectionNameStr}}">
+   
 
     <input hidden type="text" name="DBpath" id="DBpath"> 
     <input type="text" name="DBlimit" id="DBlimit" placeholder="Number of records">

@@ -1,4 +1,13 @@
 var clicks=0
+
+function saveDataBaseName() {
+  var DBnameFromField=document.getElementById("selecDB").value
+
+  localStorage.setItem("DatabaseName",DBnameFromField)
+  
+}
+
+
 function stats()
 {
     clicks=clicks+1

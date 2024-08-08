@@ -18,14 +18,10 @@ def readDB(name,col):
         #global mongodb
         mongodb=PyMongo(app).db
         item=[]
-        
-        
         #asetetaan collection nimi, eli parametrina tuleva col ja haetaan collectionista
         #data
         results = mongodb[col].find({},)
         dbKeys=[]
-
-    
     #lasketaan kokoelman kenttien määrä
     #keysTotal = len(i.keys())
         for res in results:

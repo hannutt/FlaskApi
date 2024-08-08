@@ -139,6 +139,39 @@ def read_form():
     
     return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
+#tämä suoritetaan jos käyttäjä valitsee back to collection select buttonin.
+@app.route('/BackToread-form', methods=['POST','GET']) 
+def BackToReadForm():
+
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    selection = request.form.get("rememberSelect")
+    #client = MongoClient('localhost', 27017)
+   
+   
+    
+    #db-statistiikka koodi, collectionien määrä, koko jne.
+    dbname=client[selection]
+    call = dbname.command("dbstats")
+    datasize = call['dataSize'] / 1024
+    global datasizeRound
+    datasizeRound=round(datasize,2)
+    global collections
+    collections = call['collections']
+    global objects
+    objects = call['objects']
+   
+
+    app.config['MONGO_URI']='mongodb://localhost:27017/'+selection
+    #global mongodb
+    mongodb=PyMongo(app).db
+    #global cols
+    cols=mongodb.list_collection_names()
+    # Get the form data as Python ImmutableDict datatype  
+    data = request.form
+    
+    
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selection,collections=collections,datasizeRound=datasizeRound,objects=objects)
+
 
 #näyttää kaiken datan kokoelmasta
 @app.route("/show-form",methods=['POST'])
@@ -162,10 +195,17 @@ def show_data():
 
     dbname=client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
-    #jos dblimit syötekntän arvo on muu kuin tyhjä, käytetään haussa limit metodia.
-    if findLimit !="":
+    #jos dblimit syötekntän arvo on muu kuin tyhjä, ja sisältö on mumeroita,käytetään haussa limit metodia.
+    if findLimit !="" and findLimit.isdigit():
         findLimitInt=int(findLimit)
         result= collection.find().limit(findLimitInt)
+        #löydettyjen tietuiden määrän lasku
+        count = collection.find().count()
+        #jos ei ole tyhjä, voi sisältää numeroita ja kirjaimia
+    elif findLimit !="":
+        #db.content.find({$text:{$search:"love"}})  
+        collection.create_index([('name', 'text')])
+        result = collection.find({"$text": {"$search":findLimit}})
         count = collection.find().count()
     else:
         result=collection.find()
@@ -183,58 +223,6 @@ def show_data():
     
         
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
-
-
-
-
-#api-kutsu
-@app.route("/api/all",methods=['GET'])
-def read():
-    try:
-        app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'
-        #global mongodb
-        mongodb=PyMongo(app).db
-
-        item=[]
-        results = mongodb.results.find({},)
-        #keyLen=len(res.keys())
-        #print("keylen: ",keyLen)
-        for res in results:
-         
-            first_key = list(res.keys())[0]
-            sec_key = list(res.keys())[1]
-            third_key= list(res.keys())[2]
-
-            items={
-
-                "id":str(res[first_key]),
-                "name":str(res[sec_key]),
-                "points":res[third_key],
-            }
-            item.append(items)
-           
-        
-        return jsonify(item)
-    except:InvalidURL
-    return "SELECT DATABASE!"
-#tässä haetaan nimen perusteella mongokannasta <name> on parametri johon kirjoitetaan haetun käyttäjän nimi, esim.
-#http://127.0.0.1:5000/findName/keijo
-
-
-
-@app.route('/api/delete/<db>/<iid>',methods=['GET','DELETE'])
-def delByname(db,iid):
-     print("id ",iid)
-     app.config['MONGO_URI']='mongodb://localhost:27017/quizDB'+db
-     mongodb=PyMongo(app).db
-     delete = mongodb.words.find_one({"_id":ObjectId(iid)})
-     if delete:
-          mongodb.words.delete_one({"_id":ObjectId(iid)})
-          return 'DELETED'
-        #global mongodb
-     else:
-         return "something went wrong"
-
 
     
 if __name__ == '__main__':

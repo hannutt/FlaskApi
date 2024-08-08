@@ -25,15 +25,28 @@ ACCESS TO LOCAL DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
 The program can search for all mongodb databases and their collections on the computer using MongoDB's list_database_names method. After the search, the user can select them for use via the HTML interface.
 You can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the html dropdown menu and click the Select button.
 
-Limiting the search; The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
-This feature is made using the PyMongo constraint method. the limit method receives the values ​​entered by the user as parameter.
-
 The connection between the mongo databases and the program is made using the Mongo URI. in this case the Mongo uri starts with mongodb://localhost:27017/(db)/(col).
 db and col are the parameters of the database name and the collection, the contents of which are obtained from the user's selections in the drop-down menu.
 
-JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
+LIMITING THE SEARCH 
+
+The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
+This feature is made using the PyMongo limit method. the limit method receives the values ​​entered by the user as parameter.
+
+SEARCH BY KEYWORDS
+
+The text search function uses the same input field as the search restriction feature above.
+since the search restriction only uses numbers and the text search can use numbers and letters, Python's isdigit method is used here to find out which search type is in use. 
+That is, if the input field contains only numbers, the isdigit method returns the value true, otherwise the value false. Both values ​​have their own code blocks that are executed if the condition is met.
+
+
+MEMORY FEATURES
+
+The user can return to the collection selection view at any time by clicking the "Back to collection selection" navigation element and the program remembers the user's last database selection and executes the PyMongo method list_collection_names using the selected database name as the search condition.
 
 Python and JavaScript collaboration, among others:
+
+JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
 
 The Python function counts the number of fields in the MongoDB collection and the Javascript function creates the same number of input fields (with the createElement method) in the html user interface. the end result is the right number of input fields for adding a new record or editing an old record.
 
