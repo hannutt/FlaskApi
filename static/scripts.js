@@ -1,11 +1,6 @@
 var clicks=0
 
-function saveDataBaseName() {
-  var DBnameFromField=document.getElementById("selecDB").value
 
-  localStorage.setItem("DatabaseName",DBnameFromField)
-  
-}
 
 
 function stats()
@@ -48,6 +43,11 @@ function selected() {
 function getSelectedText(sel) {
     document.getElementById("DBname").value=sel.options[sel.selectedIndex].text
     
+}
+
+function getSelectedFieldName(sel) {
+  document.getElementById("selFieldName").value=sel.options[sel.selectedIndex].text
+
 }
 //valikosta valitun tekstin näyttö selectionfordb tagissa
 function getSelectedDataBase(select) {

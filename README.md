@@ -1,7 +1,5 @@
 Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML, MongoDB Cloud Atlas
 
-
-
 Python Flask REST API with JavaScript and MongoDB.
 The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases and MongoDB Atlas databases.
 
@@ -38,6 +36,13 @@ SEARCH BY KEYWORDS
 The text search function uses the same input field as the search restriction feature above.
 since the search restriction only uses numbers and the text search can use numbers and letters, Python's isdigit method is used here to find out which search type is in use. 
 That is, if the input field contains only numbers, the isdigit method returns the value true, otherwise the value false. Both values ​​have their own code blocks that are executed if the condition is met.
+
+Using text search in MongoDB requires a text index with the following structure: 
+collection.create_index([(fieldName, 'text')]).
+
+In this program, the field names are obtained using the for loop and the keys method, which take the field names of each collection to the html selection component, from which the user can select the desired field. collection. where to search for text.
+
+The selected component contains an onChange event handler that calls a JavaScript function. The JavaScript function transfers the name of the field selected by the user to a hidden html input field, from which the Python function performing the search retrieves it using the request.form.get method.
 
 
 MEMORY FEATURES

@@ -63,14 +63,21 @@
    
 
     <input hidden type="text" name="DBpath" id="DBpath"> 
-    <input type="text" name="DBlimit" id="DBlimit" placeholder="Number of records">
+    <input type="text" name="DBlimit" id="DBlimit" placeholder="Number of records or keyword">
 
     <button>Show</button>
     <!--DBkeyslist sisältää mongo-kokoelman kenttien nimet-->
-    {% for d in dbKeysList %}
+    
+    <select name="fieldNames" id="fieldNames" onchange="getSelectedFieldName(this)">
+      {% for d in dbKeysList %}
+      <option value="{{d}}">{{d}}</option>
+      {%endfor%}
+    </select>
+    <input hidden type="text" name="selFieldName" id="selFieldName">
+    <!--
     <div hidden id="dict" class="dict">{{d}}</div>
-    <input hidden id="{{d}}" name="{{d}}" type="text" value="{{d}}">
-    {%endfor%}
+    <input hidden id="{{d}}" name="{{d}}" type="text" value="{{d}}">-->
+    
     <!--kokoelman kenttien kokonaismäärä-->
     <p id="keystotal" name="keystotal">{{keysTotal}}</p>
     <table id="dbTable" class="dbTable" border="1">

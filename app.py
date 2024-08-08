@@ -86,14 +86,7 @@ def showIndex():
      for j in range(0, len(statsNums)):
 
     
-        statsNums[j] = int(statsNums[j])
-
-     
-     #dbcom=mydatabase.command("dbstats")
-     #print(dbcom)
-     #print(selection)
-     
-    
+        statsNums[j] = int(statsNums[j])    
           
      print(amountOfdb)
      return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb)
@@ -185,7 +178,6 @@ def show_data():
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     dataBaseName=request.form.get("selecDB")
     dataBaseNameStr = str(dataBaseName)
-    print("db name ",dataBaseNameStr)
     collectionName = request.form.get("colname")
     collectionNameStr=str(collectionName)
     findLimit = request.form.get("DBlimit")
@@ -203,8 +195,9 @@ def show_data():
         count = collection.find().count()
         #jos ei ole tyhjä, voi sisältää numeroita ja kirjaimia
     elif findLimit !="":
+        fieldName= request.form.get("fieldNames")
         #db.content.find({$text:{$search:"love"}})  
-        collection.create_index([('name', 'text')])
+        collection.create_index([(fieldName, 'text')])
         result = collection.find({"$text": {"$search":findLimit}})
         count = collection.find().count()
     else:
@@ -215,6 +208,7 @@ def show_data():
         l.append(i)
         #tietokannan kenttien nimet muunnetaan listamuotoon.
         dbKeysList=list(i.keys())
+        print(dbKeysList)
 
     
     #lasketaan kokoelman kenttien määrä
