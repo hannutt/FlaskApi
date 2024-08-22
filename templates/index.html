@@ -99,11 +99,6 @@ function getAllValues()
 
 }
 
-
-
-
-
-
 var secondMaxIndex=0
 var secondBiggest=0
 function findSecondLargestUsingIteration() { 
@@ -156,8 +151,6 @@ function thirdMax() {
    
 }
 
-
-thirdMax()
 
 
 
@@ -234,48 +227,16 @@ thirdMax()
             <option value="">{{s}}</option>
             {% endfor %}
             </select>
-
     </div>
-
-
-
 
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
     <br><br>
     <div hidden id="chart">
     <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
 </div>
-    <script>
-       
 
-
-var xValues = [arrNames[0],arrNames[1],arrNames[2],arrNames[3],arrNames[4],arrNames[5],arrNames[6]];
-var yValues = [arrNums[0],arrNums[1],arrNums[2],arrNums[3],arrNums[4],arrNums[5],arrNums[6]];
-
-
-
-var barColors = ["red", "green","blue","orange","brown",];
-
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [{
-      backgroundColor: barColors,
-      data: yValues
-    }]
-  },
-  options: {
-    legend: {display: false},
-    title: {
-      display: true,
-      text: "Your databases and their sizes"
-    }
-  }
-});
-
-
-    </script>
+     
+   
    
 </body>
 

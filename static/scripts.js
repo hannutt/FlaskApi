@@ -8,6 +8,46 @@ function stats()
     clicks=clicks+1
     if (clicks % 1 == 0)
     {
+      var total=document.getElementById("dbTotal").innerHTML
+      //muunnetaan luvuksi
+      var intTotal = parseInt(total)
+      var dbnames=[]
+      var dbsizes=[]
+      //2 for silmukkaa, toisella silmukalla käydään läpi arrName = tietokantojen nimet
+      //ja toisella arrNums=tietokantojen koot. 
+      for (var i=0;i<intTotal;i++)
+      {
+      arrNames[i]
+      dbnames.push(arrNames[i])
+      
+      }
+      for (var j=0;j<intTotal;j++)
+      {
+       arrNums[j]
+       dbsizes.push(arrNums[j])
+      }
+     
+  
+  var barColors = ["red", "green","blue","orange","brown",];
+  
+  new Chart("myChart", {
+    type: "bar",
+    data: {
+      labels: dbnames,
+      datasets: [{
+        backgroundColor: barColors,
+        data: dbsizes
+      }]
+    },
+    options: {
+      legend: {display: false},
+      title: {
+        display: true,
+        text: "Your databases and their sizes"
+      }
+    }
+  });
+
         document.getElementById("stats").hidden=false
         document.getElementById("chart").hidden=false
         document.getElementById("statsBtn").textContent='Hide chart'

@@ -15,7 +15,7 @@ selected.setAttribute('id','selectionForDB')
 select.textContent='Select'
 DBname.placeholder='Database name'
 
-var mysqlPath = document.createElement("INPUT")
+
 var mysqlBtn = document.createElement("BUTTON")
 mysqlBtn.textContent="Show"
 
@@ -56,8 +56,12 @@ function createMysql() {
   if (mysqlCB.checked==true) {
     document.getElementById("mysqlForm").hidden=false
    // document.getElementById("mysqlForm").appendChild(mysqlPath)
-   // document.getElementById("mysqlForm").appendChild(mysqlBtn)
+   document.getElementById("mysqlForm").appendChild(mysqlBtn)
 
+  }
+  else {
+    document.getElementById("sqlDbs").hidden=true
+    mysqlBtn.remove()
   }
 
 }
