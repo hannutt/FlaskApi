@@ -19,13 +19,11 @@ function stats()
       {
       arrNames[i]
       dbnames.push(arrNames[i])
+      arrNums[i]
+      dbsizes.push(arrNums[i])
       
       }
-      for (var j=0;j<intTotal;j++)
-      {
-       arrNums[j]
-       dbsizes.push(arrNums[j])
-      }
+    
      
   
   var barColors = ["red", "green","blue","orange","brown",];

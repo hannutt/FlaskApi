@@ -166,7 +166,7 @@ function thirdMax() {
 
         <button hidden id="hideBtn">Hide</button>
     </div>
-    <label class="dbsLbl" for="dbs">Access to local database:</label>
+    <label class="dbsLbl" for="dbs">Access to local Mongo database:</label>
     
     <form action="{{ url_for('read_form')}}" method="post">
         <select name="dbs" id="dbs" onchange="getSelectedText(this)">
@@ -215,14 +215,14 @@ function thirdMax() {
     
 </form>
     </div>
-    <label for="mysql" class="mysqlLbl">Access to MySQL Database</label>
+    <label for="mysql" class="mysqlLbl">Access to local MySQL Database</label>
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
     
     <br>
     <div hidden id="mysqlForm">
         <select name="sqlDbs" id="sqlDbs">
             <option value="default" selected>Select Database</option>
-
+            <!--sql tietokantojen näyttö select komponentissa-->
             {% for s in sqls %}
             <option value="">{{s}}</option>
             {% endfor %}
