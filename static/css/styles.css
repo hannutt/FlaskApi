@@ -83,3 +83,9 @@ white-space: nowrap;
     background-image:  url('/static/images/flaskapiBG.jpg');
 }
 
+.mysqlLbl {
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+

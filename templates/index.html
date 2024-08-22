@@ -15,7 +15,7 @@
 
 <body class="indexbody">
    
-    <h4 id="apiName">MongoDB management tool</h4>
+    <h4 id="apiName">MongoDB & MySQL management tool</h4>
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
     {% endblock %}-->
@@ -212,17 +212,32 @@ thirdMax()
     </form> 
     <br><br>
     <label for="atlas" class="atlasLbl" >Access to Atlas DB</label>
+    <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
     
     <form action= "{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
     <div class="atlasForm" id="atlasForm">
 
     </div>
-    <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
+    
     
 </form>
-
-    
     </div>
+    <label for="mysql" class="mysqlLbl">Access to MySQL Database</label>
+    <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
+    
+    <br>
+    <div hidden id="mysqlForm">
+        <select name="sqlDbs" id="sqlDbs">
+            <option value="default" selected>Select Database</option>
+
+            {% for s in sqls %}
+            <option value="">{{s}}</option>
+            {% endfor %}
+            </select>
+
+    </div>
+
+
 
 
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>

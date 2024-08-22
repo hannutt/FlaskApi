@@ -15,6 +15,10 @@ selected.setAttribute('id','selectionForDB')
 select.textContent='Select'
 DBname.placeholder='Database name'
 
+var mysqlPath = document.createElement("INPUT")
+var mysqlBtn = document.createElement("BUTTON")
+mysqlBtn.textContent="Show"
+
 
 DBname.name='dbname'
 //collectionName.name='collection'
@@ -45,6 +49,17 @@ function createAtlas() {
   else if(atlasCB.checked==false){
     document.getElementById("atlasForm").hidden=true
   }
+}
+
+function createMysql() {
+  var mysqlCB=document.getElementById("mysql")
+  if (mysqlCB.checked==true) {
+    document.getElementById("mysqlForm").hidden=false
+   // document.getElementById("mysqlForm").appendChild(mysqlPath)
+   // document.getElementById("mysqlForm").appendChild(mysqlBtn)
+
+  }
+
 }
 
 

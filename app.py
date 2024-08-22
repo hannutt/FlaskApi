@@ -8,18 +8,40 @@ import pymongo
 from pymongo.server_api import ServerApi
 import os
 from dotenv import load_dotenv
-
+import mysql.connector
 from cruds import cruds
 from apiCalls import apiCalls
 from cloudConnection import cloudConnection
+from mysqlScripts import mysqlScripts
+from mysqlScripts import showSQLDataBases
 import urllib
 app = Flask(__name__)
 app.register_blueprint(cruds,url_prefix='')
 app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
+
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 connect=False
+
+def showSQLDataBases():
+    sqlDataBases = []
+
+    mydb = mysql.connector.connect(
+       
+        host="localhost",
+        user="root",
+        password="Root512!",
+)
+    cursor = mydb.cursor()
+    databases = ("show databases")
+    cursor.execute(databases)
+    for (databases) in cursor:
+         print (databases[0])
+         sqlDataBases.append(databases[0])
+
+    return sqlDataBases
+
 
 def listAtlasDataBases():
     
@@ -41,6 +63,8 @@ def listAtlasDataBases():
 @app.route("/",methods=['GET','POST'])
 
 def showIndex():
+     #toisen moduulin funktiota voi käyttää näin, kunhan se tuodaan import lauseella ja route on kunnossa.
+     sqls=showSQLDataBases()
      listAtlasDataBases()
      dbsAtlas=listAtlasDataBases()
    
@@ -89,7 +113,7 @@ def showIndex():
         statsNums[j] = int(statsNums[j])    
           
      print(amountOfdb)
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls)
 
 
 

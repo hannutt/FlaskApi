@@ -1,7 +1,7 @@
-Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, HTML, MongoDB Cloud Atlas
+Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, SQL HTML, MongoDB Cloud Atlas
 
-Python Flask REST API with JavaScript and MongoDB.
-The main idea is that you can access multiple mongoDB databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases and MongoDB Atlas databases.
+Python Flask REST API with JavaScript and MongoDB & MySQL.
+The main idea is that you can access multiple mongoDB or MySQL databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases and MongoDB Atlas databases.
 
 The username and password are stored in the .env environment file and retrieved with the os.getenv function.
 The .env file is in gitignore mode for security reasons
@@ -18,7 +18,7 @@ The view also uses customization, the font size is set to medium, the background
 
 Main features
 
-ACCESS TO LOCAL DATABASE USING HTML-UI & OTHER HTML-UI FEATURES.
+ACCESS TO LOCAL MongoDB DATABASE USING HTML-UI.
 
 The program can search for all mongodb databases and their collections on the computer using MongoDB's list_database_names method. After the search, the user can select them for use via the HTML interface.
 You can perform CRUD operations on the database you have selected. Selecting a database is easy, select a database from the html dropdown menu and click the Select button.
@@ -26,7 +26,11 @@ You can perform CRUD operations on the database you have selected. Selecting a d
 The connection between the mongo databases and the program is made using the Mongo URI. in this case the Mongo uri starts with mongodb://localhost:27017/(db)/(col).
 db and col are the parameters of the database name and the collection, the contents of which are obtained from the user's selections in the drop-down menu.
 
-LIMITING THE SEARCH 
+ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
+
+All local mysql databases are fetched with the "show databases" command when the user clicks the "access mysql databases" dialog. the results (i.e. database names) are looped in a for loop and displayed in the html dropdown menu.
+
+LIMITING THE SEARCH IN MONGO DATABASES
 
 The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
 This feature is made using the PyMongo limit method. the limit method receives the values ​​entered by the user as parameter.
