@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MySQL</title>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'DynamicCreate.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body>
+        <h3>MySQL Tables </h3>
+      
+        <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
+            <option value="default" selected>Select <Table></Table></option>
+            sql tietokantojen näyttö select komponentissa
+            {% for t in tables %}
+            <option value="">{{t}}</option>
+            {% endfor %}
+            </select>
+            <form action="{{ url_for('mysqlScripts.readTableData')}}" method="post">
+            <input type="text" name="selectedTable" id="selectedTable">
+            <input type="text" name="dbname" id="dbname" value="{{dbname}}">
+            <button>Show table data</button>
+        </form>
+      
+    
+        <p class="fieldNames">{{final}}</p>
+       
+
+        
+        {% for d in data %}
+        <p>{{d}}</p>
+        {% endfor %}
+    </body>
+</html>

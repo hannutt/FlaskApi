@@ -88,4 +88,6 @@ white-space: nowrap;
     text-transform: uppercase;
     font-weight: bold;
 }
-
+.fieldNames {
+    white-space: nowrap;
+}

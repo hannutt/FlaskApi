@@ -83,6 +83,18 @@ function getSelectedText(sel) {
     
 }
 
+function getMysqlDb(selection) {
+  document.getElementById("selectedSQL").value = selection.options[selection.selectedIndex].text
+  
+
+}
+
+function getSqlTable(selection)
+{
+  document.getElementById("selectedTable").value=selection.options[selection.selectedIndex].text
+  
+}
+
 function getSelectedFieldName(sel) {
   document.getElementById("selFieldName").value=sel.options[sel.selectedIndex].text
 

@@ -13,13 +13,13 @@ from cruds import cruds
 from apiCalls import apiCalls
 from cloudConnection import cloudConnection
 from mysqlScripts import mysqlScripts
-from mysqlScripts import showSQLDataBases
+
 import urllib
 app = Flask(__name__)
 app.register_blueprint(cruds,url_prefix='')
 app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
-
+app.register_blueprint(mysqlScripts,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 connect=False
@@ -65,8 +65,9 @@ def listAtlasDataBases():
 def showIndex():
      #toisen moduulin funktiota voi käyttää näin, kunhan se tuodaan import lauseella ja route on kunnossa.
      sqls=showSQLDataBases()
-     listAtlasDataBases()
-     dbsAtlas=listAtlasDataBases()
+     #listAtlasDataBases()
+     dbsAtlas=[]
+     #dbsAtlas=listAtlasDataBases()
    
     
      

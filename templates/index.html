@@ -219,15 +219,18 @@ function thirdMax() {
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
     
     <br>
+    <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
     <div hidden id="mysqlForm">
-        <select name="sqlDbs" id="sqlDbs">
+        <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">
             <option value="default" selected>Select Database</option>
             <!--sql tietokantojen näyttö select komponentissa-->
             {% for s in sqls %}
             <option value="">{{s}}</option>
             {% endfor %}
             </select>
+            <input type="text" id="selectedSQL" name="selectedSQL">
     </div>
+</form>
 
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
     <br><br>
