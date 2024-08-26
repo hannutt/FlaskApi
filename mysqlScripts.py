@@ -29,16 +29,15 @@ def readSelectedSql():
            
             finalres=result.replace("(","").replace(")","")
             tables.append(finalres)
-      
- 
        return render_template("mysql.html",tables=tables,dbname=dbname)
+
 @mysqlScripts.route("/mysqlTable",methods=['POST','GET'])
 def readTableData():
      
       data=[]
+      ids=[]
       sqltable=request.form.get("selectedTable")
       dbName=request.form.get("dbname")
-      print(dbName," ",sqltable)
       mydb = mysql.connector.connect(
        
         host="localhost",
@@ -54,10 +53,10 @@ def readTableData():
 
       cursor.execute("SELECT * FROM "+sqltable)
       #sql taulujen sarakkeiden nimet
-      num_fields = len(cursor.description)
+      numfields = len(cursor.description)
       fieldnames = [i[0] for i in cursor.description]
       #listan muunto merkkijonoksi, että voidaan näyttää kaikki samalla rivillä html:n puolella.
-      final = " ".join(fieldnames)
+      finalHeaders = " ".join(fieldnames)
      
 
       myresult = cursor.fetchall()
@@ -65,5 +64,6 @@ def readTableData():
       for x in myresult:
         print(x)
         data.append(x)
+      
 
-      return render_template("mysql.html",data=data,final=final)
+      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames)

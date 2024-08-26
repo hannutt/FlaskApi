@@ -15,6 +15,10 @@ The view also uses customization, the font size is set to medium, the background
 
 ![alt text](selection.png)
 
+Example picture where the data of the MySQL database table is displayed in the table element and the first row of the element is selected for editing. The Jquery function stores the text of the clicked element and adds it to the input field as shown in the image for editing.
+
+![alt text](sqledit.png)
+
 
 Main features
 

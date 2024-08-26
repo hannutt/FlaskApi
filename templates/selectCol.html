@@ -5,9 +5,9 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename = 'WordSearch.js') }}"></script>
-  <script type="text/javascript" src="{{ url_for('static', filename = 'DynamicCreate.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/WordSearch.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
 </head>
 
 <body class="formPageBody">
@@ -87,8 +87,6 @@
         <td id="oid" class="oid">{{r._id}}</td>
         <td id="data">{{r}}</td>
       </tr>
-
-
       {%endfor%}
 
     </table>

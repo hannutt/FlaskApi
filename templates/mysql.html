@@ -2,12 +2,16 @@
 <html>
     <head>
         <title>MySQL</title>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'scripts.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'DynamicCreate.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/mysqlScripts.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body class="sqlView">
         <h3>MySQL Tables </h3>
+        <p hidden id="fields">{{numfields}}</p>
+        <p hidden id="fieldnames">{{fieldnames}}</p>
       
         <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
             <option value="default" selected>Select <Table></Table></option>
@@ -21,14 +25,49 @@
             <input type="text" name="dbname" id="dbname" value="{{dbname}}">
             <button>Show table data</button>
         </form>
+        <br>
       
     
-        <p class="fieldNames">{{final}}</p>
+        
+        <table class="sqlTable" border="1">
+            <tr>
+              <th class="sqlHeaders">{{finalHeaders}}</th>
+            </tr>
+            {% for d in data %}
+            <tr>
+                <td id="sqldata" class="sqldata">{{d}}</td>
+              </tr>
+              {%endfor%} 
+        </table>
+        <script>
+            //jquery funktio hakee testin valitusta sqldata rivistä
+            jQuery(".sqldata").click(function () {
+              event.preventDefault();
+              //valitun rivin teksti talletetaan muuttujaan
+              var text = jQuery(this).text();
+              //korvataan ( ) merkit tyhjällä
+              var textreplace=text.replace("(","").replace(")","")
+              //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
+              const textToArray = textreplace.split(",");
+              
+              createMySqlFields(textToArray)
+             
+            });
+          
+          </script>
+          <br>
+          <label for="edit">Edit</label>
+          <input type="checkbox" name="edit" id="edit">
+          <div id="crudArea">
+
+          </div>
+        
+        
        
 
         
-        {% for d in data %}
-        <p>{{d}}</p>
-        {% endfor %}
+      
+       
+        
     </body>
 </html>
