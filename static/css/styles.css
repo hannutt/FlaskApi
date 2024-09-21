@@ -104,3 +104,21 @@ white-space: nowrap;
     font-weight: bold;
     background-color: lightblue;
 }
+.cancelBtn {
+    font-weight: bolder;
+    padding: 5px;
+    background-color: #fa6b6b;
+}
+.editBtn {
+    font-weight: bolder;
+    margin-top:10px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: lightgreen;
+}
+.showBtn {
+    font-weight: bolder;
+  
+    padding: 5px;
+    background-color: #3eedf0
+}

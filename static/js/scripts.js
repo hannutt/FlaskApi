@@ -1,5 +1,6 @@
 var clicks=0
 
+var isSelected = false
 
 
 
@@ -176,10 +177,24 @@ function removeTable() {
         table.innerHTML=originalText
 
       }
-      
-
     }
- 
+    
+    function GetSelectionFromSelect(sel) {
+      
+      var path = localStorage.getItem('db')
+      //alert(sel.options[sel.selectedIndex].text);
+      document.getElementById("path").innerHTML = path + "/" + sel.options[sel.selectedIndex].text
+      document.getElementById("colname").value = sel.options[sel.selectedIndex].text
+      document.getElementById("DBpath").value = path
+      
+   
+    }
+
+    function cancelEdit() {
+      document.getElementById("crudArea").innerHTML=""
+      document.getElementById("edit").checked=false
+    }
+    
 
 
   

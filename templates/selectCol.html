@@ -8,6 +8,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/WordSearch.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
+  
 </head>
 
 <body class="formPageBody">
@@ -39,21 +40,6 @@
 
   </select>
 
-
-  <script>
-
-
-
-    function GetSelectionFromSelect(sel) {
-      var path = localStorage.getItem('db')
-      //alert(sel.options[sel.selectedIndex].text);
-      document.getElementById("path").innerHTML = path + "/" + sel.options[sel.selectedIndex].text
-      document.getElementById("colname").value = sel.options[sel.selectedIndex].text
-      document.getElementById("DBpath").value = path
-    }
-  </script>
-
-
   <p id="path" class="path"></p>
 
 
@@ -63,12 +49,12 @@
    
 
     <input hidden type="text" name="DBpath" id="DBpath"> 
-    <input type="text" name="DBlimit" id="DBlimit" placeholder="Number of records or keyword">
+    <input hidden type="text" name="DBlimit" id="DBlimit" placeholder="Number of records or keyword">
 
     <button>Show</button>
     <!--DBkeyslist sisältää mongo-kokoelman kenttien nimet-->
     
-    <select name="fieldNames" id="fieldNames" onchange="getSelectedFieldName(this)">
+    <select hidden name="fieldNames" id="fieldNames" onchange="getSelectedFieldName(this)">
       {% for d in dbKeysList %}
       <option value="{{d}}">{{d}}</option>
       {%endfor%}
@@ -130,8 +116,14 @@
 <!--showdata muuttujan alkuarvo on false, jolloin ei näytetä allaolevaa html-koodia, funktiossa show_data
 arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 {% if showdata==True %}
+<script>
+  document.getElementById("DBlimit").hidden=false
+  
+  document.getElementById("fieldNames").hidden=false
+</script>
 <h4>Delete document</h4>
 <p>Object id:</p>
+
 
 
 <form action="{{ url_for('cruds.delRecord')}}" method="post">
