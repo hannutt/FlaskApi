@@ -19,6 +19,10 @@ Example picture where the data of the MySQL database table is displayed in the t
 
 ![alt text](static/images/flaskSQL.png)
 
+Example image where the user writes a sql query. The input fields above show the selected sql table and the sql database to be queried.
+
+![alt text](static/images/sqlQuery.png)
+
 
 Main features
 
@@ -33,6 +37,11 @@ db and col are the parameters of the database name and the collection, the conte
 ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 
 All local mysql databases are fetched with the "show databases" command when the user clicks the "access mysql databases" dialog. the results (i.e. database names) are looped in a for loop and displayed in the html dropdown menu.
+
+SELF-WRITING SQL QUERIES
+
+You can also write sql queries yourself by clicking the "write sql query" check box.
+the query is written to the textarea element, which is sent to the Python function. The Python function performs a search according to the query and returns the result to the html page
 
 LIMITING THE SEARCH IN MONGO DATABASES
 

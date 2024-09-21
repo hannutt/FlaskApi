@@ -1,75 +1,86 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>MySQL</title>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/mysqlScripts.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    </head>
-    <body class="sqlView">
-        <h3>MySQL Tables </h3>
-        <p hidden id="fields">{{numfields}}</p>
-        <p hidden id="fieldnames">{{fieldnames}}</p>
-      
-        <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
-            <option value="default" selected>Select <Table></Table></option>
-            sql tietokantojen näyttö select komponentissa
-            {% for t in tables %}
-            <option value="">{{t}}</option>
-            {% endfor %}
-            </select>
-            <form action="{{ url_for('mysqlScripts.readTableData')}}" method="post">
-            <input type="text" name="selectedTable" id="selectedTable">
-            <input type="text" name="dbname" id="dbname" value="{{dbname}}">
-            <button class="showBtn">Show table data</button>
-        </form>
-        <br>
-      
-    
-        
-        <table class="sqlTable" border="1">
-            <tr>
-              <th class="sqlHeaders">{{finalHeaders}}</th>
-            </tr>
-            {% for d in data %}
-            <tr>
-                <td id="sqldata" class="sqldata">{{d}}</td>
-              </tr>
-              {%endfor%} 
-        </table>
-        <script>
-            //jquery funktio hakee testin valitusta sqldata rivistä
-            jQuery(".sqldata").click(function () {
-              event.preventDefault();
-              //valitun rivin teksti talletetaan muuttujaan
-              var text = jQuery(this).text();
-              //korvataan ( ) merkit tyhjällä
-              var textreplace=text.replace("(","").replace(")","")
-              //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
-              const textToArray = textreplace.split(",");
-              
-              createMySqlFields(textToArray)
-             
-            });
-          
-          </script>
-          <br>
-          <label for="edit">Edit</label>
-          <input type="checkbox" name="edit" id="edit">
-          <label for="newrecord">Create new</label>
-          <input type="checkbox" name="newrecord" id="newrecord" onchange="createFieldsToNew()">
-          <div id="crudArea">
 
-          </div>
-        
-        
-       
+<head>
+  <title>MySQL</title>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/mysqlScripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
 
-        
-      
-       
-        
-    </body>
+<body class="sqlView">
+  <h3>MySQL Tables </h3>
+  <p hidden id="fields">{{numfields}}</p>
+  <p hidden id="fieldnames">{{fieldnames}}</p>
+
+  <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
+    <option value="default" selected>Select</option>
+    <!--sql tietokantojen näyttö select komponentissa-->
+    {% for t in tables %}
+    <option value="">{{t}}</option>
+    {% endfor %}
+  </select>
+  <form action="{{ url_for('mysqlScripts.readTableData')}}" method="post">
+    <input type="text" name="selectedTable" id="selectedTable">
+    <input type="text" name="dbname" id="dbname" value="{{dbname}}">
+    <button class="showBtn">Show table data</button>
+  </form>
+  
+  <label for="freequery">Write SQL query</label>
+  <input onclick="query()" type="checkbox" id="freequery"><br>
+  <form action="{{ url_for('mysqlScripts.runSQLScript')}}" method="post">
+    <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"></textarea><br>
+    <button hidden id="runBtn" class="runBtn">Run</button>
+  </form>
+
+
+  <table class="sqlTable" border="1">
+    <tr>
+      <th id="sqlHeaders" class="sqlHeaders">{{finalHeaders}}</th>
+    </tr>
+    {% for d in data %}
+    <tr>
+      <td id="sqldata" class="sqldata">{{d}}</td>
+    </tr>
+    {%endfor%}
+  </table>
+  {% for s in sqldata %}
+  <p id="sqltextarea" name="sqltextarea">{{s}}</p>
+  {%endfor%}
+  <script>
+    //jquery funktio hakee testin valitusta sqldata rivistä
+    jQuery(".sqldata").click(function () {
+      event.preventDefault();
+      //valitun rivin teksti talletetaan muuttujaan
+      var text = jQuery(this).text();
+      //korvataan ( ) merkit tyhjällä
+      var textreplace = text.replace("(", "").replace(")", "")
+      //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
+      const textToArray = textreplace.split(",");
+
+      createMySqlFields(textToArray)
+
+    });
+
+  </script>
+  <br>
+  <label for="edit">Edit</label>
+  <input type="checkbox" name="edit" id="edit">
+  <label for="newrecord">Create new</label>
+  <input type="checkbox" name="newrecord" id="newrecord" onchange="createFieldsToNew()">
+  <div id="crudArea">
+
+  </div>
+
+
+
+
+
+
+
+
+</body>
+
 </html>

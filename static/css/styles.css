@@ -122,3 +122,10 @@ white-space: nowrap;
     padding: 5px;
     background-color: #3eedf0
 }
+
+.runBtn {
+    font-weight: bolder;
+    padding: 5px;
+    background-color: #3eedf0
+
+}

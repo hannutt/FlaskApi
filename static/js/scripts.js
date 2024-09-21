@@ -195,6 +195,19 @@ function removeTable() {
       document.getElementById("edit").checked=false
     }
     
+    function query() {
+      if (document.getElementById("freequery").checked==true)
+      {
+        document.getElementById("querytext").hidden=false
+        document.getElementById("runBtn").hidden=false
+
+      }
+      else {
+        document.getElementById("querytext").hidden=true
+        document.getElementById("runBtn").hidden=true
+      }
+      
+    }
 
 
   
