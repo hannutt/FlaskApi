@@ -17,12 +17,12 @@ white-space: nowrap;
     color: blue;
 }
 .indexbody {
-    background-image:  url('/static/images/flaskapiBG.jpg');
-    color: white;
+    background-image:  url('/static/images/FlaskAppBg.jpg');
+    
 }
 
 .apiName {
-    color: white;
+    color: black;
 }
 .myChart {
     background-color: lightblue;
@@ -80,7 +80,7 @@ white-space: nowrap;
     font-weight: bold;
 }
 .formPageBody {
-    background-image:  url('/static/images/flaskapiBG.jpg');
+    background-image:  url('/static/images/FlaskAppBg.jpg');
 }
 
 .mysqlLbl {
@@ -94,7 +94,7 @@ white-space: nowrap;
 }
 
 .sqlView {
-    background-image:  url('/static/images/flaskapiBG.jpg');
+    background-image:  url('/static/images/FlaskAppBg.jpg');
 }
 .sqlHeaders {
     text-align: left;

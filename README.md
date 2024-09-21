@@ -8,16 +8,16 @@ The .env file is in gitignore mode for security reasons
 
 Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed
 
-![alt text](flaskapi.png)
+![alt text](static/images/flaskFront.png)
 
 Example view when I select a database named DBoardDB and a BannedIps collection from the database. 
 The view also uses customization, the font size is set to medium, the background color of the table is light blue, and extra characters are removed from the database text
 
-![alt text](selection.png)
+![alt text](static/images/flaskMongo.png)
 
 Example picture where the data of the MySQL database table is displayed in the table element and the first row of the element is selected for editing. The Jquery function stores the text of the clicked element and adds it to the input field as shown in the image for editing.
 
-![alt text](sqledit.png)
+![alt text](static/images/flaskSQL.png)
 
 
 Main features

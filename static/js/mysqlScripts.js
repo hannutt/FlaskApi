@@ -1,8 +1,6 @@
 function createMySqlFields(textToArray) {
     var fieldNames = []
     fieldNames.push(document.getElementById('fieldnames').innerHTML)
-  
-   
     var fields = document.getElementById("fields").innerHTML
     var fieldsInt = parseInt(fields)
     var linebreak = document.createElement("br");
@@ -34,4 +32,25 @@ function createMySqlFields(textToArray) {
         
     }
         
+}
+
+function createFieldsToNew() {
+    var fields = document.getElementById("fields").innerHTML
+    var fieldsInt = parseInt(fields)
+    var fieldnames=document.getElementById("fieldnames").innerHTML
+    var splitNames = fieldnames.split(" ")
+    console.log(splitNames)
+    for (var i = 0;i<fieldsInt;i++)
+        {
+            var inputField=document.createElement("INPUT")
+            inputField.id=i
+            document.getElementById("crudArea").appendChild(inputField)
+        }
+        for (var j=0;j<fieldsInt;j++)
+            {
+                document.getElementById(j).placeholder=splitNames[j]
+              
+            }
+        
+
 }
