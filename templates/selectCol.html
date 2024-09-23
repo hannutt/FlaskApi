@@ -17,10 +17,9 @@
     <button class="fpBtn">Front page</button> |
   </form>
   <!--paluu takaisin kokoelman valintanäkymään-->
-  <form action="{{ url_for('BackToReadForm')}}" method="post">
-    <input hidden type="text" name="rememberSelect" id="rememberSelect" value="{{selectedDB}}">
-    <button id="backtoSel" class="fpBtn">Back to collection select</button> |
-  </form>
+
+    <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+ 
 </nav>
   <div class="DBinfo">
     <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:

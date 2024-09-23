@@ -159,38 +159,6 @@ def read_form():
 
 
     
-#tämä suoritetaan jos käyttäjä valitsee back to collection select buttonin.
-@app.route('/BackToread-form', methods=['POST','GET']) 
-def BackToReadForm():
-
-    client = pymongo.MongoClient('mongodb://localhost:27017/')
-    selection = request.form.get("rememberSelect")
-    #client = MongoClient('localhost', 27017)
-   
-   
-    
-    #db-statistiikka koodi, collectionien määrä, koko jne.
-    dbname=client[selection]
-    call = dbname.command("dbstats")
-    datasize = call['dataSize'] / 1024
-    global datasizeRound
-    datasizeRound=round(datasize,2)
-    global collections
-    collections = call['collections']
-    global objects
-    objects = call['objects']
-   
-
-    app.config['MONGO_URI']='mongodb://localhost:27017/'+selection
-    #global mongodb
-    mongodb=PyMongo(app).db
-    #global cols
-    cols=mongodb.list_collection_names()
-    # Get the form data as Python ImmutableDict datatype  
-    data = request.form
-    
-    
-    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selection,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
 
 #näyttää kaiken datan kokoelmasta

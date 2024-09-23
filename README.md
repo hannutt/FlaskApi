@@ -60,6 +60,11 @@ LIMITING THE SEARCH IN MONGO DATABASES
 The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
 This feature is made using the PyMongo limit method. the limit method receives the values ​​entered by the user as parameter.
 
+BACK TO PREVIOUS PAGE
+
+The user can return to the previous page at any time if, for example, he wants to change the displayed collection or database. This functionality is implemented with button elements that receive javascript's history.back method from the onclick event handler
+
+
 SEARCH BY KEYWORDS
 
 The text search function uses the same input field as the search restriction feature above.
@@ -73,10 +78,6 @@ In this program, the field names are obtained using the for loop and the keys me
 
 The selected component contains an onChange event handler that calls a JavaScript function. The JavaScript function transfers the name of the field selected by the user to a hidden html input field, from which the Python function performing the search retrieves it using the request.form.get method.
 
-
-MEMORY FEATURES
-
-The user can return to the collection selection view at any time by clicking the "Back to collection selection" navigation element and the program remembers the user's last database selection and executes the PyMongo method list_collection_names using the selected database name as the search condition.
 
 Python and JavaScript collaboration, among others:
 

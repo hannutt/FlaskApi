@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
+<nav>
+  <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+</nav>
 
 <body class="sqlView">
   <h3>MySQL Tables </h3>
@@ -34,7 +37,6 @@
     <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"></textarea><br>
     <button hidden id="runBtn" class="runBtn">Run</button>
   </form>
-
 
   <table class="sqlTable" border="1">
     <tr>
