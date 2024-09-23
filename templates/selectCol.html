@@ -5,6 +5,7 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/menuScripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/WordSearch.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
@@ -16,9 +17,10 @@
   <form action="{{ url_for('showIndex')}}" method="post">
     <button class="fpBtn">Front page</button> |
   </form>
-  <!--paluu takaisin kokoelman valintanäkymään-->
+  <!--paluu takaisin kokoelman valintanäkymään tai eteenpäin-->
 
     <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+    <button id="forwardbtn" onclick="history.forward()" class="fpBtn">Go to forward page</button> |
  
 </nav>
   <div class="DBinfo">
@@ -77,7 +79,7 @@
 
     </table>
   </form>
-  <label id="mongoLbl" hidden for="mongoQuery">Mongo query</label>
+  <label id="mongoLbl" hidden for="mongoQuery">Write Mongo query</label>
   <input hidden id="mongoQuery" name="mongoQuery" type="checkbox" onclick="mongoquery()">
   <br>
   <form action="{{ url_for('runMongoQuery')}}" method="post">

@@ -1,6 +1,6 @@
-Project keywords: Python Flask, API, JavaScript, Jquery, NoSQL, SQL, HTML, MongoDB Cloud Atlas
+Project keywords: Python Flask, JavaScript, jQuery, NoSQL, SQL, HTML, MongoDB Cloud Atlas
 
-Python Flask REST API with JavaScript and MongoDB & MySQL.
+
 The main idea is that you can access multiple MongoDB or MySQL databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB & MySQL) and MongoDB Atlas cloud databases.
 
 The username and password are stored in the .env environment file and retrieved with the os.getenv function.
@@ -60,9 +60,11 @@ LIMITING THE SEARCH IN MONGO DATABASES
 The user can limit the number of displayed search results by entering the number of displayed records in the input field named with the "number of records" placeholder.
 This feature is made using the PyMongo limit method. the limit method receives the values ​​entered by the user as parameter.
 
-BACK TO PREVIOUS PAGE
+BACK TO THE PREVIOUS OR NEXT PAGE
 
-The user can return to the previous page at any time if, for example, he wants to change the displayed collection or database. This functionality is implemented with button elements that receive javascript's history.back method from the onclick event handler
+The user can return to the previous page at any time if, for example, he wants to change the displayed collection or database. This functionality is implemented with button elements that receive javascript's history.back method from the onclick event handler.
+
+The next page feature works practically the same way, the only difference is that then the history.forward method is called.
 
 
 SEARCH BY KEYWORDS
