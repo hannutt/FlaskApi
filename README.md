@@ -27,6 +27,10 @@ Example picture where the user writes a mongoDB query, where the search conditio
 
 ![alt text](static/images/mongoQuery.png)
 
+For the selected MongoDB database, an info row is displayed, which tells the number of collections and records and the size of the database in megabytes.
+
+![alt text](static/images/inforow.png)
+
 
 Main features
 

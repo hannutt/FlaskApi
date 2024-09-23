@@ -72,7 +72,6 @@ function createEdit() {
 
     var fieldsTotal = document.getElementById("keystotal").innerHTML
     var fieldsTotalInt = Number(fieldsTotal)
-    console.log(typeof fieldsTotalInt)
     var cb = document.getElementById("edit")
     var addCB = document.getElementById("add")
     
@@ -89,6 +88,7 @@ function createEdit() {
         //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
         inpField.id = i
         inpField.name= i
+      
         inpField.setAttribute("type", "text");
         //document.body.appendChild(inpField);
         document.getElementById("editing").appendChild(editBtn)
@@ -106,9 +106,9 @@ function createEdit() {
       var addBtn = document.createElement("BUTTON")
       addBtn.id = "Add"
       editBtn.textContent = "Add"
-      fieldTotal=document.createElement("INPUT")
-      fieldTotal.id="fieldtotal"
-      fieldTotal.name="fieldtotal"
+      fieldsTotal=document.createElement("INPUT")
+      fieldsTotal.id="fieldtotal"
+      fieldsTotal.name="fieldtotal"
       
       //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
       for (var i = 1; i < fieldsTotalInt; i++) {
@@ -136,20 +136,25 @@ function createEdit() {
         document.getElementById(i).placeholder = valuesList[i]
         document.getElementById("field"+i).value=valuesList[i]
         
-        document.getElementById("addNew").appendChild(fieldTotal)
+        document.getElementById("addNew").appendChild(fieldsTotal)
         document.getElementById("fieldtotal").value=fieldsTotalInt
 
       }
       
       
     }
-    else {
+    else if (cb.checked===false || addCB.checked===false) {
+      document.getElementById("editing").innerHTML=""
+      document.getElementById("addNew").innerHTML=""
+      /*
       document.getElementById("editBtn").remove()
+      document.getElementById("addBtn").remove()
+      document.getElementById("0").remove()
       //input-kenttien tuhoamisessa käytetään myös silmukkaa ja fieldstotal muuttujaa
       for (var i = 0; i < fieldsTotalInt; i++) {
-        document.getElementById(i).remove()
+        document.getElementById("0").remove()
 
-      }
+      }*/
     }
 
   }

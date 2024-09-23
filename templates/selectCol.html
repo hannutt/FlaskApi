@@ -59,10 +59,11 @@
       <option value="{{d}}">{{d}}</option>
       {%endfor%}
     </select>
-    <input hidden type="text" name="selFieldName" id="selFieldName">
     <!--
-    <div hidden id="dict" class="dict">{{d}}</div>
-    <input hidden id="{{d}}" name="{{d}}" type="text" value="{{d}}">-->
+    <input hidden type="text" name="selFieldName" id="selFieldName">
+    
+    <div id="dict" class="dict">{{d}}</div>
+    <input id="{{d}}" name="{{d}}" type="text" value="{{d}}">-->
     
     <!--kokoelman kenttien kokonaismäärä-->
     <p hidden id="keystotal" name="keystotal">{{keysTotal}}</p>
@@ -99,18 +100,22 @@
     <label id="tableCBLbltxt" for="prettytxtCB">Pretty text</label>
     <input type="checkbox" name="prettytxtCB" id="prettytxtCB" onclick="prettyText()">
   </div>
-  <select id="colors" class="colors" onchange="changeBGcolor(this)">
+  <select id="colors" class="colors" onclick="MenuOpened()" onchange="changeBGcolor(this)">
     <option value="default">Select table bgcolor</option>
     <option value="white">White</option>
     <option value="lightblue">Lightblue</option>
   </select>
+  <!--parametri this.value on colorcode inputtiin kirjoitettu teksti-->
+  <input hidden type="text" id="colorCode" placeholder="color name or code" onchange="changeBGcolorInputField(this.value)">
+ 
 
-  <select id="font" class="font" onchange="changeFont(this)">
+  <select id="font" class="font" onclick="fontMenuOpened()" onchange="changeFont(this)">
     <option value="default">Select font size</option>
     <option value="small">Small</option>
     <option value="medium">medium</option>
     <option value="large">Large</option>
   </select>
+  <input hidden type="text" id="fontFam" placeholder="Font" onchange="changeFontFamily(this.value)">
 
 
 </body>
@@ -135,17 +140,23 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
   document.getElementById("mongoLbl").hidden=false
   
 </script>
-<h4>Delete document</h4>
-<p>Object id:</p>
+<br><br>
+<label for="deleteCB">Delete document</label>
+<input id="deleteCB" type="checkbox" onchange="showDelete()">
+<p hidden id="objIdtext" class="objIdtext">Object id:</p>
+
+<script>
+ 
+</script>
 
 
 
 <form action="{{ url_for('cruds.delRecord')}}" method="post">
 <input hidden type="text" name="DB" value="{{selectedDB}}">
 <input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">
-<input type="text" id="objId" name="objId">
+<input hidden type="text" id="objId" name="objId">
 
-<button>Delete</button>
+<button hidden id="deleteButton" class="cancelBtn">Delete</button>
 </form>
 <input type="checkbox" name="edit" id="edit" onclick="createEdit()">
 <label for="edit">Edit?</label>

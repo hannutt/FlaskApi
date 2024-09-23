@@ -114,7 +114,7 @@ def showIndex():
         statsNums[j] = int(statsNums[j])    
           
      print(amountOfdb)
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections)
 
 
 
@@ -254,7 +254,9 @@ def runMongoQuery():
     dbname=client[dataBaseNameStr]
     col=dbname[collectionNameStr]
     text=request.form.get("mongodata")
+    #katkaistaan teksti kaksoispisteen kohdalta 2 lista-alkioksi
     t=text.split(":")
+    #kyselynä toimii t listan 0 ja 1 elementit eli esim word:susi
     query={t[0]:t[1]}
     result=col.find(query)
     
