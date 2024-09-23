@@ -190,24 +190,24 @@ function removeTable() {
    
     }
 
-    function cancelEdit() {
-      document.getElementById("crudArea").innerHTML=""
-      document.getElementById("edit").checked=false
-    }
-    
-    function query() {
-      if (document.getElementById("freequery").checked==true)
+    function mongoquery() {
+      if ( document.getElementById("mongoQuery").checked==true)
       {
-        document.getElementById("querytext").hidden=false
-        document.getElementById("runBtn").hidden=false
+        document.getElementById("mongodata").hidden=false
+        document.getElementById("runMongo").hidden=false
+        document.getElementById("dbTable").hidden=true
+
+      }else{
+        document.getElementById("mongodata").hidden=true
+        document.getElementById("runMongo").hidden=true
+        document.getElementById("dbTable").hidden=false
 
       }
-      else {
-        document.getElementById("querytext").hidden=true
-        document.getElementById("runBtn").hidden=true
-      }
-      
+     
+
     }
+
+  
 
 
   

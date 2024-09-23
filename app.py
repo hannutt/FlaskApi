@@ -65,9 +65,9 @@ def listAtlasDataBases():
 def showIndex():
      #toisen moduulin funktiota voi käyttää näin, kunhan se tuodaan import lauseella ja route on kunnossa.
      sqls=showSQLDataBases()
-     #listAtlasDataBases()
+     listAtlasDataBases()
      dbsAtlas=[]
-     #dbsAtlas=listAtlasDataBases()
+     dbsAtlas=listAtlasDataBases()
    
     
      
@@ -80,7 +80,7 @@ def showIndex():
      allStats=[]
     
 
-     
+     #tietokanta nimien listaus
      dbs=MongoClient().list_database_names()
      client = MongoClient('localhost', 27017)
    
@@ -126,7 +126,7 @@ def DB_Statistics():
 
 @app.route('/read-form', methods=['POST','GET']) 
 def read_form():
-    print('read func')
+   
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     #client = MongoClient('localhost', 27017)
     global selectedDB
@@ -157,6 +157,8 @@ def read_form():
     
     return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
+
+    
 #tämä suoritetaan jos käyttäjä valitsee back to collection select buttonin.
 @app.route('/BackToread-form', methods=['POST','GET']) 
 def BackToReadForm():
@@ -194,16 +196,18 @@ def BackToReadForm():
 #näyttää kaiken datan kokoelmasta
 @app.route("/show-form",methods=['POST'])
 def show_data():
-    
-    print('show func')
+
     global showdata
     showdata=True
     l=[]
     dbKeys=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
+    
     dataBaseName=request.form.get("selecDB")
+    global dataBaseNameStr
     dataBaseNameStr = str(dataBaseName)
     collectionName = request.form.get("colname")
+    global collectionNameStr
     collectionNameStr=str(collectionName)
     findLimit = request.form.get("DBlimit")
     print("collection name ",collectionNameStr)
@@ -243,6 +247,20 @@ def show_data():
         
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
 
+@app.route("/mongo-query", methods=['POST','GET']) 
+def runMongoQuery():
+    dataMongo=[]
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    dbname=client[dataBaseNameStr]
+    col=dbname[collectionNameStr]
+    text=request.form.get("mongodata")
+    t=text.split(":")
+    query={t[0]:t[1]}
+    result=col.find(query)
+    
+    for x in result:
+        dataMongo.append(x)
+    return render_template("selectCol.html",dataMongo=dataMongo)
     
 if __name__ == '__main__':
     app.run(debug=True)

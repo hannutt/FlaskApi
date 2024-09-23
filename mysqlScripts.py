@@ -79,8 +79,6 @@ def readTableData():
       fieldnames = [i[0] for i in cursor.description]
       #listan muunto merkkijonoksi, että voidaan näyttää kaikki samalla rivillä html:n puolella.
       finalHeaders = " ".join(fieldnames)
-     
-
       myresult = cursor.fetchall()
 
       for x in myresult:

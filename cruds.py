@@ -57,3 +57,6 @@ def addRecord():
     
     print("fields ",fieldsTotal)
     return render_template("selectCol.html")
+
+
+

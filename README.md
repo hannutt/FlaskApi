@@ -23,6 +23,10 @@ Example image where the user writes a sql query. The input fields above show the
 
 ![alt text](static/images/sqlQuery.png)
 
+Example picture where the user writes a mongoDB query, where the search condition is to find documents that mention the word Tommi in the name field.
+
+![alt text](static/images/mongoQuery.png)
+
 
 Main features
 
@@ -41,7 +45,11 @@ All local mysql databases are fetched with the "show databases" command when the
 SELF-WRITING SQL QUERIES
 
 You can also write sql queries yourself by clicking the "write sql query" check box.
-the query is written to the textarea element, which is sent to the Python function. The Python function performs a search according to the query and returns the result to the html page
+the query is written to the textarea element, which is sent to the Python function. The Python function performs a search according to the query and returns the result to the html page.
+
+SELF-WRITING MONGODB QUERIES
+
+Writing mongoDB queries works very similarly to the sql queries above. The main difference is that the user must separate the field name and the search value with a colon. For example, the selected collection has a field called products and the user wants to search if there are oranges in the collection. so the query text is products:orange. The query is sent to a python function, where the split method detects a colon in the query and splits the field name and the searched word into parts, which are passed to the PyMongo search method as a dictionary object.
 
 LIMITING THE SEARCH IN MONGO DATABASES
 

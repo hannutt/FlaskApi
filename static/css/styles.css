@@ -118,7 +118,7 @@ white-space: nowrap;
 }
 .showBtn {
     font-weight: bolder;
-  
+    border-radius: 5px;
     padding: 5px;
     background-color: #3eedf0
 }

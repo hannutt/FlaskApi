@@ -51,7 +51,7 @@
     <input hidden type="text" name="DBpath" id="DBpath"> 
     <input hidden type="text" name="DBlimit" id="DBlimit" placeholder="Number of records or keyword">
 
-    <button>Show</button>
+    <button class="showBtn">Show</button>
     <!--DBkeyslist sisältää mongo-kokoelman kenttien nimet-->
     
     <select hidden name="fieldNames" id="fieldNames" onchange="getSelectedFieldName(this)">
@@ -65,7 +65,7 @@
     <input hidden id="{{d}}" name="{{d}}" type="text" value="{{d}}">-->
     
     <!--kokoelman kenttien kokonaismäärä-->
-    <p id="keystotal" name="keystotal">{{keysTotal}}</p>
+    <p hidden id="keystotal" name="keystotal">{{keysTotal}}</p>
     <table id="dbTable" class="dbTable" border="1">
       {% for r in l %}
       <tr>
@@ -77,6 +77,18 @@
 
     </table>
   </form>
+  <label id="mongoLbl" hidden for="mongoQuery">Mongo query</label>
+  <input hidden id="mongoQuery" name="mongoQuery" type="checkbox" onclick="mongoquery()">
+  <br>
+  <form action="{{ url_for('runMongoQuery')}}" method="post">
+  <textarea hidden id="mongodata" name="mongodata"></textarea>
+  <br>
+  <button hidden id="runMongo" name="runMongo" class="showBtn">Run Mongo query</button>
+</form>
+
+{% for dm in dataMongo %}
+<p>{{dm}}</p>
+{%endfor%}
 
 
   <br>
@@ -118,8 +130,10 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 {% if showdata==True %}
 <script>
   document.getElementById("DBlimit").hidden=false
-  
+  document.getElementById("mongoQuery").hidden=false
   document.getElementById("fieldNames").hidden=false
+  document.getElementById("mongoLbl").hidden=false
+  
 </script>
 <h4>Delete document</h4>
 <p>Object id:</p>
