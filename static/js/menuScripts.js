@@ -52,11 +52,43 @@ function mongoquery() {
     document.getElementById("objId").hidden=true
     document.getElementById("deleteButton").hidden=true
   
-  
   }
   
   
   }
+  //funktio avaa open file dialogin
+  function selectSqliteFile() {
+    var pathInput= document.getElementById("path")
+    if (document.getElementById("sqlite").checked==true)
+    {
+      document.getElementById("path").hidden=false
+
+      //var btn=document.getElementById("sqliteSelect")
+      //kun elementti muuttu, eli on valittu jonkin tiedosto
+     /* .onchange= _ => {
+   
+       var filepath = document.getElementById("sqliteSelect").value;
+       console.log(filepath)
+       document.getElementById("path").value=filepath
+       readBtn.click()*/
+       
+   
+      }
+      else{
+        document.getElementById("sqliteSelect").hidden=true
+      }
+     
+     
+
+    }
+   
+
+   
+   
+  
+  
+
+
   
   
   

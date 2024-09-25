@@ -219,9 +219,25 @@ function thirdMax() {
     <label for="mysql" class="mysqlLbl">Access to local MySQL Database</label>
   
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
-
-    
     <br>
+    <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
+    <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
+
+    <input type="checkbox"  id="sqlite" name="sqlite" onchange="selectSqliteFile()"><br>
+    <button  id="readBtn">read</button>
+    <br>
+    <!--
+    <input hidden type="file" id="sqliteSelect" name="sqliteSelect">-->
+    <input hidden type="text" id="path" name="path">
+</form>
+{% if sqliteTables==True %}
+<select name="sqltables" id="sqltables">
+    {% for t in tables%}
+    <option value="{{t}}">{{t}}</option>
+   {%endfor%}
+  </select>
+{%endif%}
+    
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
     <div hidden id="mysqlForm">
         <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">
@@ -234,7 +250,7 @@ function thirdMax() {
             <input type="text" id="selectedSQL" name="selectedSQL">
     </div>
 </form>
-
+    
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
     <br><br>
     <div hidden id="chart">
