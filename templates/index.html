@@ -8,6 +8,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/menuScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
                 
 
@@ -222,17 +223,33 @@ function thirdMax() {
     <br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
-
-    <input type="checkbox"  id="sqlite" name="sqlite" onchange="selectSqliteFile()"><br>
-    <button  id="readBtn">read</button>
-    <br>
-    <!--
-    <input hidden type="file" id="sqliteSelect" name="sqliteSelect">-->
-    <input hidden type="text" id="path" name="path">
+        <button hidden id="sqliteShow" name="sqliteShow">show</button>
+    <!--runsqlite funktio toteuttaa simuloidun sqliteShow painikkeen klikkauksen
+    jos checkboksia on klikattu-->
+    <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
 </form>
+{% for s in sqliteDatabases %}
+<p id="sqlite" class="sqlite">{{s}}</p>
+{%endfor%}
+<script>
+    //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
+    jQuery(".sqlite").click(function () {
+      //event.preventDefault();
+      var text = jQuery(this).text();
+      console.log(text.trim());
+      document.getElementById("sqliteFile").value=text
+     
+    });
+  
+  </script>
+  <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+  <input type="text" id="sqliteFile" name="sqliteFile">
+  <button>Run</button>
+</form>
+<!--jos sqlitetables on true, näytetään frontendissä select komponentti-->
 {% if sqliteTables==True %}
 <select name="sqltables" id="sqltables">
-    {% for t in tables%}
+    {% for t in replacedTable%}
     <option value="{{t}}">{{t}}</option>
    {%endfor%}
   </select>

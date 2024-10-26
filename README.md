@@ -46,6 +46,13 @@ ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 
 All local mysql databases are fetched with the "show databases" command when the user clicks the "access mysql databases" dialog. the results (i.e. database names) are looped in a for loop and displayed in the html dropdown menu.
 
+ACCESS TO LOCAL SQLITE3 DATABASE USING HTML-UI (EXPERIMENTAL)
+
+Accessing sqlite databases required a different approach. for now, it's done using the Python OS library's os.walk method. With this method, the Python OS library uses a for loop to search for all files on the C drive that end with the .db identifier. Finally, all found .db files will be displayed on the HTML page.
+
+The search for sqlite files starts when the user clicks the "access sqlite databases" checkbox. It calls a Python function that does the search.
+A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database. Access to tables is under development
+
 SELF-WRITING SQL QUERIES
 
 You can also write sql queries yourself by clicking the "write sql query" check box.
