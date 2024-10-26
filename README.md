@@ -50,7 +50,9 @@ ACCESS TO LOCAL SQLITE3 DATABASE USING HTML-UI (EXPERIMENTAL)
 
 Accessing sqlite databases required a different approach. for now, it's done using the Python OS library's os.walk method. With this method, the Python OS library uses a for loop to search for all files on the C drive that end with the .db identifier. Finally, all found .db files will be displayed on the HTML page.
 
-The search for sqlite files starts when the user clicks the "access sqlite databases" checkbox. It calls a Python function that does the search.
+The search for sqlite files starts when the user clicks the "access sqlite databases" checkbox.
+After the click, the JavaScript function creates an input field and a button element. enter the number of db files to search in the input field. Without restrictions, the program will search for all .db files on the c drive, and there may be several of them and they may take a lot of time.
+
 A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database. Access to tables is under development
 
 SELF-WRITING SQL QUERIES

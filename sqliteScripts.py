@@ -8,14 +8,21 @@ sqliteScripts = Blueprint('sqliteScripts',__name__,static_folder='static',templa
 
 @sqliteScripts.route("/sqlite",methods=['POST','GET'])
 def readDBname():
+    i=0
+    restriction = request.form.get('restriction')
+    restrictionInt = int(restriction)
     sqliteDatabases=[]
-    for root, dirs, files in os.walk("C:\emptyfol"):
+    #etsitään db-päätteisiä tiedostoja kaikkialta c-levyltä.
+    for root, dirs, files in os.walk("C:\\"):
         for file in files:
             if file.endswith(".db"):
+             i=i+1
              print(os.path.join(root, file))
              dbvar=root+"\\"+file
              sqliteDatabases.append(dbvar)
-    return render_template("index.html",sqliteDatabases=sqliteDatabases)
+             #rajoitetaan db päätteiset tiedostot 5 kappaleeseen
+             if i == restrictionInt:
+                return render_template("index.html",sqliteDatabases=sqliteDatabases)
 
 @sqliteScripts.route("/getsqlite",methods=['POST','GET'])
 def showSqliteTables():

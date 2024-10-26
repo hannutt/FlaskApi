@@ -100,66 +100,6 @@ function getAllValues()
 }
 
 }
-
-var secondMaxIndex=0
-var secondBiggest=0
-function findSecondLargestUsingIteration() { 
-    let firstMax = -Infinity; 
-    let secondMax = -Infinity; 
-   
-    
-  
-    for (let num of arrNums) { 
-        if (num > firstMax) { 
-            secondMax = firstMax; 
-            firstMax = num; 
-        } else if (num > secondMax && num !== firstMax) { 
-            secondMax = num; 
-        }
-    
-    } 
-  
-    if (secondMax === -Infinity) { 
-        return "No second largest element exists"; 
-    } 
-    
-    secondBiggest=secondMax
-    secondMaxIndex=arrNums.indexOf(secondBiggest)
-    
-    return secondMaxIndex
-} 
-
-
-
-findSecondLargestUsingIteration()
-
-var thirdMaxVar
-var thirdIndex
-//kolmanneksi suurin numero listan läpikäynnillä, huomaa ehtolause
-function thirdMax() {
-    for(var num of arrNums)
-    {
-        if (num<secondBiggest && num>0)
-        {
-            thirdMaxVar=num
-            thirdIndex=arrNums.indexOf(thirdMaxVar)
-            console.log('third: ',thirdMaxVar)
-            console.log('index',thirdIndex)
-            
-
-        }
-        
-    }
-   
-}
-
-
-
-
-
-
-
-
    </script>
    <p id="demo"></p>
    
@@ -223,9 +163,10 @@ function thirdMax() {
     <br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
-        <button hidden id="sqliteShow" name="sqliteShow">show</button>
-    <!--runsqlite funktio toteuttaa simuloidun sqliteShow painikkeen klikkauksen
-    jos checkboksia on klikattu-->
+        
+        <input hidden type="number" name="restriction" id="restriction">
+        <button hidden id="sqliteShow" name="sqliteShow">Run</button>
+  
     <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
 </form>
 {% for s in sqliteDatabases %}
@@ -243,17 +184,16 @@ function thirdMax() {
   
   </script>
   <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+    {% if sqliteTables==True %}
   <input type="text" id="sqliteFile" name="sqliteFile">
   <button>Run</button>
+  {% else %}
+  <input hidden type="text" id="sqliteFile" name="sqliteFile">
+  <button hidden>Run</button>
+  {%endif%}
+ 
 </form>
-<!--jos sqlitetables on true, näytetään frontendissä select komponentti-->
-{% if sqliteTables==True %}
-<select name="sqltables" id="sqltables">
-    {% for t in replacedTable%}
-    <option value="{{t}}">{{t}}</option>
-   {%endfor%}
-  </select>
-{%endif%}
+
     
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
     <div hidden id="mysqlForm">
@@ -273,10 +213,5 @@ function thirdMax() {
     <div hidden id="chart">
     <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
 </div>
-
-     
-   
-   
 </body>
-
 </html>
