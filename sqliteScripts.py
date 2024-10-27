@@ -9,7 +9,11 @@ sqliteScripts = Blueprint('sqliteScripts',__name__,static_folder='static',templa
 @sqliteScripts.route("/sqlite",methods=['POST','GET'])
 def readDBname():
     i=0
+    #kun sqliteTables on true, näytetään filepath input index.htmlssä
+    sqliteTables=True
+    #käyttäjän syöttämä määrä, montako db tiedostoa etsitään
     restriction = request.form.get('restriction')
+    #muunto int-tietotyyppiin eli luvuksi.
     restrictionInt = int(restriction)
     sqliteDatabases=[]
     #etsitään db-päätteisiä tiedostoja kaikkialta c-levyltä.
@@ -19,13 +23,26 @@ def readDBname():
              i=i+1
              print(os.path.join(root, file))
              dbvar=root+"\\"+file
-             sqliteDatabases.append(dbvar)
-             #rajoitetaan db päätteiset tiedostot 5 kappaleeseen
+             #db-tiedostojen koot megatavuina
+             dbSize=os.stat(dbvar)
+           
+             #db-tiedostojen koon muunto megatavuiksi
+             sizeInMb=dbSize.st_size/(1024*1024)
+             #pyöritys muotoon 0,00
+             roundedSize=round(sizeInMb,2)
+             sizeInMbStr = str(roundedSize)
+             finalDBvar=dbvar+' | Size: '+sizeInMbStr + ' MB'
+             sqliteDatabases.append(finalDBvar)
+             #sqliteDatabases.append(sizeInMb)
+             #rajoitetaan db päätteiset tiedostot käyttäjän syöttämään määrään
+             #i pitää kirjaa siitä, montako db päätteistä tiedostoa on löydetty.
              if i == restrictionInt:
-                return render_template("index.html",sqliteDatabases=sqliteDatabases)
+                return render_template("index.html",sqliteDatabases=sqliteDatabases,sqliteTables=sqliteTables)
 
 @sqliteScripts.route("/getsqlite",methods=['POST','GET'])
 def showSqliteTables():
+    sqliteTables=True
+    sqlTables=[]
     dbname=request.form.get('sqliteFile')
      #määritetään tietokantatiedosto, johon yhdistetään
     conn = sqlite3.connect(dbname)
@@ -46,11 +63,9 @@ def showSqliteTables():
     
     for x in cursor:
        print(x)
-     
-        
-    
+       sqlTables.append(x)
     conn.close()
-    return render_template("index.html")
+    return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables)
    
     
     

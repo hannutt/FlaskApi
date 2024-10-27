@@ -69,10 +69,6 @@ var maxVal=0
 var minVal=0
 function getNumValues() {
   var numValues = document.getElementsByClassName("statsNums")
-  
-  
- 
-  
 for (i=0;i<7;i++)
 {
     arrNums.push(parseInt(numValues[i].innerHTML))
@@ -162,37 +158,59 @@ function getAllValues()
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
     <br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
+    <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         
         <input hidden type="number" name="restriction" id="restriction">
-        <button hidden id="sqliteShow" name="sqliteShow">Run</button>
-  
-    <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
+        <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Run</button>
+    </form>
+        <br>
+        <!--jos sqlitetables on true näytetään allaoleva input kenttä-->
+        {% if sqliteTables==True%}
+        <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+        <input type="text" id="sqliteFile" name="sqliteFile" placeholder="File path">
+        <button class="runBtn">Run</button>
+    </form>
+    <select name="sqlitetable" id="sqlitetable">
+        <option value="default" selected>Select Table</option>
+        <!--sql tietokantojen näyttö select komponentissa-->
+        {% for s in sqlTables %}
+        <option value="">{{s}}</option>
+        {% endfor %}
+        </select>
+        <!--jos sqlitetables on muu kuin true, piilotetaan input kenttä-->
+        {%else%}
+        <input hidden type="text" id="sqliteFile" name="sqliteFile" >
+        {%endif%}
+  <!--
+    <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">-->
 </form>
+<table id="sqliteTable" class="sqliteTable" border="1">
+  
 {% for s in sqliteDatabases %}
-<p id="sqlite" class="sqlite">{{s}}</p>
+<tr>
+<td id="sqlite" class="sqlite">{{s}}</td>
+</tr>
 {%endfor%}
+</table>
 <script>
     //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
     jQuery(".sqlite").click(function () {
       //event.preventDefault();
       var text = jQuery(this).text();
-      console.log(text.trim());
-      document.getElementById("sqliteFile").value=text
+      //katkaistaan merkkijono | merkin kohdalta
+      var textSplit = text.split("|")
+      //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
+      var splittedText=textSplit[0]
+      //trim poistaa välilyönnit
+      var noWhiteSpace = splittedText.trim()
+      console.log(noWhiteSpace);
+      document.getElementById("sqliteFile").value=noWhiteSpace
      
     });
   
   </script>
-  <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
-    {% if sqliteTables==True %}
-  <input type="text" id="sqliteFile" name="sqliteFile">
-  <button>Run</button>
-  {% else %}
-  <input hidden type="text" id="sqliteFile" name="sqliteFile">
-  <button hidden>Run</button>
-  {%endif%}
- 
-</form>
+
 
     
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">

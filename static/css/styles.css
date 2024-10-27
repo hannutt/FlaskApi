@@ -129,3 +129,7 @@ white-space: nowrap;
     background-color: #3eedf0
 
 }
+.sqliteTable {
+    background-color: lightblue;
+    font-size: medium;
+}
