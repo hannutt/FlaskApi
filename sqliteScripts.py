@@ -15,6 +15,7 @@ def readDBname():
     sqliteTables=True
     #käyttäjän syöttämä määrä, montako db tiedostoa etsitään
     restriction = request.form.get('restriction')
+    
     #muunto int-tietotyyppiin eli luvuksi.
     restrictionInt = int(restriction)
     sqliteDatabases=[]
@@ -43,13 +44,14 @@ def readDBname():
 
 @sqliteScripts.route("/getsqlite",methods=['POST','GET'])
 def showSqliteTables():
-    sqliteTables=True
-    
+    sqliteTables=True 
     sqlTables=[]
     global dbname
     dbname=request.form.get('sqliteFile')
-     #määritetään tietokantatiedosto, johon yhdistetään
     conn = sqlite3.connect(dbname)
+  
+     #määritetään tietokantatiedosto, johon yhdistetään
+    
     #sql kysely, joka hakee kaikki taulut valitusta tietokannasta
     sql_query = """SELECT name FROM sqlite_master 
     WHERE type='table';"""
@@ -76,6 +78,44 @@ def runsqlite():
    for row in cursor:
       data.append(row)
    return render_template("sqlite.html",data=data)
+
+@sqliteScripts.route("/readInput",methods=['POST','GET'])
+def readInput():
+   tables=[]
+   dbpath=request.form.get("dbPath")
+   conn = sqlite3.connect(dbpath)
+  
+     #määritetään tietokantatiedosto, johon yhdistetään
+    
+    #sql kysely, joka hakee kaikki taulut valitusta tietokannasta
+   sql_query = """SELECT name FROM sqlite_master 
+    WHERE type='table';"""
+   
+# Create a cursor object using the cursor() method
+   cursor = conn.cursor()
+   cursor.execute(sql_query)
+   for x in cursor:
+       print(x)
+       tables.append(x)
+   conn.close()
+   return render_template("index.html",tables=tables)
+
+
+#sqliten itse kirjoitettavat kyselyt.
+@sqliteScripts.route("/selfwrite",methods=['POST','GET'])
+def selfWriteQuery():
+   data=[]
+   conn = sqlite3.connect(dbname)
+   table = request.form.get('selectedTable')
+   query = request.form.get('sqliteQuery')
+   #f-stringillä voidaan käyttää useampaakin muuttujaa.
+   cursor = conn.execute(f"{query} {table}")
+   for row in cursor:
+      print(row)
+      data.append(row)
+  
+   return render_template("sqlite.html",data=data)
+   
 
 
    

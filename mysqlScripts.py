@@ -70,9 +70,6 @@ def readTableData():
     
 
       cursor = mydb.cursor()
-  
-      
-
       cursor.execute("SELECT * FROM "+sqltable)
       #sql taulujen sarakkeiden nimet
       numfields = len(cursor.description)

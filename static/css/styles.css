@@ -126,10 +126,19 @@ white-space: nowrap;
 .runBtn {
     font-weight: bolder;
     padding: 5px;
-    background-color: #3eedf0
+    background-color: #3eedf0;
+    border-radius: 5px;
 
 }
 .sqliteTable {
     background-color: lightblue;
     font-size: medium;
+}
+.runsqlitequery {
+    position: absolute;
+    left:100px;
+    font-weight: bolder;
+    padding: 5px;
+    background-color: #3eedf0;
+    border-radius: 5px;
 }

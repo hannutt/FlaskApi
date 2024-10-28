@@ -1,7 +1,7 @@
-Project keywords: Python Flask, JavaScript, jQuery, NoSQL, SQL, HTML, MongoDB Cloud Atlas
+Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, MongoDB Cloud Atlas
 
 
-The main idea is that you can access multiple MongoDB or MySQL databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB & MySQL) and MongoDB Atlas cloud databases.
+The main idea is that you can access multiple MongoDB, MySQL or SQLite databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL & SQLite) and MongoDB Atlas cloud databases.
 
 The username and password are stored in the .env environment file and retrieved with the os.getenv function.
 The .env file is in gitignore mode for security reasons
@@ -34,6 +34,13 @@ For the selected MongoDB database, an info row is displayed, which tells the num
 Example image where the user has limited the number of sqlite database files to be searched to five. The first 5 sqlite files found are displayed in the Table element. The size of the database files is displayed in megabytes using the stats method of the Python OS library.
 
 ![alt text](static/images/sqliteTable.png)
+
+The user can also directly access the sqlite database using the input field. The file path and the name of the database file are entered in the input field. The path and filename are passed to the Python function using the request.form.get method.
+
+![alt text](static/images/sqliteInput.png)
+
+
+
 
 
 Main features
