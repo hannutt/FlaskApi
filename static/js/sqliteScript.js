@@ -15,3 +15,23 @@ function runSqlite() {
     }
 }
 
+function selectionSqlite(dbtable) {
+    var selectedTable= dbtable.options[dbtable.selectedIndex].text
+    rep=selectedTable.replace("(","").replace(")","").replace(",","").replace("'","").replace("'","")
+    console.log(rep)
+    document.getElementById("selectedTable").value=rep
+}
+
+function showQueryBox() {
+    var cb = document.getElementById("queryCB")
+    if (cb.checked==true)
+    {
+        document.getElementById("sqliteQuery").hidden=false
+
+    }
+    else {
+        document.getElementById("sqliteQuery").hidden=true
+    }
+   
+}
+

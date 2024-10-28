@@ -159,19 +159,20 @@ function getAllValues()
     <br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
+   
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         
         <input hidden type="number" name="restriction" id="restriction">
-        <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Run</button>
+        <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
     </form>
         <br>
         <!--jos sqlitetables on true näytetään allaoleva input kenttä-->
         {% if sqliteTables==True%}
         <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
         <input type="text" id="sqliteFile" name="sqliteFile" placeholder="File path">
-        <button class="runBtn">Run</button>
+        <button id="selectBtn" name="selectBtn" class="runBtn" onclick="showButton()">Select</button>
     </form>
-    <select name="sqlitetable" id="sqlitetable">
+    <select name="sqlitetable" id="sqlitetable" onchange="selectionSqlite(this)">
         <option value="default" selected>Select Table</option>
         <!--sql tietokantojen näyttö select komponentissa-->
         {% for s in sqlTables %}
@@ -193,6 +194,14 @@ function getAllValues()
 </tr>
 {%endfor%}
 </table>
+<form action="{{ url_for('sqliteScripts.runsqlite')}}" method="post">
+    <input hidden type="text" id="selectedTable" name="selectedTable">
+    <button id="showTableBtn" name="showTableBtn">show table</button>
+    <br>
+    <label id="queryLbl" for="query">Write SQLite query</label>
+    <input type="checkbox" id="queryCB" name="queryCB" onclick="showQueryBox()">
+    <textarea hidden id="sqliteQuery" name="sqliteQuery"></textarea>
+</form>
 <script>
     //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
     jQuery(".sqlite").click(function () {

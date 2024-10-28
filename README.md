@@ -57,7 +57,7 @@ Accessing sqlite databases required a different approach. for now, it's done usi
 The search for sqlite files starts when the user clicks the "access sqlite databases" checkbox.
 After the click, the JavaScript function creates an input field and a button element. enter the number of db files to search in the input field. Without restrictions, the program will search for all .db files on the c drive, and there may be several of them and they may take a lot of time.
 
-A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database. Access to tables is under development
+A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database.
 
 SELF-WRITING SQL QUERIES
 
