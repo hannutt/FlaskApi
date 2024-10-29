@@ -9,6 +9,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/WordSearch.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/mongoScripts.js') }}"></script>
   
 </head>
 
@@ -60,11 +61,7 @@
       <option value="{{d}}">{{d}}</option>
       {%endfor%}
     </select>
-    <!--
-    <input hidden type="text" name="selFieldName" id="selFieldName">
-    
-    <div id="dict" class="dict">{{d}}</div>
-    <input id="{{d}}" name="{{d}}" type="text" value="{{d}}">-->
+  
     
     <!--kokoelman kenttien kokonaismäärä-->
     <p hidden id="keystotal" name="keystotal">{{keysTotal}}</p>
@@ -79,6 +76,18 @@
 
     </table>
   </form>
+  <br><br>
+  <label for="newCollection">Create new collection</label>
+  <input type="checkbox" id="newCollection" name="newCollection" onchange=" createNewCollection()">
+  <br>
+
+  <form action="{{ url_for('mongoScript.createNewCollection')}}" method="post">
+  <input hidden type="text" id="collectionName" name="collectionName" placeholder="Collection name">
+  <input hidden type="text" id="mongoDBname" name="mongoDBname">
+  <br>
+  <button hidden id="createBtn" name="createBtn">Create</button>
+</form>
+
   <label id="mongoLbl" hidden for="mongoQuery">Write Mongo query</label>
   <input hidden id="mongoQuery" name="mongoQuery" type="checkbox" onclick="mongoquery()">
   <br>

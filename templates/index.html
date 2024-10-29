@@ -122,12 +122,8 @@ function getAllValues()
             {% for i in dbsAtlas %}
             <option value="">{{i}}</option>
             {%endfor%}
-            
         </select>
-        
-
         <script>
-
             //jquery-funktio buttonin piilottamiseen
             $("#hideBtn").click(function () {
                 $(".hideAll").hide("slow");
@@ -137,13 +133,12 @@ function getAllValues()
         <input hidden type="text" name="selectedDB" id="selectedDB">
        <!--tässä näytetään dropdown valittu database-->
         <input type="text" name="DBname" id="DBname">
-        
-    
         <button class="selectBtn">Select</button>
     </form> 
     <br><br>
     <label for="atlas" class="atlasLbl" >Access to Atlas DB</label>
     <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
+    <br><br>
     
     <form action= "{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
     <div class="atlasForm" id="atlasForm">
@@ -156,7 +151,7 @@ function getAllValues()
     <label for="mysql" class="mysqlLbl">Access to local MySQL Database</label>
   
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
-    <br>
+    <br><br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
    

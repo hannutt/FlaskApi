@@ -53,6 +53,11 @@ You can perform CRUD operations on the database you have selected. Selecting a d
 The connection between the mongo databases and the program is made using the Mongo URI. in this case the Mongo uri starts with mongodb://localhost:27017/(db)/(col).
 db and col are the parameters of the database name and the collection, the contents of which are obtained from the user's selections in the drop-down menu.
 
+CREATE A NEW COLLECTION IN THE SELECTED MONGO DATABASE
+
+Creating a collection is started by clicking the "create new collection" checkbox. click calls a JavaScript function that creates an html input field. the name of the new collection is written in the input field and the "create" button is clicked. The name of the database and the name of the new collection are passed to a Python function that communicates with the PyMongo client and creates a new collection.
+Once the user has selected a mongo database, it is possible to create new collections in the selected database.
+
 ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 
 All local mysql databases are fetched with the "show databases" command when the user clicks the "access mysql databases" dialog. the results (i.e. database names) are looped in a for loop and displayed in the html dropdown menu.

@@ -13,7 +13,8 @@ from cruds import cruds
 from apiCalls import apiCalls
 from cloudConnection import cloudConnection
 from mysqlScripts import mysqlScripts
-from  sqliteScripts import sqliteScripts
+from sqliteScripts import sqliteScripts
+from mongoScript import mongoScript
 
 import urllib
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.register_blueprint(apiCalls,url_prefix='')
 app.register_blueprint(cloudConnection,url_prefix='')
 app.register_blueprint(mysqlScripts,url_prefix='')
 app.register_blueprint(sqliteScripts,url_prefix='')
+app.register_blueprint(mongoScript,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 connect=False

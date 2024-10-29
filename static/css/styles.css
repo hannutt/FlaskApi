@@ -46,12 +46,13 @@ white-space: nowrap;
 }
 
 .statsBtn {
-    padding: 12px 8px;
+    padding: 11px 7px;
     border-radius: 12px;
     position: absolute;
     font-weight: bold;
     background-color: lightblue;
-    top:160px;
+    top:200px;
+    left:380px;
 }
 
 .statsBtn:hover {

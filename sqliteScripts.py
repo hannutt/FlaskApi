@@ -9,6 +9,8 @@ sqliteScripts = Blueprint('sqliteScripts',__name__,static_folder='static',templa
 
 @sqliteScripts.route("/sqlite",methods=['POST','GET'])
 def readDBname():
+    dbNames=[]
+    dbSizes=[]
     runsql=True
     i=0
     #kun sqliteTables on true, näytetään filepath input index.htmlssä
@@ -26,11 +28,13 @@ def readDBname():
              i=i+1
              print(os.path.join(root, file))
              dbvar=root+"\\"+file
+             dbNames.append(file)
              #db-tiedostojen koot megatavuina
              dbSize=os.stat(dbvar)
            
              #db-tiedostojen koon muunto megatavuiksi
              sizeInMb=dbSize.st_size/(1024*1024)
+             dbSizes.append(sizeInMb)
              #pyöritys muotoon 0,00
              roundedSize=round(sizeInMb,2)
              sizeInMbStr = str(roundedSize)
