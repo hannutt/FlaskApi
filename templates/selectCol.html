@@ -80,6 +80,13 @@
   <label for="newCollection">Create new collection</label>
   <input type="checkbox" id="newCollection" name="newCollection" onchange=" createNewCollection()">
   <br>
+  <label for="dropCol">Delete Collection</label>
+  <input type="checkbox" id="dropCol" name="dropCol" onchange="deleteCollection()">
+  <form action="{{ url_for('mongoScript.dropCollection')}}" method="post">
+    <input hidden type="text" id="colToDelete" name="colToDelete" placeholder="Delete collection">
+    <input hidden type="text" id="DB" name="DB">
+    <button hidden id="colDeleteBtn">Delete</button>
+  </form>
 
   <form action="{{ url_for('mongoScript.createNewCollection')}}" method="post">
   <input hidden type="text" id="collectionName" name="collectionName" placeholder="Collection name">

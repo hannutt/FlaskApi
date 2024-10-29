@@ -16,3 +16,15 @@ def createNewCollection():
     newcol.insert_one(insertQuery)
 
     return render_template("selectCol.html")
+
+@mongoScript.route("/dropcollection",methods=['POST','GET'])
+def dropCollection():
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    dataBaseName=request.form.get('DB')
+    colName=request.form.get('colToDelete')
+    dbname=client[dataBaseName]
+    delCol = dbname[colName]
+    delCol.drop()
+
+    return render_template("selectCol.html")
+

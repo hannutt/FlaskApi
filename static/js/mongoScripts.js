@@ -14,3 +14,20 @@ function createNewCollection() {
     }
 
 }
+
+function deleteCollection() {
+    var cb=document.getElementById("dropCol")
+    if (cb.checked==true) {
+        document.getElementById("colToDelete").hidden=false
+        document.getElementById("colDeleteBtn").hidden=false
+        var mongodb = document.getElementById("selecDB").value
+        document.getElementById("DB").value=mongodb
+
+    }
+    else {
+        document.getElementById("colToDelete").value=""
+        document.getElementById("colToDelete").hidden=true
+        document.getElementById("colDeleteBtn").hidden=true
+
+    }
+}

@@ -40,10 +40,7 @@ The user can also directly access the sqlite database using the input field. The
 ![alt text](static/images/sqliteInput.png)
 
 
-
-
-
-Main features
+MAIN FEATURES
 
 ACCESS TO LOCAL MongoDB DATABASE USING HTML-UI.
 
@@ -57,6 +54,11 @@ CREATE A NEW COLLECTION IN THE SELECTED MONGO DATABASE
 
 Creating a collection is started by clicking the "create new collection" checkbox. click calls a JavaScript function that creates an html input field. the name of the new collection is written in the input field and the "create" button is clicked. The name of the database and the name of the new collection are passed to a Python function that communicates with the PyMongo client and creates a new collection.
 Once the user has selected a mongo database, it is possible to create new collections in the selected database.
+
+DELETE MONGODB COLLECTION
+
+Deleting a collection from a selected mongo database is quite similar to creating a new collection. The only difference is in the Python function that implements the deletion, which uses the drop method after receiving information from the user interface about the name of the database and the name of the collection to be deleted. A Python function obtains this information using the request.form.get method.
+
 
 ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 

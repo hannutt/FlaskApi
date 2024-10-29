@@ -156,16 +156,16 @@ function getAllValues()
     <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
    
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
-        
-        <input hidden type="number" name="restriction" id="restriction">
+        <label for="restriction">Set the number of files to search:</label>
+        <input hidden type="text" name="restriction" id="restriction" size="4">
         <br><br>
         <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
     </form>
         <br>
         <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
-            <input type="text" placeholder="db-file path" id="dbPath" name="dbPath">
+            <input hidden type="text" placeholder="db-file path" id="dbPath" name="dbPath">
             <br><br>
-            <button class="runBtn">Access</button>
+            <button hidden class="runBtn" id="accessBtn">Access</button>
         </form>
         <select hidden name="sqliteInput" id="sqliteInput">
             <option value="default" selected>Select Table</option>
