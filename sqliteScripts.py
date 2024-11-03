@@ -1,3 +1,4 @@
+import io
 from flask import Blueprint, render_template, request
 import sqlite3,os
 from pathlib import Path, PureWindowsPath
@@ -52,7 +53,9 @@ def showSqliteTables():
     sqlTables=[]
     global dbname
     dbname=request.form.get('sqliteFile')
+    
     conn = sqlite3.connect(dbname)
+    
   
      #määritetään tietokantatiedosto, johon yhdistetään
     
@@ -68,6 +71,7 @@ def showSqliteTables():
        print(x)
        sqlTables.append(x)
     conn.close()
+
     return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables)
 
 @sqliteScripts.route("/opentable",methods=['POST','GET'])
@@ -79,9 +83,21 @@ def runsqlite():
    conn = sqlite3.connect(dbname)
    #f-stringin avulla voidaan antaan taulun nimi parametrina.
    cursor = conn.execute(f"SELECT * FROM {table}")
+   #sarakkeiden nimet
+   columnnames = list(map(lambda x: x[0], cursor.description))
+   finalNames = " ".join(columnnames)
+   #columnnames listan pituus
+   lng = len(columnnames)
+   
+   
    for row in cursor:
-      data.append(row)
-   return render_template("sqlite.html",data=data)
+      #row on tuple datatyyppi, joten muutetaan se merkkijonoksi että voidaan käyttää replace metodia
+      #poistamaan ylim. merkit
+      datastr = str(row).replace("(","").replace(")","").replace("'","")
+      
+      data.append(datastr)
+      
+   return render_template("sqlite.html",data=data,lng=lng,finalNames=finalNames)
 
 @sqliteScripts.route("/readInput",methods=['POST','GET'])
 def readInput():
@@ -114,11 +130,26 @@ def selfWriteQuery():
    query = request.form.get('sqliteQuery')
    #f-stringillä voidaan käyttää useampaakin muuttujaa.
    cursor = conn.execute(f"{query} {table}")
+
    for row in cursor:
       print(row)
       data.append(row)
   
    return render_template("sqlite.html",data=data)
+
+@sqliteScripts.route("/databaseBackup", methods=['POST','GET'])
+def backUpDB():
+   dbname=request.form.get("sqliteBase")
+   conn = sqlite3.connect(dbname)
+   print("BACKUP ",conn)
+   
+   with io.open('backupdatabase_dump.sql', 'w') as p:  
+          
+    # iterdump() function 
+    for line in conn.iterdump():
+         p.write('%s\n' % line) 
+   conn.close()
+   return render_template("sqlite.html")  
    
 
 

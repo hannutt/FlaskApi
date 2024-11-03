@@ -2,6 +2,8 @@ function runSqlite() {
     var cb = document.getElementById("sqlite")
     if (cb.checked==true)
     {  
+
+        document.getElementById('restrictionLbl').hidden=false
         document.getElementById('restriction').hidden=false
         document.getElementById('sqliteShow').hidden=false
         document.getElementById('dbPath').hidden=false
@@ -9,10 +11,11 @@ function runSqlite() {
 
     }
     else {
+        document.getElementById('restrictionLbl').hidden=true
         document.getElementById('restriction').hidden=true
         document.getElementById('sqliteShow').hidden=true
         document.getElementById('dbPath').hidden=true
-        document.getElementById('accessBtn').hidden=false
+        document.getElementById('accessBtn').hidden=true
         //document.getElementById('sqliteFile').hidden=true
 
     }
@@ -41,5 +44,32 @@ function showQueryBox() {
         document.getElementById("runsqlitequery").hidden=true
     }
    
+}
+
+function backUp(inputVal) {
+   
+    if (inputVal!=null)
+    {
+        document.getElementById("backup").hidden=false
+        document.getElementById("backupLbl").hidden=false
+    }
+}
+function clearBackup(val) {
+    if (val=='')
+    {
+        document.getElementById("backup").hidden=true
+        document.getElementById("backupLbl").hidden=true
+
+    }
+}
+
+function startBackup() {
+    var cb = document.getElementById("backup").checked
+    if (cb===true)
+    {
+        document.getElementById("backupBtn").click()
+
+    }
+    
 }
 

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <title>SQLite</title>
     </head>
     <body>
         <h3>SQLite Databases</h3>
+       
+        <p id="cols" class="cols">{{finalNames}}</p>
+        
        <p id="data">{%for d in data%}
         {{d}}
         {%endfor%}

@@ -10,13 +10,13 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-                
 
- 
+
+
     <title>Flask-APi</title>
 
 <body class="indexbody">
-   
+
     <h4 id="apiName">MongoDB & MySQL management tool</h4>
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
@@ -26,86 +26,82 @@
     </p>
     <!--kokoelmien nimi,koko yms tietojen läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
     {% for j in stats %}
-   <p hidden id="stats" class="statsNames">{{j}}</p>
-   {%endfor%}
-   <!--tietokantojen koot-->
-   {% for i in statsNums %}
-   <div id="statsNums" hidden class="statsNums">{{i}}</div>
-   {% endfor %}
-   <p hidden class="allStat">{{allStats}}</p>
-   
-   <script>
-    //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
-    $(document).ready(function() {
-  $( "#apiName" ).animate({
-    width: "70%",
-    opacity: 0.9,
-    marginLeft: "0.6in",
-    fontSize: "3em",
-    borderWidth: "10px",
-  }, 1500 );
-});
-    var arrNums=[]
-    var arrNames=[]
-    var allStats=[]
-    //kokoelmien nimien läpikäynti
-function getNameValues(){
-    //haetaan tietokantojen kokonaismäärän kertova luku dbTotal tagista
-    var total=document.getElementById("dbTotal").innerHTML
-    //muunnetaan luvuksi
-    var intTotal = parseInt(total)
-    console.log(typeof(intTotal))
-    var nameValues = document.getElementsByClassName("statsNames")
+    <p hidden id="stats" class="statsNames">{{j}}</p>
+    {%endfor%}
+    <!--tietokantojen koot-->
+    {% for i in statsNums %}
+    <div id="statsNums" hidden class="statsNums">{{i}}</div>
+    {% endfor %}
+    <p hidden class="allStat">{{allStats}}</p>
 
-    for (i=0;i<intTotal;i++)
-    {
-        arrNames.push(nameValues[i].innerHTML)
-    }
-    console.log(arrNames)
+    <script>
+        //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
+        $(document).ready(function () {
+            $("#apiName").animate({
+                width: "70%",
+                opacity: 0.9,
+                marginLeft: "0.6in",
+                fontSize: "3em",
+                borderWidth: "10px",
+            }, 1500);
+        });
+        var arrNums = []
+        var arrNames = []
+        var allStats = []
+        //kokoelmien nimien läpikäynti
+        function getNameValues() {
+            //haetaan tietokantojen kokonaismäärän kertova luku dbTotal tagista
+            var total = document.getElementById("dbTotal").innerHTML
+            //muunnetaan luvuksi
+            var intTotal = parseInt(total)
+            console.log(typeof (intTotal))
+            var nameValues = document.getElementsByClassName("statsNames")
 
-}
-getNameValues()
-var maxVal=0
-var minVal=0
-function getNumValues() {
-  var numValues = document.getElementsByClassName("statsNums")
-for (i=0;i<7;i++)
-{
-    arrNums.push(parseInt(numValues[i].innerHTML))
-    console.log(arrNums)
-    
+            for (i = 0; i < intTotal; i++) {
+                arrNames.push(nameValues[i].innerHTML)
+            }
+            console.log(arrNames)
 
-}
-minVal=Math.min(...arrNums)
-maxVal=Math.max(...arrNums)
-//suurimman numeron indeksipaikka arrNums listassa. talletetaan se muuttujaan, koska arrNames ja arrNums ovat samankokoisia listoja ja
-// listan järjestys on sama, näin saadaan käyttöön chartJs:ssä suurin kannan koko ja sen nimi
-indexNum=arrNums.indexOf(maxVal)
-indexNumMin = arrNums.indexOf(4)
-console.log(indexNum)
-console.log(maxVal)
-console.log(minVal)
-}
-getNumValues()
-function getAllValues() 
-{
-    var all = document.getElementsByClassName("allStat")
-    for (j=0;j<14;j++)
-{
-    allStats.push(all[j].innerHTML)
-}
+        }
+        getNameValues()
+        var maxVal = 0
+        var minVal = 0
+        function getNumValues() {
+            var numValues = document.getElementsByClassName("statsNums")
+            for (i = 0; i < 7; i++) {
+                arrNums.push(parseInt(numValues[i].innerHTML))
+                console.log(arrNums)
 
-}
-   </script>
-   <p id="demo"></p>
-   
+
+            }
+            minVal = Math.min(...arrNums)
+            maxVal = Math.max(...arrNums)
+            //suurimman numeron indeksipaikka arrNums listassa. talletetaan se muuttujaan, koska arrNames ja arrNums ovat samankokoisia listoja ja
+            // listan järjestys on sama, näin saadaan käyttöön chartJs:ssä suurin kannan koko ja sen nimi
+            indexNum = arrNums.indexOf(maxVal)
+            indexNumMin = arrNums.indexOf(4)
+            console.log(indexNum)
+            console.log(maxVal)
+            console.log(minVal)
+        }
+        getNumValues()
+        function getAllValues() {
+            var all = document.getElementsByClassName("allStat")
+            for (j = 0; j < 14; j++) {
+                allStats.push(all[j].innerHTML)
+            }
+
+        }
+    </script>
+    <p id="demo"></p>
+
     <div class="hideAll">
-        <p id="selection"  class="selection"></p>
+        <p id="selection" class="selection"></p>
 
         <button hidden id="hideBtn">Hide</button>
     </div>
     <label class="dbsLbl" for="dbs">Access to local Mongo database:</label>
-    
+
     <form action="{{ url_for('read_form')}}" method="post">
         <select name="dbs" id="dbs" onchange="getSelectedText(this)">
 
@@ -117,7 +113,7 @@ function getAllValues()
             <option value="mongodb://localhost:27017/{{each}}">{{each}}</option>
             {% endfor %}
         </select>
-        <select hidden name="atlasDB"id="atlasDB" onchange="getSelectedDataBase(this)">
+        <select hidden name="atlasDB" id="atlasDB" onchange="getSelectedDataBase(this)">
             <option value="default" selected>Select Atlas DB</option>
             {% for i in dbsAtlas %}
             <option value="">{{i}}</option>
@@ -131,134 +127,149 @@ function getAllValues()
         </script>
 
         <input hidden type="text" name="selectedDB" id="selectedDB">
-       <!--tässä näytetään dropdown valittu database-->
+        <!--tässä näytetään dropdown valittu database-->
         <input type="text" name="DBname" id="DBname">
         <button class="selectBtn">Select</button>
-    </form> 
+    </form>
     <br><br>
-    <label for="atlas" class="atlasLbl" >Access to Atlas DB</label>
+    <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
     <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
     <br><br>
-    
-    <form action= "{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
-    <div class="atlasForm" id="atlasForm">
 
-    </div>
-    
-    
-</form>
+    <form action="{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
+        <div class="atlasForm" id="atlasForm">
+
+        </div>
+
+
+    </form>
     </div>
     <label for="mysql" class="mysqlLbl">Access to local MySQL Database</label>
-  
+
     <input type="checkbox" class="mysqlCB" id="mysql" name="mysql" onclick="createMysql()">
     <br><br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
-    <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">
-   
+    <input type="checkbox" id="sqlite" name="sqlite" onchange="runSqlite()">
+
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
-        <label for="restriction">Set the number of files to search:</label>
+        <label hidden id="restrictionLbl" for="restriction">Set the number of files to search:</label>
         <input hidden type="text" name="restriction" id="restriction" size="4">
         <br><br>
         <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
     </form>
-        <br>
-        <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
-            <input hidden type="text" placeholder="db-file path" id="dbPath" name="dbPath">
-            <br><br>
-            <button hidden class="runBtn" id="accessBtn">Access</button>
-        </form>
-        <select hidden name="sqliteInput" id="sqliteInput">
-            <option value="default" selected>Select Table</option>
-            <!--sql tietokantojen näyttö select komponentissa-->
-            {% for t in tables %}
-            <option value="">{{t}}</option>
-            {% endfor %}
-            </select>
-        
-        <!--jos sqlitetables on true näytetään allaoleva input kenttä-->
-        {% if sqliteTables==True%}
-        <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
-        <input type="text" id="sqliteFile" name="sqliteFile" placeholder="File path">
+    <br>
+    <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
+        <input hidden type="text" placeholder="db-file path" id="dbPath" name="dbPath">
+        <br><br>
+        <button hidden class="runBtn" id="accessBtn">Access</button>
+    </form>
+    <select hidden name="sqliteInput" id="sqliteInput">
+        <option value="default" selected>Select Table</option>
+        <!--sql tietokantojen näyttö select komponentissa-->
+        {% for t in tables %}
+        <option value="">{{t}}</option>
+        {% endfor %}
+    </select>
+
+    <!--jos sqlitetables on true näytetään allaoleva input kenttä-->
+    {% if sqliteTables==True%}
+    <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+        <!--huomaa oninput eventti, koska teksti lisätään jquery funktiolla tähän inputtii
+        täytyy kentän merkkijonon tarkkailu tehdä oninputilla ja eri funktiolla-->
+        <input type="text" id="sqliteFile" name="sqliteFile" placeholder="File path" oninput="clearBackup(this.value)">
+
         <button id="selectBtn" name="selectBtn" class="runBtn" onclick="showButton()">Select</button>
     </form>
+    <form action="{{ url_for('sqliteScripts.backUpDB')}}" method="post">
+    <label hidden id="backupLbl" for="backup">Backup this database</label>
+    <input hidden type="checkbox" id="backup" onchange="startBackup()">
+    <input type="text" name="sqliteBase" id="sqliteBase">
+    <button id="backupBtn">Backup</button>
+</form>
     <select name="sqlitetable" id="sqlitetable" onchange="selectionSqlite(this)">
         <option value="default" selected>Select Table</option>
         <!--sql tietokantojen näyttö select komponentissa-->
         {% for s in sqlTables %}
         <option value="">{{s}}</option>
         {% endfor %}
-        </select>
-        <!--jos sqlitetables on muu kuin true, piilotetaan input kenttä-->
-        {%else%}
-        <input hidden type="text" id="sqliteFile" name="sqliteFile" >
-        {%endif%}
-  <!--
+    </select>
+    <!--jos sqlitetables on muu kuin true, piilotetaan input kenttä-->
+    {%else%}
+    <input hidden type="text" id="sqliteFile" name="sqliteFile">
+    {%endif%}
+    <!--
     <input type="checkbox"  id="sqlite" name="sqlite" onchange="runSqlite()">-->
-</form>
-<table id="sqliteTable" class="sqliteTable" border="1">
-  
-{% for s in sqliteDatabases %}
-<tr>
-<td id="sqlite" class="sqlite">{{s}}</td>
-</tr>
-{%endfor%}
-</table>
-<form action="{{ url_for('sqliteScripts.runsqlite')}}" method="post">
-    <input hidden type="text" id="selectedTable" name="selectedTable">
-    <!--show table button näytetään vasta etsinnän tulosten yhteydessä if lohko toimii myös eri formeissa-->
-    {% if sqliteTables==True%}
-    <button id="showTableBtn" name="showTableBtn">Show table</button>
-    {%endif%}
-    <br>
-</form>
-<form action="{{ url_for('sqliteScripts.selfWriteQuery')}}" method="post">
-    <input hidden type="text" id="selectedTable2" name="selectedTable">
-    {% if sqliteTables==True%}
-    <label id="queryLbl" for="query">Write SQLite query</label>
-    <input type="checkbox" id="queryCB" name="queryCB" onclick="showQueryBox()">
-    {%endif%}
-    <br>
-    <textarea hidden id="sqliteQuery" name="sqliteQuery"></textarea>
-    <br>
-    <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
-</form>
-<script>
-    //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
-    jQuery(".sqlite").click(function () {
-      //event.preventDefault();
-      var text = jQuery(this).text();
-      //katkaistaan merkkijono | merkin kohdalta
-      var textSplit = text.split("|")
-      //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
-      var splittedText=textSplit[0]
-      //trim poistaa välilyönnit
-      var noWhiteSpace = splittedText.trim()
-      console.log(noWhiteSpace);
-      document.getElementById("sqliteFile").value=noWhiteSpace
-     
-    });
-  
-  </script>
+    </form>
+    <table id="sqliteTable" class="sqliteTable" border="1">
+
+        {% for s in sqliteDatabases %}
+        <tr>
+            <td id="sqlite" class="sqlite">{{s}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+    <form action="{{ url_for('sqliteScripts.runsqlite')}}" method="post">
+        <input hidden type="text" id="selectedTable" name="selectedTable">
+        <!--show table button näytetään vasta etsinnän tulosten yhteydessä if lohko toimii myös eri formeissa-->
+        {% if sqliteTables==True%}
+        <button id="showTableBtn" name="showTableBtn">Show table</button>
+        {%endif%}
+        <br>
+    </form>
+    <form action="{{ url_for('sqliteScripts.selfWriteQuery')}}" method="post">
+        <input hidden type="text" id="selectedTable2" name="selectedTable">
+        {% if sqliteTables==True%}
+        <label id="queryLbl" for="query">Write SQLite query</label>
+        <input type="checkbox" id="queryCB" name="queryCB" onclick="showQueryBox()">
+        {%endif%}
+        <br>
+        <textarea hidden id="sqliteQuery" name="sqliteQuery"></textarea>
+        <br>
+        <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
+    </form>
+    <script>
+        //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
+        jQuery(".sqlite").click(function () {
+            //event.preventDefault();
+            var text = jQuery(this).text();
+            //katkaistaan merkkijono | merkin kohdalta
+            var textSplit = text.split("|")
+            //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
+            var splittedText = textSplit[0]
+            //trim poistaa välilyönnit
+            var noWhiteSpace = splittedText.trim()
+            console.log(noWhiteSpace);
+            document.getElementById("sqliteFile").value = noWhiteSpace
+            document.getElementById("sqliteBase").value = noWhiteSpace
+
+            document.getElementById("sqliteFile").style.background="yellow"
+            document.getElementById("sqliteFile").onchange=backUp(document.getElementById("sqliteFile").value)
 
 
-    
+        });
+
+    </script>
+
+
+
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
-    <div hidden id="mysqlForm">
-        <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">
-            <option value="default" selected>Select Database</option>
-            <!--mysql tietokantojen näyttö select komponentissa-->
-            {% for s in sqls %}
-            <option value="">{{s}}</option>
-            {% endfor %}
+        <div hidden id="mysqlForm">
+            <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">
+                <option value="default" selected>Select Database</option>
+                <!--mysql tietokantojen näyttö select komponentissa-->
+                {% for s in sqls %}
+                <option value="">{{s}}</option>
+                {% endfor %}
             </select>
             <input type="text" id="selectedSQL" name="selectedSQL">
-    </div>
-</form>
-    
+        </div>
+    </form>
+
     <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
     <br><br>
     <div hidden id="chart">
-    <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
-</div>
+        <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
+    </div>
 </body>
+
 </html>

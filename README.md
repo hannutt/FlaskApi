@@ -73,6 +73,10 @@ After the click, the JavaScript function creates an input field and a button ele
 
 A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database.
 
+BACKUP SQLITE DATABASE
+
+User can backup SQLite databases. The backup is made using the iterdumb method and the IO library. The backup file is saved as a .sql file in the program folder.
+
 SELF-WRITING SQL QUERIES
 
 You can also write sql queries yourself by clicking the "write sql query" check box.
