@@ -2,17 +2,46 @@
 <html>
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <title>SQLite</title>
     </head>
     <body>
         <h3>SQLite Databases</h3>
-       
-        <p id="cols" class="cols">{{finalNames}}</p>
+       <table border="1">
+        <tr>
+            <th id="cols" class="cols">{{finalNames}}</th>
+        </tr>
+
         
-       <p id="data">{%for d in data%}
-        {{d}}
-        {%endfor%}
-    </p>
+           {%for d in data%}
+          
+           <tr>
+           <td id="data{{loop.index}}">{{d}}</td><td>
+            <!--id annetaan endpointissa, eli funktion nimi ,id=[:2] eli 2 ensimmäistä merkkiä
+            koska d on merkkijono ja ensimmäiset kirjaimet ovat id numero -->
+            <form action="{{ url_for('sqliteScripts.deleteSqliteRecord',id=d[:2])}}" method="post">
+            <button>X</button><input id="btnId{{loop.index}}" name="btnId{{loop.index}}" type="text" ></td>
+            </form>
+            <script>
+                jQuery("#data{{loop.index}}").click(function () {
+                   //event.preventDefault();
+                   var text = jQuery(this).text();
+                   //katkaistaan merkkijono , merkin kohdalta
+                   var textSplit = text.split(",")
+                   //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
+                   var splittedText = textSplit[0]
+                   console.log(splittedText)
+                   //klikatun tietueen id annetaan sitä vastaavan inputin arvoksi.
+                   document.getElementById("btnId{{loop.index}}").value=splittedText
+               });
+           </script>
+           {%endfor%}
+        </tr>
+      
+    </table>
+    
+    
+    
       
     </body>
 </html>

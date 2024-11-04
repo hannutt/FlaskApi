@@ -76,7 +76,7 @@ def showSqliteTables():
 
 @sqliteScripts.route("/opentable",methods=['POST','GET'])
 def runsqlite():
-   
+   ids=[]
    data=[]
    global dbname
    table=request.form.get("selectedTable")
@@ -91,13 +91,14 @@ def runsqlite():
    
    
    for row in cursor:
+      ids.append(row)
       #row on tuple datatyyppi, joten muutetaan se merkkijonoksi että voidaan käyttää replace metodia
       #poistamaan ylim. merkit
       datastr = str(row).replace("(","").replace(")","").replace("'","")
       
       data.append(datastr)
       
-   return render_template("sqlite.html",data=data,lng=lng,finalNames=finalNames)
+   return render_template("sqlite.html",ids=ids,data=data,lng=lng,finalNames=finalNames)
 
 @sqliteScripts.route("/readInput",methods=['POST','GET'])
 def readInput():
@@ -141,7 +142,7 @@ def selfWriteQuery():
 def backUpDB():
    dbname=request.form.get("sqliteBase")
    conn = sqlite3.connect(dbname)
-   print("BACKUP ",conn)
+   
    
    with io.open('backupdatabase_dump.sql', 'w') as p:  
           
@@ -149,7 +150,18 @@ def backUpDB():
     for line in conn.iterdump():
          p.write('%s\n' % line) 
    conn.close()
-   return render_template("sqlite.html")  
+   return render_template("sqlite.html")
+
+#vastaan otetaan parametrina html:stä saatu id
+@sqliteScripts.route("/deleteSqlite/<id>",methods=['POST','GET'])
+def deleteSqliteRecord(id):
+      strid=str(id)
+      if "," in strid:
+         rep=strid.replace(",","")
+         print(rep)
+      else:
+         print(id)
+      return render_template("sqlite.html")
    
 
 
