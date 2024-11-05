@@ -66,10 +66,38 @@ function clearBackup(val) {
 function startBackup() {
     var cb = document.getElementById("backup").checked
     if (cb===true)
-    {
+    {  //simuloitu klikkaus buttonille
         document.getElementById("backupBtn").click()
 
     }
     
 }
+//funktio hakee amountin arvon, joka kertoo montako inputtia tarvitaan
+//inputit luodaan for silmukassa createElementin avulla ja sijoitetaan
+//createNew diviin appendChild metodin avulla
+function createSqlFields() {
+    var amount = document.getElementById("colAmount").innerHTML
+    console.log(amount)
+    var amountInt = parseInt(amount)
+    var cb= document.getElementById("createRecord")
+    if (cb.checked===true)
+    {
+        document.getElementById("columnNames").hidden=false
+       
+        for (var i=0;i<amountInt;i++)
+        {
+           var input= document.createElement("INPUT")
+           document.getElementById("createNew").appendChild(input)
+           input.id=i
+           input.name=i
+        }
+        var createBtn = document.createElement("button")
+        createBtn.textContent="Create record"
+        document.getElementById("createNew").appendChild(createBtn)
+    }
+    else {
+        document.getElementById("createNew").innerHTML=""
+    }
+    
 
+}

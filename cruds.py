@@ -7,6 +7,7 @@ import pymongo
 
 cruds = Blueprint('cruds',__name__,static_folder='static',template_folder='templates')
 
+#mongodb crud funktiot
 @cruds.route('/edit-form',methods=['POST'])
 def editRecords():
     client = pymongo.MongoClient('mongodb://localhost:27017/')

@@ -147,3 +147,16 @@ white-space: nowrap;
     font-size: larger;
     font-weight: bold;
 }
+.columnNames {
+    font-weight: bold;
+}
+.sqliteBody {
+    background-image:  url('/static/images/FlaskAppBg.jpg');
+}
+.sqliteDelete {
+    background-color: #db2c1f;
+}
+.tableName {
+    font-size: larger;
+    font-weight: bold;
+}

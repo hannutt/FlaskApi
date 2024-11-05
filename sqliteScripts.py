@@ -76,18 +76,22 @@ def showSqliteTables():
 
 @sqliteScripts.route("/opentable",methods=['POST','GET'])
 def runsqlite():
+   selectedTable=request.form.get('selectedTable')
    ids=[]
    data=[]
-   global dbname
+   
    table=request.form.get("selectedTable")
    conn = sqlite3.connect(dbname)
    #f-stringin avulla voidaan antaan taulun nimi parametrina.
    cursor = conn.execute(f"SELECT * FROM {table}")
-   #sarakkeiden nimet
+   #sarakkeiden nimet, columanames[0] = id kenttä ja se välitetään html-sivulle
    columnnames = list(map(lambda x: x[0], cursor.description))
    finalNames = " ".join(columnnames)
+  
    #columnnames listan pituus
    lng = len(columnnames)
+   columnInt = int(lng)
+   print("columns ",lng)
    
    
    for row in cursor:
@@ -97,8 +101,12 @@ def runsqlite():
       datastr = str(row).replace("(","").replace(")","").replace("'","")
       
       data.append(datastr)
-      
-   return render_template("sqlite.html",ids=ids,data=data,lng=lng,finalNames=finalNames)
+   getDbName(dbname)
+   return render_template("sqlite.html",ids=ids,data=data,lng=lng,finalNames=finalNames,dbname=dbname,selectedTable=selectedTable,columnnames=columnnames[0],columnInt=columnInt,columnamesAll=columnnames,table=table)
+
+def getDbName(returnedDB):
+   return returnedDB
+
 
 @sqliteScripts.route("/readInput",methods=['POST','GET'])
 def readInput():
@@ -142,8 +150,6 @@ def selfWriteQuery():
 def backUpDB():
    dbname=request.form.get("sqliteBase")
    conn = sqlite3.connect(dbname)
-   
-   
    with io.open('backupdatabase_dump.sql', 'w') as p:  
           
     # iterdump() function 
@@ -152,16 +158,45 @@ def backUpDB():
    conn.close()
    return render_template("sqlite.html")
 
-#vastaan otetaan parametrina html:stä saatu id
+#vastaan otetaan parametrina html:stä saatu id ja sen perusteella poistetaan
 @sqliteScripts.route("/deleteSqlite/<id>",methods=['POST','GET'])
 def deleteSqliteRecord(id):
+      databaseName=request.form.get('dbname')
+      databaseTable=request.form.get('sqlSelection')
+      idField=request.form.get('idfield')
+      #poistetaan id:stä ylim. merkit ja muunnetaan se numeroksi.
       strid=str(id)
       if "," in strid:
-         rep=strid.replace(",","")
-         print(rep)
+         rep=strid.replace(",","").replace(" ","")
+         idToInt = int(rep)
+         print(idToInt)
       else:
-         print(id)
+         idToInt = int(id)
+         print(idToInt)
+      conn=sqlite3.connect(databaseName)
+      #sql lause, jossa poistetaan valitusta taulusta id-numeron perusteella
+      #idfield on sarake, jossa id-numerot ovat
+      cursor=conn.execute(f"DELETE FROM {databaseTable} WHERE {idField}={idToInt}")
+      conn.commit()
+      conn.close()
+      #cursor = conn.execute(f"DELETE FROM {databaseTable}" "WHERE ")
       return render_template("sqlite.html")
+
+#amount on parametri jonka arvo annetaan sqlite.html:ssä. amount sisältää input kenttien lukumäärän
+@sqliteScripts.route("/createSqliteRecord/<amount>",methods=['POST','GET'])
+def createSqliteRec(amount):
+   amounInt=int(amount)
+   i=-1
+   while i<amounInt:
+      j=request.form.get(str(i))
+      print(j)
+      i=i+1
+      
+      
+
+     
+   print(i)
+   return render_template("sqlite.html")
    
 
 

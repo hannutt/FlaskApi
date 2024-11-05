@@ -3,10 +3,26 @@
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
         <title>SQLite</title>
     </head>
-    <body>
+    <body class="sqliteBody">
+        <nav>
+            <form action="{{ url_for('showIndex')}}" method="post">
+              <button class="fpBtn">Front page</button> |
+            </form>
+            <!--paluu takaisin kokoelman valintanäkymään tai eteenpäin-->
+          
+              <button id="backtoSel2" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+              <button id="forwardbtn" onclick="history.forward()" class="fpBtn">Go to forward page</button> |
+           
+          </nav>
         <h3>SQLite Databases</h3>
+        <p id="tableName" class="tableName">{{table}} table Selected</p>
+      
+       
+       
+        
        <table border="1">
         <tr>
             <th id="cols" class="cols">{{finalNames}}</th>
@@ -20,7 +36,11 @@
             <!--id annetaan endpointissa, eli funktion nimi ,id=[:2] eli 2 ensimmäistä merkkiä
             koska d on merkkijono ja ensimmäiset kirjaimet ovat id numero -->
             <form action="{{ url_for('sqliteScripts.deleteSqliteRecord',id=d[:2])}}" method="post">
-            <button>X</button><input id="btnId{{loop.index}}" name="btnId{{loop.index}}" type="text" ></td>
+                <input type="text" hidden id="dbname" name="dbname" value="{{dbname}}">
+            <button class="sqliteDelete">X</button><input hidden id="btnId{{loop.index}}" name="btnId{{loop.index}}" type="text" ></td>
+            <input hidden type="text" name="sqlSelection" value="{{selectedTable}}">
+            <!--taulun id kentän nimi on tässä nimi haetaan sqlitescripts.py:n runsqlite funktiossa-->
+            <input hidden type="text" name="idfield" value="{{columnnames}}">
             </form>
             <script>
                 jQuery("#data{{loop.index}}").click(function () {
@@ -40,8 +60,17 @@
       
     </table>
     
+    <p hidden type="text" id="colAmount">{{columnInt}}></p>
+    <label for="createRecord">Crete new record</label>
+    <p id="columnNames" class="columnNames" hidden>{{columnamesAll}}</p>
+    <input type="checkbox" id="createRecord" name="createRecord" onchange="createSqlFields()">
+    <!--sarakkeiden määrä lähetetään python funktiolle parametrina amount=columnInt-->
+    <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt)}}" method="post">
+       
     
-    
-      
-    </body>
+    <div id="createNew">
+    </form>
+
+    </div>  
+    </body> 
 </html>
