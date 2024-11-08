@@ -1,76 +1,118 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
-        <title>SQLite</title>
-    </head>
-    <body class="sqliteBody">
-        <nav>
-            <form action="{{ url_for('showIndex')}}" method="post">
-              <button class="fpBtn">Front page</button> |
-            </form>
-            <!--paluu takaisin kokoelman valintanäkymään tai eteenpäin-->
-          
-              <button id="backtoSel2" onclick="history.back()" class="fpBtn">Back to previous page</button> |
-              <button id="forwardbtn" onclick="history.forward()" class="fpBtn">Go to forward page</button> |
-           
-          </nav>
-        <h3>SQLite Databases</h3>
-        <p id="tableName" class="tableName">{{table}} table Selected</p>
-      
-       
-       
-        
-       <table border="1">
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
+    <title>SQLite</title>
+</head>
+
+<body class="sqliteBody">
+    <nav>
+        <form action="{{ url_for('showIndex')}}" method="post">
+            <button class="fpBtn">Front page</button> |
+        </form>
+        <!--paluu takaisin kokoelman valintanäkymään tai eteenpäin-->
+
+        <button id="backtoSqlite" onclick="reloadPage()" class="fpBtn">Back to previous page</button> |
+        <button id="forwardbtn" onclick="history.forward()" class="fpBtn">Go to forward page</button> |
+
+    </nav>
+    <h3>SQLite Databases</h3>
+    <p id="tableName" class="tableName">{{table}} table Selected</p>
+
+
+
+
+    <table border="1">
         <tr>
             <th id="cols" class="cols">{{finalNames}}</th>
         </tr>
 
-        
-           {%for d in data%}
-          
-           <tr>
-           <td id="data{{loop.index}}">{{d}}</td><td>
-            <!--id annetaan endpointissa, eli funktion nimi ,id=[:2] eli 2 ensimmäistä merkkiä
+
+        {%for d in data%}
+
+        <tr>
+            <td id="data{{loop.index}}">{{d}}</td>
+            <td>
+                <!--id annetaan endpointissa, eli funktion nimi ,id=[:2] eli 2 ensimmäistä merkkiä
             koska d on merkkijono ja ensimmäiset kirjaimet ovat id numero -->
-            <form action="{{ url_for('sqliteScripts.deleteSqliteRecord',id=d[:2])}}" method="post">
-                <input type="text" hidden id="dbname" name="dbname" value="{{dbname}}">
-            <button class="sqliteDelete">X</button><input hidden id="btnId{{loop.index}}" name="btnId{{loop.index}}" type="text" ></td>
+                <form action="{{ url_for('sqliteScripts.deleteSqliteRecord',id=d[:2])}}" method="post">
+                    <input hidden type="text" id="dbname" name="dbname" value="{{dbname}}">
+                    <button class="sqliteDelete">X</button><input hidden id="btnId{{loop.index}}"
+                        name="btnId{{loop.index}}" type="text">
+            </td>
             <input hidden type="text" name="sqlSelection" value="{{selectedTable}}">
             <!--taulun id kentän nimi on tässä nimi haetaan sqlitescripts.py:n runsqlite funktiossa-->
             <input hidden type="text" name="idfield" value="{{columnnames}}">
             </form>
             <script>
                 jQuery("#data{{loop.index}}").click(function () {
-                   //event.preventDefault();
-                   var text = jQuery(this).text();
-                   //katkaistaan merkkijono , merkin kohdalta
-                   var textSplit = text.split(",")
-                   //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
-                   var splittedText = textSplit[0]
-                   console.log(splittedText)
-                   //klikatun tietueen id annetaan sitä vastaavan inputin arvoksi.
-                   document.getElementById("btnId{{loop.index}}").value=splittedText
-               });
-           </script>
-           {%endfor%}
+                    //event.preventDefault();
+                    var text = jQuery(this).text();
+                    //katkaistaan merkkijono , merkin kohdalta, että saadaan pelkkä id numero
+                    var textSplit = text.split(",")
+                    //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
+                    var splittedText = textSplit[0]
+                    console.log(splittedText)
+                    //klikatun tietueen id annetaan sitä vastaavan inputin arvoksi.
+                    document.getElementById("btnId{{loop.index}}").value = splittedText
+                });
+            </script>
+            <script>
+                jQuery("#data{{loop.index}}").dblclick(function () {
+                    //event.preventDefault();
+                    var text = jQuery(this).text();
+                    var Colamount = document.getElementById("colAmount").innerHTML
+                    var ColamountInt = parseInt(Colamount)
+                    var textArray = text.split(",")
+                    console.log(Colamount)
+                    //klikatun tietueen arvot on talletettu textarray listaan. silmukan ja kierrosmuuttujan
+                    //avulla saadaan oikea arvo oikeaan kenttään valmiiksi editoitavaksi.
+                    for (var i = 0; i < ColamountInt; i++) {
+
+                        document.getElementById(i).value = textArray[i]
+
+                    }
+                    //id-kenttä muutetaan readonlyksi, eli id:tä ei voi muokata
+                    document.getElementById("0").setAttribute("readonly", "true")
+
+
+                });
+            </script>
+            {%endfor%}
         </tr>
-      
+
     </table>
-    
-    <p hidden type="text" id="colAmount">{{columnInt}}></p>
-    <label for="createRecord">Crete new record</label>
+    <p hidden>{{dbname}}</p>
+    <p type="text" hidden id="colAmount">{{columnInt}}</p>
+    <label for="createRecord" class="createRecordLbl">Create new record</label>
+
     <p id="columnNames" class="columnNames" hidden>{{columnamesAll}}</p>
     <input type="checkbox" id="createRecord" name="createRecord" onchange="createSqlFields()">
+    <label for="editSqlRecord" class="editSqlRecord">Edit record</label>
+    <input type="checkbox" id="editSqlRecord" onchange="createSqlEditFields()">
     <!--sarakkeiden määrä lähetetään python funktiolle parametrina amount=columnInt-->
-    <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt)}}" method="post">
-       
-    
-    <div id="createNew">
+    <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt,db=dbname,table=table)}}" method="post">
+
+
+        <div id="createNew">
     </form>
 
-    </div>  
-    </body> 
+    </div>
+    <form action="{{ url_for('sqliteScripts.editSqlite',amount=columnInt,db=dbname,table=table)}}" method="post">
+        <div id="editSqlite">
+
+        </div>
+    </form>
+
+
+    <button id="reloadBtn" onclick="location.reload(true)">Reload</button>
+    <script>
+
+    </script>
+
+</body>
+
 </html>

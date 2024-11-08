@@ -61,5 +61,5 @@ def getDataFromAtlas():
     except Exception as e:
         print(e)
     
-    return render_template('cloudSelect.html',l=l)
+    return render_template('cloudSelect.html',l=l,DBname=DBname,colName=colName)
 

@@ -1,3 +1,4 @@
+var ReloadPage=false
 function runSqlite() {
     var cb = document.getElementById("sqlite")
     if (cb.checked==true)
@@ -76,6 +77,15 @@ function startBackup() {
 //inputit luodaan for silmukassa createElementin avulla ja sijoitetaan
 //createNew diviin appendChild metodin avulla
 function createSqlFields() {
+    //haetaan kaikki elementin sisältämä teksti
+    var columnNames=document.getElementsByClassName("columnNames")
+    //talletetaan se toiseen muuttujaan, että voidaan käyttää split metodia
+    var cols = columnNames[0].innerHTML
+    var colsRep = cols.replace("[","").replace("]","")
+    //splitnames on taulukko ja muuttujan teksti katkaistaan aina pilkun kohdalta, jolloin
+    //jokainen sana saadaan omaksi alkiokseen listaan
+    var splitNames = colsRep.split(",")
+    
     var amount = document.getElementById("colAmount").innerHTML
     console.log(amount)
     var amountInt = parseInt(amount)
@@ -83,6 +93,8 @@ function createSqlFields() {
     if (cb.checked===true)
     {
         document.getElementById("columnNames").hidden=false
+        //vähennetään luotavista input-kentistä yksi, eli id kenttä.
+        
        
         for (var i=0;i<amountInt;i++)
         {
@@ -90,14 +102,51 @@ function createSqlFields() {
            document.getElementById("createNew").appendChild(input)
            input.id=i
            input.name=i
+           //placeholderin arvoksi tulee sarakkeiden nimet
+           input.placeholder=splitNames[i]
         }
         var createBtn = document.createElement("button")
         createBtn.textContent="Create record"
+        createBtn.setAttribute("class","runBtn")
         document.getElementById("createNew").appendChild(createBtn)
     }
     else {
         document.getElementById("createNew").innerHTML=""
+        document.getElementById("columnNames").hidden=true
     }
     
 
 }
+
+function createSqlEditFields() {
+    var amount = document.getElementById("colAmount").innerHTML
+    console.log(amount)
+    var amountInt = parseInt(amount)
+    console.log(amountInt)
+    var cb= document.getElementById("editSqlRecord")
+    var editBtn=document.createElement("button")
+    editBtn.textContent="Edit record"
+    editBtn.setAttribute("class","runBtn")
+    if (cb.checked===true)
+    {   
+        for (var i=0;i<amountInt;i++)
+        {
+           var input= document.createElement("INPUT")
+           document.getElementById("editSqlite").appendChild(input)
+           input.id=i
+           input.name=i
+          
+        }
+        
+        
+       
+        document.getElementById("editSqlite").appendChild(editBtn)
+    }
+    else {
+        document.getElementById("editSqlite").innerHTML=""
+      
+    }
+    
+}
+
+

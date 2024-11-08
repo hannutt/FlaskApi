@@ -1,5 +1,5 @@
 import io
-from flask import Blueprint, render_template, request
+from flask import Blueprint, redirect, render_template, request, url_for
 import sqlite3,os
 from pathlib import Path, PureWindowsPath
 
@@ -183,20 +183,78 @@ def deleteSqliteRecord(id):
       return render_template("sqlite.html")
 
 #amount on parametri jonka arvo annetaan sqlite.html:ssä. amount sisältää input kenttien lukumäärän
-@sqliteScripts.route("/createSqliteRecord/<amount>",methods=['POST','GET'])
-def createSqliteRec(amount):
-   amounInt=int(amount)
-   i=-1
-   while i<amounInt:
-      j=request.form.get(str(i))
-      print(j)
-      i=i+1
-      
-      
+#db parametri on tietokannam polku ja nimi
+@sqliteScripts.route("/createSqliteRecord/<amount>/<db>/<table>",methods=['POST','GET'])
+def createSqliteRec(amount,db,table):
+   amountInt = int(amount)
+   conn=sqlite3.connect(db)
+   cursor=conn.cursor()
+ 
+  #haetaan sarakkeiden lukumäärä valitusta taulusta.
+   columnsQuery = "PRAGMA table_info(%s)" % table
+   cursor.execute(columnsQuery)
+   numberOfColumns = len(cursor.fetchall())
+   #lisätään muuttujaan niin monta ? ja . , merkkiä kuin tarvitaan, eli jos on 5 saraketta tarvitaan
+   #sql lauseessa ?,?,?,?,? lauseke
+   placeholder= '?,' * numberOfColumns
+   #poistetaan merkkijonon lopusta pilkku, jota ei tarvita.
+   placeholder=placeholder[:-1]
+   print(placeholder)
+  
 
-     
-   print(i)
+   i=0
+   values=[]
+   for i in range(i,amountInt):
+      #input kenttien arvot talleteaan j muuttujaan inputtien nimet html:ssä lähtevät numerosta 0
+      #for-silmukka kasvattaa i:tä eli input kentän nimeä aina yhdellä, että saadaan
+      #kaikki input kenttien arvot talteen
+      j=request.form.get(str(i))
+      values.append(j)
+   #LISTAarvojen tallennus tietokantaan. kysymysmerkki vastaa yhtä sarakkeen nimeä.
+   #Placeholder muuttuja sisältää ?, lausekkeen
+   conn.execute(f"INSERT INTO {table} VALUES ({placeholder})",values)
+   conn.commit()
+   conn.close()
+   placeholder=''
+   
    return render_template("sqlite.html")
+
+@sqliteScripts.route("/editSqlite/<amount>/<db>/<table>",methods=['POST','GET'])
+def editSqlite(amount,db,table):
+   amountInt=int(amount)
+   conn=sqlite3.connect(db)
+   cursor=conn.cursor()
+ 
+  #haetaan sarakkeiden lukumäärä valitusta taulusta.
+   columnsQuery = "PRAGMA table_info(%s)" % table
+   cursor.execute(columnsQuery)
+   numberOfColumns = len(cursor.fetchall())
+   #lisätään muuttujaan niin monta ? ja . , merkkiä kuin tarvitaan, eli jos on 5 saraketta tarvitaan
+   #sql lauseessa ?,?,?,?,? lauseke
+   placeholder= '?,' * numberOfColumns
+   #poistetaan merkkijonon lopusta pilkku, jota ei tarvita.
+   placeholder=placeholder[:-1]
+   print(placeholder)
+  
+
+   i=0
+   values=[]
+   for i in range(i,amountInt):
+      j=request.form.get(str(i))
+      values.append(j)
+
+   conn.execute(f"UPDATE {table} SET QUESTION=? WHERE qID=?",(values[1],values[0]))
+   conn.commit()
+   conn.close()
+   placeholder=''
+
+   return render_template("sqlite.html")
+
+
+@sqliteScripts.route("/reload",methods=['POST','GET'])
+def reload():
+   
+   return redirect(url_for('sqliteScripts.runsqlite'))
    
 
 

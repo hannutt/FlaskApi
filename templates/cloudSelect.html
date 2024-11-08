@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>COllection select</title>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
-    </head>
-    <body>
-        <form action="{{ url_for('cloudConnection.getDataFromAtlas')}}" method="post">
+
+<head>
+    <title>COllection select</title>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <nav>
+
+        <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+        <button id="forwardbtn" onclick="history.forward()" class="fpBtn">Go to forward page</button> |
+    </nav>
+    <h3>You are viewing database named: {{DBName}} and collection named: {{colName}}</h3>
+    <br><br>
+    <form action="{{ url_for('cloudConnection.getDataFromAtlas')}}" method="post">
         <input type="text" name="atlasDBName" id="atlasDBName" value="{{name}}">
         <input type="text" name="atlasCollection" id="atlasCollection">
         <button>Show</button>
     </form>
-       
-        <select name="names" id="names "onchange="getCollectionName(this)">
-            <option value="default">Select</option>
-            {% for c in collections %}
-            <option value="">{{c}}</option>
-            {%endfor%}
-        </select>
-        {% for i in l %}
-        <p>{{i}}</p>
-        {%endfor%}
 
-       
-    </body>
+    <select name="names" id="names " onchange="getCollectionName(this)">
+        <option value="default">Select</option>
+        {% for c in collections %}
+        <option value="">{{c}}</option>
+        {%endfor%}
+    </select>
+    {% for i in l %}
+    <p>{{i}}</p>
+    {%endfor%}
+
+
+</body>
+
 </html>

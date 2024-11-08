@@ -160,3 +160,6 @@ white-space: nowrap;
     font-size: larger;
     font-weight: bold;
 }
+.createRecordLbl {
+    font-weight: bold;
+}
