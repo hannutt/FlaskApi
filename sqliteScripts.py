@@ -72,7 +72,7 @@ def showSqliteTables():
        sqlTables.append(x)
     conn.close()
 
-    return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables)
+    return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables,dbname=dbname)
 
 @sqliteScripts.route("/opentable",methods=['POST','GET'])
 def runsqlite():
@@ -224,7 +224,11 @@ def editSqlite(amount,db,table):
    amountInt=int(amount)
    conn=sqlite3.connect(db)
    cursor=conn.cursor()
- 
+   cursor.execute(f"SELECT * FROM {table}")
+   #taulun sarakkeiden nimet
+   names = list(map(lambda x: x[0], cursor.description))
+   print(names)
+   
   #haetaan sarakkeiden lukumäärä valitusta taulusta.
    columnsQuery = "PRAGMA table_info(%s)" % table
    cursor.execute(columnsQuery)
@@ -242,12 +246,15 @@ def editSqlite(amount,db,table):
    for i in range(i,amountInt):
       j=request.form.get(str(i))
       values.append(j)
-
-   conn.execute(f"UPDATE {table} SET QUESTION=? WHERE qID=?",(values[1],values[0]))
+   j=0
+   #tähän tarvitaan toinen silmukka, koska jos execute metodin suorittaisi samassa silmukassa
+   #muokka ei toimisi, koska values[1] on olemassa vasta silmukan päättymisen jälkeen.
+   for j in range(j,amountInt):
+      #muokattava taulu ja sarakkeiden nimet ovat hakasuluissa, asetettava arvot values listassa.
+      conn.execute(f"UPDATE {table} SET {names[1]}=? WHERE {names[0]}=?",(values[1],values[0]))
    conn.commit()
    conn.close()
-   placeholder=''
-
+   
    return render_template("sqlite.html")
 
 

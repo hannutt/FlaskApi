@@ -25,9 +25,9 @@ function runSqlite() {
 function selectionSqlite(dbtable) {
     var selectedTable= dbtable.options[dbtable.selectedIndex].text
     rep=selectedTable.replace("(","").replace(")","").replace(",","").replace("'","").replace("'","")
-    console.log(rep)
     document.getElementById("selectedTable").value=rep
     document.getElementById("selectedTable2").value=rep
+    
 }
 
 function showQueryBox() {
@@ -143,10 +143,18 @@ function createSqlEditFields() {
         document.getElementById("editSqlite").appendChild(editBtn)
     }
     else {
-        document.getElementById("editSqlite").innerHTML=""
-      
+        document.getElementById("editSqlite").innerHTML=""     
     }
-    
 }
-
+function createSqliteTable() {
+    var cb= document.getElementById("cretateTableCB")
+    if (cb.checked==true)
+    {
+        var t = document.createElement("textarea")
+        document.getElementById("texta").appendChild(t)
+    }
+    else{
+        document.getElementById("texta").innerHTML=''
+    }
+}
 

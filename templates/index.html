@@ -5,8 +5,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"
+        integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css"
+        integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/menuScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
@@ -167,10 +171,10 @@
     </form>
     <script>
         //jquery autocomplete funktio
-        $( function(){
-            var drives=['c:\\','d:\\','e:\\','f:\\','g:\\']
+        $(function () {
+            var drives = ['c:\\', 'd:\\', 'e:\\', 'f:\\', 'g:\\']
             $('#dbPath').autocomplete({
-                source:drives
+                source: drives
             })
         })
     </script>
@@ -185,6 +189,14 @@
     <!--jos sqlitetables on true näytetään allaoleva input kenttä-->
     {% if sqliteTables==True%}
     <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+      
+        <p id="selectedSqliteDB">{{dbname}}</p>
+        <label for="createTableCB">Create table to {{dbname}}</label>
+        <input id = "cretateTableCB"type="checkbox" onchange="createSqliteTable()">
+        <div id="texta">
+            
+        </div>
+        <br>
         <!--huomaa oninput eventti, koska teksti lisätään jquery funktiolla tähän inputtii
         täytyy kentän merkkijonon tarkkailu tehdä oninputilla ja eri funktiolla-->
         <input type="text" id="sqliteFile" name="sqliteFile" placeholder="File path" oninput="clearBackup(this.value)">
@@ -192,13 +204,13 @@
         <button id="selectBtn" name="selectBtn" class="runBtn" onclick="showButton()">Select</button>
     </form>
     <form action="{{ url_for('sqliteScripts.backUpDB')}}" method="post">
-    <label hidden id="backupLbl" for="backup">Backup this database</label>
-    <input hidden type="checkbox" id="backup" onchange="startBackup()">
-    <input hidden type="text" name="sqliteBase" id="sqliteBase">
-    <button hidden id="backupBtn">Backup</button>
-    
+        <label hidden id="backupLbl" for="backup">Backup this database</label>
+        <input hidden type="checkbox" id="backup" onchange="startBackup()">
+        <input hidden type="text" name="sqliteBase" id="sqliteBase">
+        <button hidden id="backupBtn">Backup</button>
 
-</form>
+
+    </form>
     <select name="sqlitetable" id="sqlitetable" onchange="selectionSqlite(this)">
         <option value="default" selected>Select Table</option>
         <!--sql tietokantojen näyttö select komponentissa-->
@@ -254,9 +266,9 @@
             console.log(noWhiteSpace);
             document.getElementById("sqliteFile").value = noWhiteSpace
             document.getElementById("sqliteBase").value = noWhiteSpace
-            sessionStorage.setItem('dbfile',noWhiteSpace)
-            document.getElementById("sqliteFile").style.background="yellow"
-            document.getElementById("sqliteFile").onchange=backUp(document.getElementById("sqliteFile").value)
+            sessionStorage.setItem('dbfile', noWhiteSpace)
+            document.getElementById("sqliteFile").style.background = "yellow"
+            document.getElementById("sqliteFile").onchange = backUp(document.getElementById("sqliteFile").value)
 
 
         });

@@ -3,10 +3,12 @@ Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, 
 
 The main idea is that you can access multiple MongoDB, MySQL or SQLite databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL & SQLite) and MongoDB Atlas cloud databases.
 
-The username and password are stored in the .env environment file and retrieved with the os.getenv function.
-The .env file is in gitignore mode for security reasons
+It is possible to update, add new records and delete records to all the mentioned databases.
+You can also create new document collections in Mongo databases.
 
-Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed
+The Mongo Cloud Atlas username and password are stored in the .env environment file and retrieved with the os.getenv function. The .env file is in gitignore mode for security reasons.
+
+Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed.
 
 ![alt text](static/images/flaskFront.png)
 
@@ -64,7 +66,7 @@ ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 
 All local mysql databases are fetched with the "show databases" command when the user clicks the "access mysql databases" dialog. the results (i.e. database names) are looped in a for loop and displayed in the html dropdown menu.
 
-ACCESS TO LOCAL SQLITE3 DATABASE USING HTML-UI (EXPERIMENTAL)
+ACCESS TO LOCAL SQLITE3 DATABASE USING HTML-UI 
 
 Accessing sqlite databases required a different approach. for now, it's done using the Python OS library's os.walk method. With this method, the Python OS library uses a for loop to search for all files on the C drive that end with the .db identifier. Finally, all found .db files will be displayed on the HTML page.
 
@@ -140,7 +142,6 @@ The selected value of the dropdown is obtained by the request.form.get method an
 
 After selecting a database, click the selection button and the program will go to a new html page, where the available collections are from the drop-down menu. select a collection and click the View button to see the contents of the collection.
 The available collections are retrieved using the list_collection_names method
-
 
 
 ACCESS THE DATABASE USING API ENDPOINT
