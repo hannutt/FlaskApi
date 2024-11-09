@@ -112,6 +112,9 @@ def getDbName(returnedDB):
 def readInput():
    tables=[]
    dbpath=request.form.get("dbPath")
+   repDbPath=dbpath.replace("\\\\","\\")
+   print(repDbPath)
+   '''
    conn = sqlite3.connect(dbpath)
   
      #määritetään tietokantatiedosto, johon yhdistetään
@@ -127,6 +130,7 @@ def readInput():
        print(x)
        tables.append(x)
    conn.close()
+   '''
    return render_template("index.html",tables=tables)
 
 

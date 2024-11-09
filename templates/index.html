@@ -23,6 +23,7 @@
 
 <body class="indexbody">
 
+    <p id="paths" hidden class="paths">{{dirsFinal}}</p>
     <h4 id="apiName">MongoDB & MySQL management tool</h4>
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
@@ -172,9 +173,28 @@
     <script>
         //jquery autocomplete funktio
         $(function () {
-            var drives = ['c:\\', 'd:\\', 'e:\\', 'f:\\', 'g:\\']
+            var paths=document.getElementsByClassName("paths")
+            var pathNames = paths[0].innerHTML
+            var pathList = pathNames.split(",")
+            var newPathList=[]
+            //käydään pathList listan sisältö läpi
+            for (var i = 0;i<pathList.length;i++)
+            {
+                var item=pathList[i]
+                //jos sisällön merkkijonot sisältävät kaksi \\ merkkiä niin korvataan replacen
+                //avulla \\ merkit \ merkiksi ja ' ' merkit tyhjällä ja lisätään se uuteen (newpathlist) listaan.
+                if (item.includes("\\\\") && item.includes("'") && item.includes("'"))
+                {
+                    var itemRep=item.replace("\\\\","\\").replace("'","").replace("'","")
+                    newPathList.push(itemRep)
+                }
+                
+                
+            }
+            
+           
             $('#dbPath').autocomplete({
-                source: drives
+                source: newPathList
             })
         })
     </script>

@@ -37,10 +37,10 @@ Example image where the user has limited the number of sqlite database files to 
 
 ![alt text](static/images/sqliteTable.png)
 
-The user can also directly access the sqlite database using the input field. The file path and the name of the database file are entered in the input field. The path and filename are passed to the Python function using the request.form.get method.
+An example picture of a function where the user can enter the desired .db file path in the input field. 
+The input field has a predictive text input feature, implemented with Python os.walk & next methods and jQuery's auto-completion function. With the help of the functions, all the main folders of the c-drive are displayed, thus making it easier to write the address path.
 
-![alt text](static/images/sqliteInput.png)
-
+![alt text](static/images/autocomplete.png)
 
 MAIN FEATURES
 
@@ -74,6 +74,11 @@ The search for sqlite files starts when the user clicks the "access sqlite datab
 After the click, the JavaScript function creates an input field and a button element. enter the number of db files to search in the input field. Without restrictions, the program will search for all .db files on the c drive, and there may be several of them and they may take a lot of time.
 
 A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database.
+
+If desired, the user can also enter the path of the db file in the html input field. 
+This function also uses predictive text input implemented with jQuery auto-completion and Python Os.Walk & next functions. The Python functions search all the main folders on the C drive, and jQuery's autocomplete recognizes the search terms entered by the user and provides folders that match the search terms.
+
+
 
 BACKUP SQLITE DATABASE
 

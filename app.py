@@ -83,11 +83,17 @@ def showIndex():
      global allStats
      allStats=[]
     
-
+     
      #tietokanta nimien listaus
      dbs=MongoClient().list_database_names()
      client = MongoClient('localhost', 27017)
-   
+     #haetaan vain pääkansiot ilman alikansioita c-asemalta
+     dirs=next(os.walk('c:\\'))[1]
+     #lisätään merkki c:\\ jokaisen lista-alkion eteen. kenoviivoja on 4, että ne voidaan
+     #korvata myöhemmin koodissa yhdellä kenoviivalla replace-metodin avulla. (readInput funktio
+     # sqliteScript.py:ssä)
+     dirsFinal=["c:\\"+  d for d in dirs]
+    
      #mydatabase = client.quizDB
      #collections = mydatabase.list_collection_names()
      #print(collections)
@@ -118,7 +124,7 @@ def showIndex():
         statsNums[j] = int(statsNums[j])    
           
      print(amountOfdb)
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections)
+     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections,dirsFinal=dirsFinal)
 
 
 
