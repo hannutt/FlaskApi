@@ -163,3 +163,11 @@ white-space: nowrap;
 .createRecordLbl {
     font-weight: bold;
 }
+.createTableLbl,.backupLbl {
+    font-weight: bold;
+}
+.sqlitetable {
+    position: absolute;
+    
+    top:450px;
+}

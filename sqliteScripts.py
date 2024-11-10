@@ -112,9 +112,8 @@ def getDbName(returnedDB):
 def readInput():
    tables=[]
    dbpath=request.form.get("dbPath")
-   repDbPath=dbpath.replace("\\\\","\\")
-   print(repDbPath)
-   '''
+  
+   
    conn = sqlite3.connect(dbpath)
   
      #määritetään tietokantatiedosto, johon yhdistetään
@@ -130,7 +129,7 @@ def readInput():
        print(x)
        tables.append(x)
    conn.close()
-   '''
+
    return render_template("index.html",tables=tables)
 
 
@@ -262,10 +261,19 @@ def editSqlite(amount,db,table):
    return render_template("sqlite.html")
 
 
-@sqliteScripts.route("/reload",methods=['POST','GET'])
-def reload():
-   
-   return redirect(url_for('sqliteScripts.runsqlite'))
+@sqliteScripts.route("/newtable",methods=['POST','GET'])
+def createSqliteTable():
+
+   db=request.form.get('sqliteFile2')
+   table=request.form.get("createArea")
+   conn=sqlite3.connect(db)
+   cursor=conn.cursor()
+   #luodaan sql-taulu, jossa on vain id-kenttä inkremoinnilla.
+   cursor.execute(f"CREATE TABLE {table} (id INTEGER PRIMARY KEY AUTOINCREMENT)")
+   conn.commit()
+   conn.close()
+   return render_template("sqlite.html")
+
    
 
 

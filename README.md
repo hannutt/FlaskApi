@@ -4,7 +4,7 @@ Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, 
 The main idea is that you can access multiple MongoDB, MySQL or SQLite databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL & SQLite) and MongoDB Atlas cloud databases.
 
 It is possible to update, add new records and delete records to all the mentioned databases.
-You can also create new document collections in Mongo databases.
+You can also create new document collections in Mongo databases and tables and columns in SQL databases.
 
 The Mongo Cloud Atlas username and password are stored in the .env environment file and retrieved with the os.getenv function. The .env file is in gitignore mode for security reasons.
 

@@ -27,6 +27,7 @@
   <div class="DBinfo">
     <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
       {{objects}}</p> <p hidden id="total"> {{objects}}</p>
+      <p class="databaseFields">{{dbKeysList}}</p>
   </div>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
@@ -64,7 +65,7 @@
   
     
     <!--kokoelman kenttien kokonaismäärä-->
-    <p hidden id="keystotal" name="keystotal">{{keysTotal}}</p>
+    <p id="keystotal" name="keystotal">{{keysTotal}}</p>
     <table id="dbTable" class="dbTable" border="1">
       {% for r in l %}
       <tr>
@@ -179,7 +180,7 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 <label for="edit">Edit?</label>
 <input type="checkbox" name="search" id="search" onchange="showSearchOptions()">
 <label for="search">Search</label>
-<input type="checkbox" name="add" id="add" onclick="createEdit()">
+<input type="checkbox" name="add" id="add" onclick="createAddFields()">
 <label for="add">Add new</label>
 <div class="searchOptions" id="searchOptions" hidden>
   <input type="text" id="src">
@@ -241,7 +242,7 @@ arvo muuttuu trueksi ja allaoleva näytetään if/else ehtojen mukaisesti-->
 
 </div>
 
-<form action="{{ url_for('cruds.addRecord')}}" method="post">
+<form action="{{ url_for('cruds.addRecord',keysTotal=keysTotal,dbfields=dbKeysList)}}" method="post">
 <div id="addNew">
 <input hidden type="text" name="DB" value="{{selectedDB}}">
 <input hidden type="text" id="col" name="col" value="{{collectionNameStr}}">

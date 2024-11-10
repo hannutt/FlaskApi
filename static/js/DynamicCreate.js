@@ -68,12 +68,16 @@ function createMysql() {
 
 
 
+
+
 function createEdit() {
 
     var fieldsTotal = document.getElementById("keystotal").innerHTML
     var fieldsTotalInt = Number(fieldsTotal)
     var cb = document.getElementById("edit")
-    var addCB = document.getElementById("add")
+    //talletetaan kaikki databasefield class tagin sisältämät arvot
+    var DBfields=document.getElementsByClassName("databaseFields")
+    var DBfieldsList=DBfields[0].innerHTML.split(",") 
     
     var editBtn = document.createElement("BUTTON")
     editBtn.id = "editBtn"
@@ -97,64 +101,49 @@ function createEdit() {
         //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
         //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
         //oikeaan input-kenttään
-        document.getElementById(i).value = valuesList[i]
+        document.getElementById(i).placeholder = DBfieldsList[i]
+        
       }
-
-    }
-    else if(addCB.checked==true)
-    {
-      var addBtn = document.createElement("BUTTON")
-      addBtn.id = "Add"
-      editBtn.textContent = "Add"
-      fieldsTotal=document.createElement("INPUT")
-      fieldsTotal.id="fieldtotal"
-      fieldsTotal.name="fieldtotal"
       
-      //silmukan avulla luodaan yhtä monta input-kenttää kuin mitä kenttiä on kokoelmassakin
-      for (var i = 1; i < fieldsTotalInt; i++) {
-        var inpField = document.createElement("INPUT");
-        var fieldValues = document.createElement("INPUT");
+   
+    }else {
+      document.getElementById("editing").innerHTML=""
+    }
+  }
 
+  function createAddFields() {
+    var cb=document.getElementById("add").checked
+    //kenttien lukumäärä eli montako input kenttää tarvitaan
+    var fieldsTotal = document.getElementById("keystotal").innerHTML
+    var fieldsTotalInt = Number(fieldsTotal)
+    fieldsTotalInt = fieldsTotalInt -1
+    var DBfields=document.getElementsByClassName("databaseFields")
+    var DBfieldsList=DBfields[0].innerHTML.split(",") 
+    if (cb===true)
+    {
+      for (var i = 1; i <=fieldsTotalInt; i++) {
+        var inpField = document.createElement("INPUT");
+        var addBtn = document.createElement("button")
+        addBtn.textContent="Add"
         //annetaan id silmukkamuuttujan kautta eli id:t ovat 0,1,2,3 jne
         inpField.id = i
         inpField.name= i
-        fieldValues.name="field"+i
-        fieldValues.id="field"+i
-        fieldValues.hidden=true
-        fieldValues.setAttribute("type","text")
+      
         inpField.setAttribute("type", "text");
-       
-        
-        //luodut syötentät ja painkkeet sijoitetaan addNew diviin
+        //document.body.appendChild(inpField);
+        //document.getElementById("editing").appendChild(editBtn)
         document.getElementById("addNew").appendChild(inpField)
-        document.getElementById("addNew").appendChild(editBtn)
-        document.getElementById("addNew").appendChild(fieldValues)
-        document.getElementById("addNew").appendChild(atlas)
+        
+  
         //tietokannan kenttien nimet on lähetetty python listana html-sivulle, josta ne on puolestaan
         //talletettu javascript listaan. i-silmukkamuuttujan avulla saadaan asetettuja oikea placeholder
         //oikeaan input-kenttään
-        document.getElementById(i).placeholder = valuesList[i]
-        document.getElementById("field"+i).value=valuesList[i]
-        
-        document.getElementById("addNew").appendChild(fieldsTotal)
-        document.getElementById("fieldtotal").value=fieldsTotalInt
-
+        document.getElementById(i).placeholder = DBfieldsList[i]
       }
-      
-      
-    }
-    else if (cb.checked===false || addCB.checked===false) {
-      document.getElementById("editing").innerHTML=""
+      document.getElementById("addNew").appendChild(addBtn)
+  
+    }else {
       document.getElementById("addNew").innerHTML=""
-      /*
-      document.getElementById("editBtn").remove()
-      document.getElementById("addBtn").remove()
-      document.getElementById("0").remove()
-      //input-kenttien tuhoamisessa käytetään myös silmukkaa ja fieldstotal muuttujaa
-      for (var i = 0; i < fieldsTotalInt; i++) {
-        document.getElementById("0").remove()
-
-      }*/
     }
-
+  
   }

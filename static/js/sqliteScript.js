@@ -46,13 +46,16 @@ function showQueryBox() {
     }
    
 }
-
+//funktio näyttää create table ja backup database checkboksit, jos ehto täyttyy.
 function backUp(inputVal) {
    
     if (inputVal!=null)
     {
         document.getElementById("backup").hidden=false
         document.getElementById("backupLbl").hidden=false
+        document.getElementById("createTableCB").hidden=false
+        document.getElementById("createTableLbl").hidden=false
+        
     }
 }
 function clearBackup(val) {
@@ -60,7 +63,8 @@ function clearBackup(val) {
     {
         document.getElementById("backup").hidden=true
         document.getElementById("backupLbl").hidden=true
-
+        document.getElementById("createTableCB").hidden=true
+        document.getElementById("createTableLbl").hidden=true
     }
 }
 
@@ -147,14 +151,42 @@ function createSqlEditFields() {
     }
 }
 function createSqliteTable() {
-    var cb= document.getElementById("cretateTableCB")
+    var cb= document.getElementById("createTableCB")
+    
     if (cb.checked==true)
     {
-        var t = document.createElement("textarea")
+        
+        var t = document.createElement("input")
+        var b = document.createElement("button")
+        b.textContent="Create table"
+        t.name="createArea"
+        t.placeholder="TABLE NAME"
         document.getElementById("texta").appendChild(t)
+        document.getElementById("texta").appendChild(b)
     }
     else{
         document.getElementById("texta").innerHTML=''
     }
+}
+function tableColumnsDiv() {
+    var cb=document.getElementById("tableColumnsCB").checked
+    if (cb===true)
+    {
+        document.getElementById("tableColumnsDiv").hidden=false
+    }
+    else{
+        document.getElementById("tableColumnsDiv").hidden=true
+
+    }
+}
+var inputsClicks=0
+//funktion suoritus lisää aina yhden html-inputin / klikkaus
+function createInputsSqlite() {
+    inputsClicks=inputsClicks+1
+    var input =document.createElement("INPUT")
+    input.id=inputsClicks
+    document.getElementById("tableColumnsDiv").appendChild(input)
+
+
 }
 

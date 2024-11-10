@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript2.js') }}"></script>
     <title>SQLite</title>
 </head>
 
@@ -93,14 +94,22 @@
     <input type="checkbox" id="createRecord" name="createRecord" onchange="createSqlFields()">
     <label for="editSqlRecord" class="editSqlRecord">Edit record</label>
     <input type="checkbox" id="editSqlRecord" onchange="createSqlEditFields()">
+    <label for="createColumn">Create new column</label>
+    <input type="checkbox" id="createColumn" onchange="createNewColumn()">
+    <form action="{{ url_for('sqliteScripts2.createColumn',dbname=dbname,table=table)}}" method="post">
+    <div hidden id="columnCreate">
+        <input type="text" id="columnName" name="columnName" placeholder="Column name">
+        <button>Create column</button>
+    </form>
+
+    </div>
     <!--sarakkeiden määrä lähetetään python funktiolle parametrina amount=columnInt-->
     <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt,db=dbname,table=table)}}" method="post">
 
 
         <div id="createNew">
+        </div>
     </form>
-
-    </div>
     <form action="{{ url_for('sqliteScripts.editSqlite',amount=columnInt,db=dbname,table=table)}}" method="post">
         <div id="editSqlite">
 
