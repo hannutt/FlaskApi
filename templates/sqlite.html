@@ -21,6 +21,7 @@
 
     </nav>
     <h3>SQLite Databases</h3>
+    <p>sqlite.html</p>
     <p id="tableName" class="tableName">{{table}} table Selected</p>
 
 
@@ -94,15 +95,7 @@
     <input type="checkbox" id="createRecord" name="createRecord" onchange="createSqlFields()">
     <label for="editSqlRecord" class="editSqlRecord">Edit record</label>
     <input type="checkbox" id="editSqlRecord" onchange="createSqlEditFields()">
-    <label for="createColumn">Create new column</label>
-    <input type="checkbox" id="createColumn" onchange="createNewColumn()">
-    <form action="{{ url_for('sqliteScripts2.createColumn',dbname=dbname,table=table)}}" method="post">
-    <div hidden id="columnCreate">
-        <input type="text" id="columnName" name="columnName" placeholder="Column name">
-        <button>Create column</button>
-    </form>
-
-    </div>
+ 
     <!--sarakkeiden määrä lähetetään python funktiolle parametrina amount=columnInt-->
     <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt,db=dbname,table=table)}}" method="post">
 
@@ -115,8 +108,34 @@
 
         </div>
     </form>
+    <label for="createColumn">Create new column</label>
+    <input type="checkbox" id="createColumn" onchange="createNewColumn()">
+    <form action="{{ url_for('sqliteScripts2.createColumn',dbname=dbname,table=table)}}" method="post">
+    <div hidden id="columnCreate">
+        <input type="text" id="columnName" name="columnName" placeholder="Column name">
+        <button>Create column</button>
+    </div>
+    </form>
 
+    
+      
+<!--</form>-->
+<label id="tableColumns" class="tableColumns" for="tableColumnsCB">Create table and columns</label>
+<input type="checkbox" id="tableColumnsCB" onchange="tableColumnsDiv()">
 
+    <div hidden id="tableColumnsDiv">
+        <button onclick=" createInputsSqlite()">Create input</button>
+        <br>
+        <form action="{{ url_for('sqliteScripts2.createTableCols',dbname=dbname,table=table)}}" method="post">
+        <button>Create columns</button>
+        <input type="text" id="columns" name="columns"></input>
+    </form>
+        <!--
+        <input type="submit">send</input>-->
+    
+    </div>
+    </form>
+    <br>
     <button id="reloadBtn" onclick="location.reload(true)">Reload</button>
     <script>
 

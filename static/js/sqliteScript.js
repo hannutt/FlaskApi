@@ -182,10 +182,12 @@ function tableColumnsDiv() {
 var inputsClicks=0
 //funktion suoritus lisää aina yhden html-inputin / klikkaus
 function createInputsSqlite() {
+
     inputsClicks=inputsClicks+1
     var input =document.createElement("INPUT")
     input.id=inputsClicks
     document.getElementById("tableColumnsDiv").appendChild(input)
+    document.getElementById("columns").value=inputsClicks
 
 
 }
