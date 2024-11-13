@@ -19,11 +19,13 @@ The view also uses customization, the font size is set to medium, the background
 
 Example picture where the data of the MySQL database table is displayed in the table element and the first row of the element is selected for editing. The Jquery function stores the text of the clicked element and adds it to the input field as shown in the image for editing.
 
+The JavaScript function always creates the correct number of html input fields using the for-loop and createElement method. The MySQL table selected in the example image has a total of 5 columns, so editing its records requires the same number of input fields
+
 ![alt text](static/images/flaskSQL.png)
 
 Example image where the user writes a sql query. The input fields above show the selected sql table and the sql database to be queried.
 
-![alt text](static/images/sqlQuery.png)
+[alt text](static/images/sqlQuery.png)
 
 Example picture where the user writes a mongoDB query, where the search condition is to find documents that mention the word Tommi in the name field.
 
@@ -36,6 +38,10 @@ For the selected MongoDB database, an info row is displayed, which tells the num
 Example image where the user has limited the number of sqlite database files to be searched to five. The first 5 sqlite files found are displayed in the Table element. The size of the database files is displayed in megabytes using the stats method of the Python OS library.
 
 ![alt text](static/images/sqliteTable.png)
+
+Sqlite db files can also be searched for in specific folders by typing the path of the folder in the html input field. The folder path entered by the user is displayed in the html button after typing. This feature is made using the onChange event handler and a JavaScript function.
+
+![alt text](static/images/searchFolder.png)
 
 An example picture of a function where the user can enter the desired .db file path in the input field. 
 The input field has a predictive text input feature, implemented with Python os.walk & next methods and jQuery's auto-completion function. With the help of the functions, all the main folders of the c-drive are displayed, thus making it easier to write the address path.
@@ -74,6 +80,8 @@ The search for sqlite files starts when the user clicks the "access sqlite datab
 After the click, the JavaScript function creates an input field and a button element. enter the number of db files to search in the input field. Without restrictions, the program will search for all .db files on the c drive, and there may be several of them and they may take a lot of time.
 
 A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database.
+
+You can also search for db files by typing the folder path. for example C:\folderName will search for all db files in that path. This property also uses a for loop and the OS.walk method.
 
 If desired, the user can also enter the path of the db file in the html input field. 
 This function also uses predictive text input implemented with jQuery auto-completion and Python Os.Walk & next functions. The Python functions search all the main folders on the C drive, and jQuery's autocomplete recognizes the search terms entered by the user and provides folders that match the search terms.

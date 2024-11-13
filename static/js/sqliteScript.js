@@ -9,6 +9,9 @@ function runSqlite() {
         document.getElementById('sqliteShow').hidden=false
         document.getElementById('dbPath').hidden=false
         document.getElementById('accessBtn').hidden=false
+        document.getElementById("searchFolderCB").hidden=false
+        document.getElementById('searchFolderLbl').hidden=false
+       
 
     }
     else {
@@ -17,6 +20,10 @@ function runSqlite() {
         document.getElementById('sqliteShow').hidden=true
         document.getElementById('dbPath').hidden=true
         document.getElementById('accessBtn').hidden=true
+        document.getElementById("searchFolderCB").hidden=true
+        document.getElementById('searchFolderLbl').hidden=true
+       
+      
         //document.getElementById('sqliteFile').hidden=true
 
     }

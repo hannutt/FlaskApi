@@ -1,4 +1,5 @@
 
+import os
 from flask import Blueprint, redirect, render_template, request, url_for
 import sqlite3
 
@@ -21,3 +22,19 @@ def createTableCols(dbname,table):
     inputs=request.form.get("columns")
     return render_template("sqlite.html")
 
+@sqliteScripts2.route("/searchFrom",methods=['POST','GET'])
+def searchFromFolder():
+    #saman nimistä listaa käytetään myös sqliteScripts readdbname funktiossa, jonka jälkeen
+    #löydetyt tietodston käydään index.htmlssä for silmukalla läpi, kun myös käytetään
+    #samaa listaa, saadaan myös tämän tulokset näkymään samassa table.elementissä
+    sqliteDatabases=[]
+    folder = request.form.get("srcFolder")
+    for root, dirs, files in os.walk(folder):
+        for file in files:
+            if file.endswith(".db"):
+                dbvar=root+"\\"+file
+                sqliteDatabases.append(dbvar)
+                
+    return render_template("index.html",sqliteDatabases=sqliteDatabases)
+            
+  

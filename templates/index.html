@@ -15,6 +15,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/menuScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript2.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 
@@ -23,6 +24,7 @@
     
 
 <body class="indexbody">
+   
 
     <p id="paths" hidden class="paths">{{dirsFinal}}</p>
     <h4 id="apiName">MongoDB & MySQL management tool</h4>
@@ -109,6 +111,7 @@
 
         <button hidden id="hideBtn">Hide</button>
     </div>
+   
     <label class="dbsLbl" for="dbs">Access to local Mongo database:</label>
 
     <form action="{{ url_for('read_form')}}" method="post">
@@ -159,12 +162,22 @@
     <br><br>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <input type="checkbox" id="sqlite" name="sqlite" onchange="runSqlite()">
+  
 
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         <label hidden id="restrictionLbl" for="restriction">Set the number of files to search:</label>
         <input hidden type="text" name="restriction" id="restriction" size="4">
-        <br><br>
         <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+    </form>
+        <br><br>
+        <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
+        <label hidden for="srcFolder" id="searchFolderLbl">Search the folder:</label>
+        <input hidden type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
+        <input hidden type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
+        <button class="runBtn" hidden id="searchFolderBtn">Search from </button>
+    </form>
+
+        
     </form>
     <br>
     <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
