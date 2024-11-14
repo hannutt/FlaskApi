@@ -3,28 +3,15 @@ function runSqlite() {
     var cb = document.getElementById("sqlite")
     if (cb.checked==true)
     {  
-
-        document.getElementById('restrictionLbl').hidden=false
-        document.getElementById('restriction').hidden=false
-        document.getElementById('sqliteShow').hidden=false
-        document.getElementById('dbPath').hidden=false
-        document.getElementById('accessBtn').hidden=false
-        document.getElementById("searchFolderCB").hidden=false
-        document.getElementById('searchFolderLbl').hidden=false
+        document.getElementById("sqliteStart").hidden=false
+        document.getElementById("sqliteStart2").hidden=false
+     
        
 
     }
     else {
-        document.getElementById('restrictionLbl').hidden=true
-        document.getElementById('restriction').hidden=true
-        document.getElementById('sqliteShow').hidden=true
-        document.getElementById('dbPath').hidden=true
-        document.getElementById('accessBtn').hidden=true
-        document.getElementById("searchFolderCB").hidden=true
-        document.getElementById('searchFolderLbl').hidden=true
-       
-      
-        //document.getElementById('sqliteFile').hidden=true
+        document.getElementById("sqliteStart").hidden=true
+        document.getElementById("sqliteStart2").hidden=true
 
     }
 }

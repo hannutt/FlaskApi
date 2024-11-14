@@ -29,14 +29,14 @@
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
     {% endblock %}-->
-  
+
     <p id="demo"></p>
 
     <div class="hideAll">
         <p id="selection" class="selection"></p>
         <button hidden id="hideBtn">Hide</button>
     </div>
-   <!--näytetään mongolocalin html-koodi tässä-->
+    <!--näytetään mongolocalin html-koodi tässä-->
     {% include 'mongoLocal.html' %}
     <br><br>
     <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
@@ -53,23 +53,31 @@
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         {% include 'sqliteSelect.html' %}
     </form>
+    <div hidden id="sqliteStart2">
+        <p hidden id="avoid" class="avoid">Avoid these directories:</p>
+        <input type="text" hidden id="avoidTA">
+        <button  id="insertBtn" onclick="directoriesToAvoid()">Insert to list</button>
+    
+
     <br><br>
     <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
-        <label hidden for="srcFolder" id="searchFolderLbl">Search the folder:</label>
-        <input hidden type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
-        <input hidden type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
+        <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
+        <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
+        <input type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
         <button class="runBtn" hidden id="searchFolderBtn">Search from </button>
     </form>
+
 
 
     </form>
     <br>
     <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
-        <input  type="text" placeholder="db-file path" id="dbPath" name="dbPath">
+        <input type="text" placeholder="db-file path" id="dbPath" name="dbPath">
         <br><br>
-        <button hidden class="runBtn" id="accessBtn"onclick="deliveryDB()">Access</button>
+        <button class="runBtn" id="accessBtn">Access</button>
 
     </form>
+</div>
     <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
     jossa se on true, näytetään alla oleva select  komponentti-->
     {% if searched==True %}
@@ -80,7 +88,7 @@
     </select>
     {%endif%}
 
-  
+
     <select hidden name="sqliteInput" id="sqliteInput" onclick="sqliteSelection(this.value)">
         <option value="default" selected>Select Table</option>
         <!--sql tietokantojen näyttö select komponentissa-->
@@ -94,7 +102,7 @@
     {% if sqliteTables==True%}
     <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
 
-        <p id="selectedSqliteDB">{{dbname}}</p>
+        <p hidden id="selectedSqliteDB">{{dbname}}</p>
 
         <br>
         <!--huomaa oninput eventti, koska teksti lisätään jquery funktiolla tähän inputtii
@@ -140,10 +148,14 @@
         </tr>
         {%endfor%}
     </table>
-    <form action="{{ url_for('sqliteScripts.runsqlite')}}" method="post">
-        <button class="runBtn" hidden id="selfWriteBtn">Access</button>
+    <!--tietokanta lähetetään parametrina dbname=dbname jos muuttuja on esim. {{dbname}} muodossa
+    sitä voi käyttää suoraan parametrina.-->
+    <form action="{{ url_for('sqliteScripts.runsqlite',dbname=dbname)}}" method="post">
+
+        <!--
+        <button class="runBtn" hidden id="selfWriteBtn">Access</button>-->
         <input hidden type="text" id="selectedTable" name="selectedTable">
-        <input hidden type="text" id="dataBname" name="DataBname">
+        <input hidden type="text" id="dataBname" name="dataBname">
         <!--show table button näytetään vasta etsinnän tulosten yhteydessä if lohko toimii myös eri formeissa-->
         {% if sqliteTables==True%}
         <button id="showTableBtn" name="showTableBtn">Show table</button>

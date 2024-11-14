@@ -4,10 +4,14 @@
         <title>SQLite</title>
     </head>
     <body>
-        <div>
-        <label hidden id="restrictionLbl" for="restriction">Set the number of files to search:</label>
-        <input hidden type="text" name="restriction" id="restriction" size="4">
-        <button hidden id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+        <div hidden id="sqliteStart">
+        <label id="restrictionLbl" for="restriction">Set the number of files to search:</label>
+        <input type="text" name="restriction" id="restriction" size="4">
+        <button id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+       
+    </div>
+    <div id="avoidList">
+
     </div>
     </body>
 </html>

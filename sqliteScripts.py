@@ -23,7 +23,10 @@ def readDBname():
     restrictionInt = int(restriction)
     sqliteDatabases=[]
     #etsitään db-päätteisiä tiedostoja kaikkialta c-levyltä.
+    #avoid listaan voidaan lisätä sijainnit, joista ei etsitä, esim nyt roskakorista ei etsitä.
+    avoid=['$Recycle.Bin']
     for root, dirs, files in os.walk("C:\\"):
+        dirs[:] = [d for d in dirs if d not in avoid]
         for file in files:
             if file.endswith(".db"):
              i=i+1
@@ -74,14 +77,17 @@ def showSqliteTables():
 
     return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables,dbname=dbname)
 
-@sqliteScripts.route("/opentable",methods=['POST','GET'])
-def runsqlite():
-   dbname = request.form.get("DataBname")
-   selectedTable=request.form.get('selectedTable')
+@sqliteScripts.route("/opentable/<dbname>",methods=['POST','GET'])
+def runsqlite(dbname):
+   #dbname = request.form.get("dataBname")
+
+   table=request.form.get("selectedTable")
+   
+   #selectedTable=request.form.get('selectedTable')
    ids=[]
    data=[]
    
-   table=request.form.get("selectedTable")
+   #table=request.form.get("selectedTable")
    conn = sqlite3.connect(dbname)
    #f-stringin avulla voidaan antaan taulun nimi parametrina.
    cursor = conn.execute(f"SELECT * FROM {table}")
@@ -93,6 +99,7 @@ def runsqlite():
    lng = len(columnnames)
    columnInt = int(lng)
    print("columns ",lng)
+   changes=conn.total_changes
    
    
    for row in cursor:
@@ -103,7 +110,8 @@ def runsqlite():
       
       data.append(datastr)
    getDbName(dbname)
-   return render_template("sqlite.html",ids=ids,data=data,lng=lng,finalNames=finalNames,dbname=dbname,selectedTable=selectedTable,columnnames=columnnames[0],columnInt=columnInt,columnamesAll=columnnames,table=table)
+ 
+   return render_template("sqlite.html",ids=ids,data=data,lng=lng,finalNames=finalNames,dbname=dbname,columnnames=columnnames[0],columnInt=columnInt,columnamesAll=columnnames,changes=changes,table=table)
 
 def getDbName(returnedDB):
    return returnedDB
@@ -114,9 +122,7 @@ def readInput():
    searched=True
    tables=[]
    dbpath=request.form.get("dbPath")
-   print(dbpath)
-  
-   
+   print(dbpath) 
    conn = sqlite3.connect(dbpath)
   
      #määritetään tietokantatiedosto, johon yhdistetään

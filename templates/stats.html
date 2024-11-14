@@ -10,9 +10,9 @@
             <p hidden id="dbTotal">{{amountOfdb}}</p>
             <p hidden id="dbL">
             </p>
-            <!--kokoelmien nimien läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
+            <!--mongo tietokantojen nimien läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
             {% for j in stats %}
-            <p  id="stats" class="statsNames">{{j}}</p>
+            <p hidden id="stats" class="statsNames">{{j}}</p>
             {%endfor%}
             <!--tietokantojen koot-->
             {% for i in statsNums %}

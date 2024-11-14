@@ -42,9 +42,10 @@ function showSearchOptions() {
     }
 }
 
-function deliveryDB()
-{
-    var db=document.getElementById("dbPath").value
-    sessionStorage.setItem("dbname",db)
+function directoriesToAvoid() {
     
+    var dir = document.getElementById("avoidTA").value
+    document.getElementById("avoidList").innerHTML+=dir+','
+    document.getElementById("avoidTA").value=''
+
 }
