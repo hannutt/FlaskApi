@@ -112,6 +112,7 @@ def getDbName(returnedDB):
 def readInput():
    tables=[]
    dbpath=request.form.get("dbPath")
+   print(dbpath)
   
    
    conn = sqlite3.connect(dbpath)
@@ -129,6 +130,7 @@ def readInput():
        print(x)
        tables.append(x)
    conn.close()
+   
 
    return render_template("index.html",tables=tables)
 

@@ -8,6 +8,8 @@ You can also create new document collections in Mongo databases and tables and c
 
 The Mongo Cloud Atlas username and password are stored in the .env environment file and retrieved with the os.getenv function. The .env file is in gitignore mode for security reasons.
 
+
+
 Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed.
 
 ![alt text](static/images/flaskFront.png)
@@ -49,6 +51,8 @@ The input field has a predictive text input feature, implemented with Python os.
 ![alt text](static/images/autocomplete.png)
 
 MAIN FEATURES
+
+index.html is split into smaller html files using the Python Flask Include method.
 
 ACCESS TO LOCAL MongoDB DATABASE USING HTML-UI.
 

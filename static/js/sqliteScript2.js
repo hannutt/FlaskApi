@@ -32,12 +32,13 @@ function showSearchOptions() {
         var btn=document.getElementById("searchFolderBtn")
         document.getElementById("srcFolder").hidden=false
         document.getElementById("srcFolder").placeholder="ENTER PATH"
-        document.getElementById("searchFolberBtn").hidden=false
+        document.getElementById("searchFolderBtn").hidden=false
         
     }
     else {
         document.getElementById("srcFolder").hidden=true
-        document.getElementById("searhcFolberBtn").hidden=true
+        document.getElementById("searhcFolderBtn").hidden=true
 
     }
 }
+

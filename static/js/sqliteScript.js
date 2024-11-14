@@ -34,6 +34,7 @@ function selectionSqlite(dbtable) {
     rep=selectedTable.replace("(","").replace(")","").replace(",","").replace("'","").replace("'","")
     document.getElementById("selectedTable").value=rep
     document.getElementById("selectedTable2").value=rep
+    console.log(rep)
     
 }
 

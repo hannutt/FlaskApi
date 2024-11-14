@@ -94,7 +94,7 @@ def showIndex():
      #lisätään merkki c:\\ jokaisen lista-alkion eteen. kenoviivoja on 4, että ne voidaan
      #korvata myöhemmin koodissa yhdellä kenoviivalla replace-metodin avulla. (readInput funktio
      # sqliteScript.py:ssä)
-     dirsFinal=["c:\\"+  d for d in dirs]
+     dirsFinal=["C:\\"+  d for d in dirs]
     
      #mydatabase = client.quizDB
      #collections = mydatabase.list_collection_names()

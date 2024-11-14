@@ -27,14 +27,17 @@ def searchFromFolder():
     #saman nimistä listaa käytetään myös sqliteScripts readdbname funktiossa, jonka jälkeen
     #löydetyt tietodston käydään index.htmlssä for silmukalla läpi, kun myös käytetään
     #samaa listaa, saadaan myös tämän tulokset näkymään samassa table.elementissä
-    sqliteDatabases=[]
+    tables=[]
+   
     folder = request.form.get("srcFolder")
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.endswith(".db"):
                 dbvar=root+"\\"+file
-                sqliteDatabases.append(dbvar)
+                tables.append(dbvar)
                 
-    return render_template("index.html",sqliteDatabases=sqliteDatabases)
+    return render_template("index.html",sqliteDatabases=tables)
+
+
             
   
