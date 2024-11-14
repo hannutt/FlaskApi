@@ -17,6 +17,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript2.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/statistic.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Flask-APi</title>
@@ -42,17 +43,6 @@
     <p hidden class="allStat">{{allStats}}</p>
 
     <script>
-        //jquery animate funktion kutsu ja suoritus sivun latauksen yhteydessä
-        $(document).ready(function () {
-            $("#apiName").animate({
-                width: "70%",
-                opacity: 0.9,
-                marginLeft: "0.6in",
-                fontSize: "3em",
-                borderWidth: "10px",
-            }, 1500);
-        });
-
         getNumValues()
     </script>
 
@@ -133,30 +123,7 @@
         {%endfor%}
     </select>
 
-    <script>
-        //jquery autocomplete funktio
-        $(function () {
-            var paths = document.getElementsByClassName("paths")
-            var pathNames = paths[0].innerHTML
-            var pathList = pathNames.split(",")
-            var newPathList = []
-            //käydään pathList listan sisältö läpi
-            for (var i = 0; i < pathList.length; i++) {
-                var item = pathList[i]
-                //jos sisällön merkkijonot sisältävät kaksi \\ merkkiä niin korvataan replacen
-                //avulla \\ merkit \ merkiksi ja ' ' merkit tyhjällä ja lisätään se uuteen (newpathlist) listaan.
-                if (item.includes("\\\\") && item.includes("'") && item.includes("'")) {
-                    var itemRep = item.replace("\\\\", "\\").replace("'", "").replace("'", "").replace("[", "").replace("]", "")
-                    newPathList.push(itemRep)
-                }
-            }
-
-
-            $('#dbPath').autocomplete({
-                source: newPathList
-            })
-        })
-    </script>
+  
     <select hidden name="sqliteInput" id="sqliteInput" onclick="sqliteSelection(this.value)">
         <option value="default" selected>Select Table</option>
         <!--sql tietokantojen näyttö select komponentissa-->
@@ -185,9 +152,7 @@
         <label hidden id="createTableLbl" for="createTableCB" class="createTableLbl"></label>
         <input hidden id="createTableCB" type="checkbox" onchange="createSqliteTable()">
         <div id="texta">
-
         </div>
-
 
         <form action="{{ url_for('sqliteScripts.backUpDB')}}" method="post">
             <label hidden id="backupLbl" for="backup" class="backupLbl">Backup this database</label>
@@ -237,40 +202,6 @@
         <br>
         <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
     </form>
-    <script>
-        //jquery funktio näyttää jokaisen _id-arvon ja siirtää sen input-kenttään kun sitä klikkaa hiirellä.
-        jQuery(".sqlite").click(function () {
-            //event.preventDefault();
-            var text = jQuery(this).text();
-            //katkaistaan merkkijono | merkin kohdalta
-            var textSplit = text.split("|")
-            //textSplit on taulukko, joten talletetaan muuttujaan taulukon ensimmäinen (0) alkio.
-            var splittedText = textSplit[0]
-            //trim poistaa välilyönnit
-            var noWhiteSpace = splittedText.trim()
-            console.log(noWhiteSpace);
-            document.getElementById("sqliteFile").value = noWhiteSpace
-            document.getElementById("sqliteFile2").value = noWhiteSpace
-            document.getElementById("sqliteBase").value = noWhiteSpace
-            sessionStorage.setItem('dbfile', noWhiteSpace)
-            document.getElementById("sqliteFile").style.background = "yellow"
-            document.getElementById("sqliteFile").onchange = backUp(document.getElementById("sqliteFile").value)
-            var database = document.getElementById("sqliteFile").value
-            document.getElementById("createTableLbl").innerText = "Create empty table to: " + noWhiteSpace
-            document.getElementById("tableColumnsCB").hidden = false
-            document.getElementById("tableColumns").innerText = "Create Table with columns"
-
-
-        });
-        jQuery(".sqlite").dblclick(function () {
-            var text = jQuery(this).text()
-            document.getElementById("dbPath").hidden = false
-            document.getElementById("dbPath").value = text
-            document.getElementById("accessBtn").hidden = false
-        })
-
-    </script>
-
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
         <div hidden id="mysqlForm">
             <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">
