@@ -24,17 +24,29 @@ def createTableCols(dbname,table):
 
 @sqliteScripts2.route("/searchFrom",methods=['POST','GET'])
 def searchFromFolder():
+    
     #saman nimistä listaa käytetään myös sqliteScripts readdbname funktiossa, jonka jälkeen
     #löydetyt tietodston käydään index.htmlssä for silmukalla läpi, kun myös käytetään
     #samaa listaa, saadaan myös tämän tulokset näkymään samassa table.elementissä
     tables=[]
+    dbSizes=[]
    
     folder = request.form.get("srcFolder")
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.endswith(".db"):
                 dbvar=root+"\\"+file
-                tables.append(dbvar)
+                
+                dbSize=os.stat(dbvar)
+           
+             #db-tiedostojen koon muunto megatavuiksi
+                sizeInMb=dbSize.st_size/(1024*1024)
+                dbSizes.append(sizeInMb)
+             #pyöritys muotoon 0,00
+                roundedSize=round(sizeInMb,2)
+                sizeInMbStr = str(roundedSize)
+                finalDBvar=dbvar+' | Size: '+sizeInMbStr + ' MB'
+                tables.append(finalDBvar)
                 
     return render_template("index.html",sqliteDatabases=tables)
 

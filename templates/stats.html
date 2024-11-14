@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>index 2</title>
+        <title>Statics</title>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/statistic.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
     </head>
     <body>
+        <div>
+            <p hidden id="dbTotal">{{amountOfdb}}</p>
+            <p hidden id="dbL">
+            </p>
+            <!--kokoelmien nimien läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
+            {% for j in stats %}
+            <p  id="stats" class="statsNames">{{j}}</p>
+            {%endfor%}
+            <!--tietokantojen koot-->
+            {% for i in statsNums %}
+            <div id="statsNums" hidden class="statsNums">{{i}}</div>
+            {% endfor %}
+            <p hidden class="allStat">{{allStats}}</p>
+        
+            <script>
+                getNumValues()
+                getNameValues()
+            </script>
+        
+        </div>
         <div>
             <button id="statsBtn" class="statsBtn" onclick="stats()">Database statistics</button>
             <br><br>
             <div hidden id="chart">
                 <canvas id="myChart" class="myChart" style="width:100%;max-width:400px"></canvas>
+                <script>
+                    
+                </script>
               
             </div>
     </body>

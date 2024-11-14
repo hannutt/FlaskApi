@@ -52,7 +52,7 @@ The input field has a predictive text input feature, implemented with Python os.
 
 MAIN FEATURES
 
-index.html is split into smaller html files using the Python Flask Include method.
+index.html is split into smaller html files using the Python Flask Include method. Jquery code and JavaScript code are also in their own external .js files. The Python code is divided into its own files using the Blueprint method
 
 ACCESS TO LOCAL MongoDB DATABASE USING HTML-UI.
 

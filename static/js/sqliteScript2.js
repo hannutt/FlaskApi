@@ -42,3 +42,9 @@ function showSearchOptions() {
     }
 }
 
+function deliveryDB()
+{
+    var db=document.getElementById("dbPath").value
+    sessionStorage.setItem("dbname",db)
+    
+}

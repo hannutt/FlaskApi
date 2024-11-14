@@ -17,7 +17,7 @@ function getNameValues() {
 
 }
 
-getNameValues()
+
 var maxVal = 0
 var minVal = 0
 function getNumValues() {
@@ -45,25 +45,3 @@ function getAllValues() {
     }
 
 }
-
-  function Doautocomplete() {
-                var paths = document.getElementsByClassName("paths")
-            var pathNames = paths[0].innerHTML
-            var pathList = pathNames.split(",")
-            var newPathList = []
-            //käydään pathList listan sisältö läpi
-            for (var i = 0; i < pathList.length; i++) {
-                var item = pathList[i]
-                //jos sisällön merkkijonot sisältävät kaksi \\ merkkiä niin korvataan replacen
-                //avulla \\ merkit \ merkiksi ja ' ' merkit tyhjällä ja lisätään se uuteen (newpathlist) listaan.
-                if (item.includes("\\\\") && item.includes("'") && item.includes("'")) {
-                    var itemRep = item.replace("\\\\", "\\").replace("'", "").replace("'", "").replace("[","").replace("]","")
-                    newPathList.push(itemRep)
-                }
-
-
-            }
-
-
-
-            }

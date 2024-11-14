@@ -28,8 +28,10 @@ $(document).ready(function () {
 $(document).ready(function () {
     jQuery(".sqlite").dblclick(function () {
         var text = jQuery(this).text()
+        var txtSplit = text.split("|")
+        var finalText=txtSplit[0]
         document.getElementById("dbPath").hidden = false
-        document.getElementById("dbPath").value = text
+        document.getElementById("dbPath").value = finalText
         document.getElementById("accessBtn").hidden = false
     })
 })

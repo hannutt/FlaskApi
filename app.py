@@ -125,7 +125,7 @@ def showIndex():
     
         statsNums[j] = int(statsNums[j])    
           
-     print(amountOfdb)
+  
      return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections,dirsFinal=dirsFinal)
 
 

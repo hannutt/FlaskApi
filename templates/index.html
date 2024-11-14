@@ -29,23 +29,7 @@
     <!--Flask api animaatio näytetään näin myös selectcol.html sivulla
     {% block content %}
     {% endblock %}-->
-    <p hidden id="dbTotal">{{amountOfdb}}</p>
-    <p hidden id="dbL">
-    </p>
-    <!--kokoelmien nimi,koko yms tietojen läpikäynti silmukassa, tiedot tuodaan sivulle stats-listassa-->
-    {% for j in stats %}
-    <p hidden id="stats" class="statsNames">{{j}}</p>
-    {%endfor%}
-    <!--tietokantojen koot-->
-    {% for i in statsNums %}
-    <div id="statsNums" hidden class="statsNums">{{i}}</div>
-    {% endfor %}
-    <p hidden class="allStat">{{allStats}}</p>
-
-    <script>
-        getNumValues()
-    </script>
-
+  
     <p id="demo"></p>
 
     <div class="hideAll">
@@ -81,16 +65,20 @@
     </form>
     <br>
     <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
-        <input hidden type="text" placeholder="db-file path" id="dbPath" name="dbPath">
+        <input  type="text" placeholder="db-file path" id="dbPath" name="dbPath">
         <br><br>
-        <button hidden class="runBtn" id="accessBtn">Access</button>
+        <button hidden class="runBtn" id="accessBtn"onclick="deliveryDB()">Access</button>
 
     </form>
-    <select onchange="selectionSqlite(this)">
+    <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
+    jossa se on true, näytetään alla oleva select  komponentti-->
+    {% if searched==True %}
+    <select id="selSQLite" onchange="selectionSqlite(this)">
         {% for t in tables %}
         <option>{{t}}</option>
         {%endfor%}
     </select>
+    {%endif%}
 
   
     <select hidden name="sqliteInput" id="sqliteInput" onclick="sqliteSelection(this.value)">
@@ -153,7 +141,9 @@
         {%endfor%}
     </table>
     <form action="{{ url_for('sqliteScripts.runsqlite')}}" method="post">
+        <button class="runBtn" hidden id="selfWriteBtn">Access</button>
         <input hidden type="text" id="selectedTable" name="selectedTable">
+        <input hidden type="text" id="dataBname" name="DataBname">
         <!--show table button näytetään vasta etsinnän tulosten yhteydessä if lohko toimii myös eri formeissa-->
         {% if sqliteTables==True%}
         <button id="showTableBtn" name="showTableBtn">Show table</button>

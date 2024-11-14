@@ -6,6 +6,7 @@ function stats() {
   clicks = clicks + 1
   if (clicks % 1 == 0) {
     var total = document.getElementById("dbTotal").innerHTML
+    var nameValues = document.getElementsByClassName("statsNames")
     //muunnetaan luvuksi
     var intTotal = parseInt(total)
     var dbnames = []
@@ -14,11 +15,13 @@ function stats() {
     //ja toisella arrNums=tietokantojen koot. 
     for (var i = 0; i < intTotal; i++) {
       arrNames[i]
-      dbnames.push(arrNames[i])
+      dbnames.push(nameValues[i].innerHTML)
+      console.log(dbnames)
       arrNums[i]
       dbsizes.push(arrNums[i])
 
     }
+ 
 
 
 

@@ -76,6 +76,7 @@ def showSqliteTables():
 
 @sqliteScripts.route("/opentable",methods=['POST','GET'])
 def runsqlite():
+   dbname = request.form.get("DataBname")
    selectedTable=request.form.get('selectedTable')
    ids=[]
    data=[]
@@ -110,6 +111,7 @@ def getDbName(returnedDB):
 
 @sqliteScripts.route("/readInput",methods=['POST','GET'])
 def readInput():
+   searched=True
    tables=[]
    dbpath=request.form.get("dbPath")
    print(dbpath)
@@ -132,7 +134,7 @@ def readInput():
    conn.close()
    
 
-   return render_template("index.html",tables=tables)
+   return render_template("index.html",tables=tables,searched=searched)
 
 
 #sqliten itse kirjoitettavat kyselyt.

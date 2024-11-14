@@ -34,7 +34,11 @@ function selectionSqlite(dbtable) {
     rep=selectedTable.replace("(","").replace(")","").replace(",","").replace("'","").replace("'","")
     document.getElementById("selectedTable").value=rep
     document.getElementById("selectedTable2").value=rep
-    console.log(rep)
+    document.getElementById("selfWriteBtn").hidden=false
+    document.getElementById("selfWriteBtn").textContent="Access "+rep
+    document.getElementById("dataBname").value=sessionStorage.getItem("dbname")
+  
+  
     
 }
 
