@@ -27,7 +27,7 @@ The JavaScript function always creates the correct number of html input fields u
 
 Example image where the user writes a sql query. The input fields above show the selected sql table and the sql database to be queried.
 
-[alt text](static/images/sqlQuery.png)
+![alt text](static/images/sqlQuery.png)
 
 Example picture where the user writes a mongoDB query, where the search condition is to find documents that mention the word Tommi in the name field.
 

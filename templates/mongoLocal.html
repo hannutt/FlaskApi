@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <label class="dbsLbl" for="dbs">Access to local Mongo database:</label>
+
+        <form action="{{ url_for('read_form')}}" method="post">
+            <select name="dbs" id="dbs" onchange="getSelectedText(this)">
+    
+                <option value="default" selected>Select Database</option>
+                <!--
+              <option value="mongodb://localhost:27017/quizDB">quizDB</option>
+              kokoelmien nimien lisäys pudotusvalikkoon-->
+                {% for each in dbsList %}
+                <option value="mongodb://localhost:27017/{{each}}">{{each}}</option>
+                {% endfor %}
+            </select>
+            <select hidden name="atlasDB" id="atlasDB" onchange="getSelectedDataBase(this)">
+                <option value="default" selected>Select Atlas DB</option>
+                {% for i in dbsAtlas %}
+                <option value="">{{i}}</option>
+                {%endfor%}
+            </select>
+            <script>
+                //jquery-funktio buttonin piilottamiseen
+                $("#hideBtn").click(function () {
+                    $(".hideAll").hide("slow");
+                });
+            </script>
+    
+            <input hidden type="text" name="selectedDB" id="selectedDB">
+            <!--tässä näytetään dropdown valittu database-->
+            <input type="text" name="DBname" id="DBname">
+            <button class="selectBtn">Select</button>
+        </form>
+    </body>
+</html>
