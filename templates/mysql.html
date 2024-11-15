@@ -9,6 +9,8 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <nav>
   <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
@@ -16,8 +18,10 @@
 
 <body class="sqlView">
   <h3>MySQL Tables </h3>
-  <p hidden id="fields">{{numfields}}</p>
-  <p hidden id="fieldnames">{{fieldnames}}</p>
+  <p id="tableTotal">{{lng}}</p>
+  <p id="dbname">{{dbname}}</p>
+  <p id="fields">{{numfields}}</p>
+  <p id="fieldnames">{{fieldnames}}</p>
 
   <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
     <option value="default" selected>Select</option>
@@ -31,7 +35,7 @@
     <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
     <button class="showBtn">Show table data</button>
   </form>
-  
+
   <label for="freequery">Write SQL query</label>
   <input onclick="query()" type="checkbox" id="freequery"><br>
   <form action="{{ url_for('mysqlScripts.runSQLScript')}}" method="post">
@@ -75,6 +79,16 @@
   <input type="checkbox" name="newrecord" id="newrecord" onchange="createFieldsToNew()">
   <div id="crudArea">
   </div>
+  <div>
+    <button class="runBtn" onclick="googleChart()">Graphics</button>
+  </div>
+  <div hidden id="dbChart" style="max-width:400px; height:300px"></div>
+  <script>
+   
+
+   
+  </script>
+  </script>
 </body>
 
 </html>

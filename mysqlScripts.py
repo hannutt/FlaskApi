@@ -17,19 +17,27 @@ def readSelectedSql():
         password="Root512!",
         database=dbname
 )
+       
+       
        cursor = mydb.cursor()
        cursor.execute("SHOW TABLES")
-
+       
+       sizequery="SELECT table_schema '%(dbname)s', SUM(data_length + index_length) / (1024 * 1024) FROM information_schema.TABLES GROUP BY table_schema"
        #myresult = cursor.fetchall()
      
        for x in cursor:
             #x:n tietotyyppi on tuple, joten join metodin avulla muutetaan se merkkijonoksi
             #että voidaan käyttää replace metodia poistamaan ylim. merkit.
             result = "".join(x)
-           
             finalres=result.replace("(","").replace(")","")
             tables.append(finalres)
-       return render_template("mysql.html",tables=tables,dbname=dbname)
+       cursor.execute(sizequery)
+       for c in cursor:
+            print(c)
+       lng=len(tables)
+
+      
+       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng)
 
 @mysqlScripts.route("/runScript",methods=['POST','GET'])
 def runSQLScript():

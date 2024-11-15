@@ -221,12 +221,12 @@ def show_data(selectedDB):
         
     return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
 
-@app.route("/mongo-query", methods=['POST','GET']) 
-def runMongoQuery():
+@app.route("/mongo-query/<selectedDB>/<collection>", methods=['POST','GET']) 
+def runMongoQuery(selectedDB,collection):
     dataMongo=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
-    dbname=client[dataBaseNameStr]
-    col=dbname[collectionNameStr]
+    dbname=client[selectedDB]
+    col=dbname[collection]
     text=request.form.get("mongodata")
     #katkaistaan teksti kaksoispisteen kohdalta 2 lista-alkioksi
     t=text.split(":")
@@ -234,8 +234,10 @@ def runMongoQuery():
     query={t[0]:t[1]}
     result=col.find(query)
     
+    #näytetään käyttäjän kirjoittaman kyselyn tulos
     for x in result:
         dataMongo.append(x)
+    
     return render_template("selectCol.html",dataMongo=dataMongo)
     
 if __name__ == '__main__':

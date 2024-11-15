@@ -154,8 +154,8 @@ def readInput():
 
 
 #sqliten itse kirjoitettavat kyselyt.
-@sqliteScripts.route("/selfwrite",methods=['POST','GET'])
-def selfWriteQuery():
+@sqliteScripts.route("/selfwrite/<dbname>",methods=['POST','GET'])
+def selfWriteQuery(dbname):
    data=[]
    conn = sqlite3.connect(dbname)
    table = request.form.get('selectedTable')

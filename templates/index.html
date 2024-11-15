@@ -52,6 +52,8 @@
 
     {% include 'sqliteSelect.html' %}
 
+    <input hidden type="text" id="dbPath">
+    <button hidden class="runBtn" id="accessBtn">Access</button>
     <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
     jossa se on true, näytetään alla oleva select  komponentti-->
     {% if searched==True %}
@@ -136,7 +138,7 @@
         {%endif%}
         <br>
     </form>
-    <form action="{{ url_for('sqliteScripts.selfWriteQuery')}}" method="post">
+    <form action="{{ url_for('sqliteScripts.selfWriteQuery',dbname=dbname)}}" method="post">
         <input hidden type="text" id="selectedTable2" name="selectedTable">
         {% if sqliteTables==True%}
         <label id="queryLbl" for="query">Write SQLite query</label>

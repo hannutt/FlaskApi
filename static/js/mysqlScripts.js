@@ -93,3 +93,45 @@ function cancelEdit() {
     }
     
   }
+  function drawChart() {
+
+    var tables = document.getElementById("tableTotal").innerHTML
+    var tablesInt = parseInt(tables)
+    var dbname = document.getElementById("dbname").innerHTML
+    // Set Data
+    const data = google.visualization.arrayToDataTable([
+
+      ['Contry', 'Mhl'],
+      ['Tables', tablesInt],
+      ['France', 49],
+      ['Spain', 44],
+      ['USA', 24],
+      ['Argentina', 15]
+    ]);
+
+    // Set Options
+    const options = {
+      title: 'Database ' + dbname + ' statistics'
+    };
+
+    // Draw
+    const chart = new google.visualization.BarChart(document.getElementById('dbChart'));
+    chart.draw(data, options);
+
+  }
+var clicks=0
+function googleChart() {
+    clicks=clicks+1
+    if(clicks % 1 ===0)
+    {
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+    
+        document.getElementById("dbChart").hidden=false
+    }
+    if (clicks % 2 ===0)
+    {
+        document.getElementById("dbChart").hidden=true
+    }
+   
+}

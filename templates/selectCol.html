@@ -99,7 +99,7 @@
   <label id="mongoLbl" hidden for="mongoQuery">Write Mongo query</label>
   <input hidden id="mongoQuery" name="mongoQuery" type="checkbox" onclick="mongoquery()">
   <br>
-  <form action="{{ url_for('runMongoQuery')}}" method="post">
+  <form action="{{ url_for('runMongoQuery',selectedDB=selectedDB,collection=collectionNameStr)}}" method="post">
   <textarea hidden id="mongodata" name="mongodata"></textarea>
   <br>
   <button hidden id="runMongo" name="runMongo" class="showBtn">Run Mongo query</button>
