@@ -171,3 +171,12 @@ white-space: nowrap;
     
     top:450px;
 }
+.avoidInputs input{
+    display: flex;
+    flex-direction: row;
+
+}
+.avoidInputs label{
+    font-weight: bold;
+
+}

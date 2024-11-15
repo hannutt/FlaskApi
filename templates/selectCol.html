@@ -45,8 +45,8 @@
 
   <p id="path" class="path"></p>
 
-
-  <form action="{{ url_for('show_data')}}" method="post">
+<!--valittu tietokanta lähetetää selectedDB parametrina seur. funktiolle-->
+  <form action="{{ url_for('show_data',selectedDB=selectedDB)}}" method="post">
     <input type="text" name="selecDB" id="selecDB" value="{{selectedDB}}">
     <input type="text" id="colname" name="colname" value="{{collectionNameStr}}">
    

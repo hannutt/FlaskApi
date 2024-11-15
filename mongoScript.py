@@ -28,3 +28,5 @@ def dropCollection():
 
     return render_template("selectCol.html")
 
+
+

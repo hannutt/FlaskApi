@@ -4,14 +4,37 @@
         <title>SQLite</title>
     </head>
     <body>
+        <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         <div hidden id="sqliteStart">
-        <label id="restrictionLbl" for="restriction">Set the number of files to search:</label>
+            <div class="avoidInputs">
+                <br>
+        <label id="restrictionLbl" for="restriction" class="restLbl">Set the number of files to search:</label>
         <input type="text" name="restriction" id="restriction" size="4">
-        <button id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+        <br>
        
+        <label for="avoidInput">Enter directories not to be searched</label>
+        <input type="text" id="avoidInput" onchange="directoriesToAvoid()">
     </div>
-    <div id="avoidList">
+    <br>
+        <button id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+        <input hidden type="text" name="avoiding" id="avoiding" placeholder="avoiding">
+    </form>
+       
+    
+    <div id="avoidList" class="avoidList">
+    </div>
+    
+    <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
+        <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
+        <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
+        <input type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
+        <br>
+      
+        <button class="runBtn" hidden id="searchFolderBtn">Search from </button>
+        
+    </form>
+</div>
 
-    </div>
+
     </body>
 </html>

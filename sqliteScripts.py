@@ -10,6 +10,15 @@ sqliteScripts = Blueprint('sqliteScripts',__name__,static_folder='static',templa
 
 @sqliteScripts.route("/sqlite",methods=['POST','GET'])
 def readDBname():
+   #haetaan avoid inputtiin syötetyt arvot
+    avoid = request.form.get("avoiding")
+    #koska inputin arvojen perään lisätään js-funktiossa pilkku, niin luodaan merkkijonosta
+    #lista. listan sanat erotellaan pilkulla, eli jokainen pilkun jälkeinen merkki on oma lista-alkio
+    avoidList=avoid.split(",")
+    #poistetaan listan viimeinen tyhjäksi jäävä arvo
+    avoidList.pop()
+   
+    
     dbNames=[]
     dbSizes=[]
     runsql=True
@@ -24,9 +33,9 @@ def readDBname():
     sqliteDatabases=[]
     #etsitään db-päätteisiä tiedostoja kaikkialta c-levyltä.
     #avoid listaan voidaan lisätä sijainnit, joista ei etsitä, esim nyt roskakorista ei etsitä.
-    avoid=['$Recycle.Bin']
+    
     for root, dirs, files in os.walk("C:\\"):
-        dirs[:] = [d for d in dirs if d not in avoid]
+        dirs[:] = [d for d in dirs if d not in avoidList]
         for file in files:
             if file.endswith(".db"):
              i=i+1
@@ -49,7 +58,8 @@ def readDBname():
              #i pitää kirjaa siitä, montako db päätteistä tiedostoa on löydetty.
              if i == restrictionInt:
                 return render_template("index.html",sqliteDatabases=sqliteDatabases,sqliteTables=sqliteTables,runsql=runsql)
-
+                
+   
 @sqliteScripts.route("/getsqlite",methods=['POST','GET'])
 def showSqliteTables():
     sqliteTables=True 

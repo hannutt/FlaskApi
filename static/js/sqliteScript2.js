@@ -41,11 +41,13 @@ function showSearchOptions() {
 
     }
 }
-
+var l =[]
 function directoriesToAvoid() {
     
-    var dir = document.getElementById("avoidTA").value
-    document.getElementById("avoidList").innerHTML+=dir+','
-    document.getElementById("avoidTA").value=''
+    var dir = document.getElementById("avoidInput").value
+    document.getElementById("avoiding").value+=dir+','
+    l.push(dir)
+    document.getElementById("avoidInput").value=''
+    console.log(l)
 
 }

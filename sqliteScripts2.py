@@ -30,7 +30,6 @@ def searchFromFolder():
     #samaa listaa, saadaan myös tämän tulokset näkymään samassa table.elementissä
     tables=[]
     dbSizes=[]
-   
     folder = request.form.get("srcFolder")
     for root, dirs, files in os.walk(folder):
         for file in files:

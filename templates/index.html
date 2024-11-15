@@ -50,34 +50,8 @@
     </div>
     {% include 'mysqlSelect.html' %}
 
-    <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
-        {% include 'sqliteSelect.html' %}
-    </form>
-    <div hidden id="sqliteStart2">
-        <p hidden id="avoid" class="avoid">Avoid these directories:</p>
-        <input type="text" hidden id="avoidTA">
-        <button  id="insertBtn" onclick="directoriesToAvoid()">Insert to list</button>
-    
+    {% include 'sqliteSelect.html' %}
 
-    <br><br>
-    <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
-        <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
-        <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
-        <input type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
-        <button class="runBtn" hidden id="searchFolderBtn">Search from </button>
-    </form>
-
-
-
-    </form>
-    <br>
-    <form action="{{ url_for('sqliteScripts.readInput')}}" method="post">
-        <input type="text" placeholder="db-file path" id="dbPath" name="dbPath">
-        <br><br>
-        <button class="runBtn" id="accessBtn">Access</button>
-
-    </form>
-</div>
     <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
     jossa se on true, näytetään alla oleva select  komponentti-->
     {% if searched==True %}

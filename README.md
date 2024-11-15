@@ -41,6 +41,10 @@ Example image where the user has limited the number of sqlite database files to 
 
 ![alt text](static/images/sqliteTable.png)
 
+The user can also enter locations where the user does not want to search for .db files. In the example image, the user has specified that the search is not performed from the Recycle Bin. the terms are stored in a list, so you can enter as many as you want.
+
+![alt text](static/images/avoid.png)
+
 Sqlite db files can also be searched for in specific folders by typing the path of the folder in the html input field. The folder path entered by the user is displayed in the html button after typing. This feature is made using the onChange event handler and a JavaScript function.
 
 ![alt text](static/images/searchFolder.png)
@@ -82,6 +86,9 @@ Accessing sqlite databases required a different approach. for now, it's done usi
 
 The search for sqlite files starts when the user clicks the "access sqlite databases" checkbox.
 After the click, the JavaScript function creates an input field and a button element. enter the number of db files to search in the input field. Without restrictions, the program will search for all .db files on the c drive, and there may be several of them and they may take a lot of time.
+
+The user can also enter directories where the user does not want to search for .db files
+The directory names to be avoided are entered into the html input field, the content of which is passed to the python function. The Python function creates a list of words using the split method and passes the values ​​of the list to the method of the os.walk library.
 
 A found sqlite file can be selected by clicking on it. The click calls a jQuery function that passes the path and name of the clicked database file to the python function. This shows all tables from selected database.
 
@@ -161,14 +168,6 @@ After selecting a database, click the selection button and the program will go t
 The available collections are retrieved using the list_collection_names method
 
 
-ACCESS THE DATABASE USING API ENDPOINT
-
-using api/db/(name)/(collection) where the parameter (name) is the name of the desired database and (collection) is the name of the desired collection. This will display all the database information on the screen.
-
-DELETE RECORDS USING API ENDPOINT
-
-Deleting a record using the api endpoint is done with the /api/delete/(database)/(collection)/(id) command
-this will remove the record whose id it receives as a parameter from the named database's collection.
 
 
 

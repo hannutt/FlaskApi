@@ -53,19 +53,19 @@ def runSQLScript():
 
      return render_template("mysql.html",sqldata=sqldata,script=script)
 
-@mysqlScripts.route("/mysqlTable",methods=['POST','GET'])
-def readTableData():
+@mysqlScripts.route("/mysqlTable/<dbname>",methods=['POST','GET'])
+def readTableData(dbname):
      
       data=[]
       ids=[]
       sqltable=request.form.get("selectedTable")
-      dbName=request.form.get("dbname")
+      #dbName=request.form.get("dbname")
       mydb = mysql.connector.connect(
        
         host="localhost",
         user="root",
         password="Root512!",
-        database=dbName
+        database=dbname
 )
     
 

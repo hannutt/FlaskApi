@@ -5,9 +5,6 @@ function runSqlite() {
     {  
         document.getElementById("sqliteStart").hidden=false
         document.getElementById("sqliteStart2").hidden=false
-     
-       
-
     }
     else {
         document.getElementById("sqliteStart").hidden=true

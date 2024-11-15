@@ -136,7 +136,7 @@ def DB_Statistics():
 
     return render_template('index.html',stats=statsNames)
 
-@app.route('/read-form', methods=['POST','GET']) 
+@app.route('/mongodb/', methods=['POST','GET']) 
 def read_form():
    
     client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -170,22 +170,16 @@ def read_form():
     return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
 
 
-    
-
-
 #näyttää kaiken datan kokoelmasta
-@app.route("/show-form",methods=['POST'])
-def show_data():
+@app.route("/readcollection/<selectedDB>",methods=['POST'])
+def show_data(selectedDB):
 
     global showdata
     showdata=True
     l=[]
     dbKeys=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
-    
-    dataBaseName=request.form.get("selecDB")
-    global dataBaseNameStr
-    dataBaseNameStr = str(dataBaseName)
+    dataBaseNameStr = str(selectedDB)
     collectionName = request.form.get("colname")
     global collectionNameStr
     collectionNameStr=str(collectionName)
