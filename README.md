@@ -1,13 +1,12 @@
 Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, MongoDB Cloud Atlas
 
 
-The main idea is that you can access multiple MongoDB, MySQL or SQLite databases with a single program using api endpoints or an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL & SQLite) and MongoDB Atlas cloud databases.
+The main idea is that you can access multiple MongoDB, MySQL or SQLite databases with a single program using an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL & SQLite) and MongoDB Atlas cloud databases.
 
 It is possible to read, update, add new records and delete records to all the mentioned databases.
 You can also create new document collections in Mongo databases and tables and columns in SQL databases.
 
 The Mongo Cloud Atlas username and password are stored in the .env environment file and retrieved with the os.getenv function. The .env file is in gitignore mode for security reasons.
-
 
 
 Example view from the front page, where the user can choose the local database or the cloud database they want. Database statistics made with ChartJS are also displayed.
@@ -56,7 +55,7 @@ The input field has a predictive text input feature, implemented with Python os.
 
 MAIN FEATURES
 
-index.html is split into smaller html files using the Python Flask Include method. Jquery code and JavaScript code are also in their own external .js files. The Python code is divided into its own files using the Blueprint method
+index.html is split into smaller html files using the Python Flask Include method. Jquery code and JavaScript code are also in their own external .js files. The Python code is divided into its own files using the Blueprint method.
 
 ACCESS TO LOCAL MongoDB DATABASE USING HTML-UI.
 
@@ -74,6 +73,18 @@ Once the user has selected a mongo database, it is possible to create new collec
 DELETE MONGODB COLLECTION
 
 Deleting a collection from a selected mongo database is quite similar to creating a new collection. The only difference is in the Python function that implements the deletion, which uses the drop method after receiving information from the user interface about the name of the database and the name of the collection to be deleted. A Python function obtains this information using the request.form.get method.
+
+ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
+
+On the home page, select the checkbox called Access to the Atlas database. 
+After clicking, the program executes a javascript function that dynamically creates a drop-down menu and retrieves the available databases using the list_database_names method.
+the databases are placed in a drop-down menu from which the user selects the desired database.
+
+The selected value of the dropdown is obtained by the request.form.get method and stored in a variable that is passed to the Python function that communicates with MongoDB Cloud Atlas.
+
+After selecting a database, click the selection button and the program will go to a new html page, where the available collections are from the drop-down menu. select a collection and click the View button to see the contents of the collection.
+The available collections are retrieved using the list_collection_names method
+
 
 
 ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
@@ -137,35 +148,33 @@ In this program, the field names are obtained using the for loop and the keys me
 
 The selected component contains an onChange event handler that calls a JavaScript function. The JavaScript function transfers the name of the field selected by the user to a hidden html input field, from which the Python function performing the search retrieves it using the request.form.get method.
 
+JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is done with jquery click and these methods.
+The application also uses the same jQuery method to modify and delete records in SQL databases.
 
-Python and JavaScript collaboration, among others:
+ADDING a NEW RECORD OR EDITING AN EXISTING ONE 
 
-JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is made made with jquery click and this methods.
+The Python function calculates the number of required fields in the MongoDB collection/SQL table and the Javascript function creates the same number of input fields (with the createElement method) in the html user interface. the end result is the right number of input fields for adding a new record or editing an old record.
 
-The Python function counts the number of fields in the MongoDB collection and the Javascript function creates the same number of input fields (with the createElement method) in the html user interface. the end result is the right number of input fields for adding a new record or editing an old record.
+DATABASE STATISTICS
 
-Database statistics, using the JavaScript ChartJS library, this feature displays databases in a bar chart based on their size. Database statistics are obtained from a Python function and delivered to an html page where a JavaScript function grabs the values ​​and makes Bar chart graphs with the values.
+Using the JavaScript ChartJS library, this feature displays Mongo databases in a bar chart based on their size. The database statistics are obtained from a Python function and delivered to an html page where a JavaScript function grabs the values ​​and converts the values ​​into bar chart graphs.
 
-The statistical chart works on the hide/show principle. one click shows the chart div, i.e. one click sets the hidden attribute to true and another click sets it to false and the chart div is hidden.
+The MySQL database also has a graphical statistics feature implemented using Google Charts. 
+Otherwise, this feature works in the same way as the graphical statistics of Mongo databases.
+The statistical chart works on the hide/show principle. one click shows the chart div, i.e.
+one click sets the hidden attribute to true and another click sets it to false and the chart
+div is hidden.
 
-Customization options, in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
+CUSTOMIZATION OPTIONS
+
+in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
 
 Make the text more readable. Normally, MongoDB displays characters like { }, () etc. next to the data.
 The checkbox option pretty text removes these characters using a for-loop and a javaScript replace methods
 
-JavaScript search function. The function uses the window.find method and highlights the found words in yellow. the function also stores the searched words in a table and displays them to the user.
-The function also shows some statistics about the searched words, for example the number of characters of the longest and shortest words and the number of characters of both words.
+JavaScript search function. The function uses the window.find method and highlights the found words in yellow.
 
-ACCESS TO DATABASE IN MONGODB CLOUD ATLAS
 
-On the home page, select the checkbox called Access to the Atlas database. 
-After clicking, the program executes a javascript function that dynamically creates a drop-down menu and retrieves the available databases using the list_database_names method.
-the databases are placed in a drop-down menu from which the user selects the desired database.
-
-The selected value of the dropdown is obtained by the request.form.get method and stored in a variable that is passed to the Python function that communicates with MongoDB Cloud Atlas.
-
-After selecting a database, click the selection button and the program will go to a new html page, where the available collections are from the drop-down menu. select a collection and click the View button to see the contents of the collection.
-The available collections are retrieved using the list_collection_names method
 
 
 

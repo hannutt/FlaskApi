@@ -21,8 +21,8 @@ def readSelectedSql():
        
        cursor = mydb.cursor()
        cursor.execute("SHOW TABLES")
-       
-       sizequery="SELECT table_schema '%(dbname)s', SUM(data_length + index_length) / (1024 * 1024) FROM information_schema.TABLES GROUP BY table_schema"
+       #tämä sql lause hakee valitun tietokannan koon
+       sizequery="SELECT table_schema '%(dbname)s', SUM(data_length + index_length) / 1024 FROM information_schema.TABLES GROUP BY table_schema LIMIT 1"
        #myresult = cursor.fetchall()
      
        for x in cursor:
@@ -32,12 +32,12 @@ def readSelectedSql():
             finalres=result.replace("(","").replace(")","")
             tables.append(finalres)
        cursor.execute(sizequery)
-       for c in cursor:
-            print(c)
+       for dbsize in cursor:
+            print(dbsize[1])
        lng=len(tables)
 
       
-       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng)
+       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng,dbsize=dbsize[1])
 
 @mysqlScripts.route("/runScript",methods=['POST','GET'])
 def runSQLScript():

@@ -97,21 +97,34 @@ function cancelEdit() {
 
     var tables = document.getElementById("tableTotal").innerHTML
     var tablesInt = parseInt(tables)
+    var dbsize=document.getElementById("dbsize").innerHTML
+    var dbsizeInt= parseInt(dbsize)
     var dbname = document.getElementById("dbname").innerHTML
     // Set Data
     const data = google.visualization.arrayToDataTable([
 
-      ['Contry', 'Mhl'],
+      ['', ''],
       ['Tables', tablesInt],
-      ['France', 49],
-      ['Spain', 44],
-      ['USA', 24],
-      ['Argentina', 15]
+      ['Database Size (KB)', dbsizeInt],
+     
     ]);
 
     // Set Options
     const options = {
-      title: 'Database ' + dbname + ' statistics'
+      title: 'Database ' + dbname + ' statistics',
+      backgroundColor:"#4d7574",
+      colors:["#a1d4d6"],
+      hAxis: {
+        textStyle:{color: '#FFF'}
+    },
+    vAxis: {
+      textStyle:{color: '#FFF'}
+  },
+  titleTextStyle: {
+    color: '#FFF',
+    fontSize:16
+}
+      
     };
 
     // Draw
