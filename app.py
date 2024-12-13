@@ -16,6 +16,7 @@ from mysqlScripts import mysqlScripts
 from sqliteScripts import sqliteScripts
 from mongoScript import mongoScript
 from sqliteScripts2 import sqliteScripts2
+from postgreScripts import postgreScripts
 
 import urllib
 app = Flask(__name__)
@@ -26,6 +27,7 @@ app.register_blueprint(mysqlScripts,url_prefix='')
 app.register_blueprint(sqliteScripts,url_prefix='')
 app.register_blueprint(mongoScript,url_prefix='')
 app.register_blueprint(sqliteScripts2,url_prefix='')
+app.register_blueprint(postgreScripts,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 showdata = False
 connect=False

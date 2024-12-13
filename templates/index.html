@@ -18,6 +18,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/sqliteScript2.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/statistic.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Flask-APi</title>
@@ -42,6 +43,13 @@
     <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
     <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
     <br><br>
+    
+    <form action="{{ url_for('postgreScripts.readPostgre')}}" method="post">
+        <label for="postgreCB" class="postgreLbl">Access to PostgeSQL DataBase</label>
+        <input type="checkbox" class="postgreCB" id="postgreCB" name="postgreCB" onclick="goPostgrePage()">
+        <br><button hidden id="gobtn">Go</button>
+    </form>
+    <br>
 
     <form action="{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
         <div class="atlasForm" id="atlasForm">

@@ -75,11 +75,12 @@ white-space: nowrap;
     position: absolute;
     top:300px;
 }
-.atlasLbl {
+.atlasLbl,.postgreLbl {
     color: black;
     text-transform: uppercase;
     font-weight: bold;
 }
+
 .formPageBody {
     background-image:  url('/static/images/FlaskAppBg.jpg');
 }

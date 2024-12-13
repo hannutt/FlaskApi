@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PostgreSQL</title>
+    </head>
+    <body>
+        <h2>PostgreSQL</h2>
+        <select>
+        {% for d in databases %}
+        <option>{{d}}</option>
+        {%endfor%}
+    </select>
+    </body>
+</html>
