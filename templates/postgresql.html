@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>PostgreSQL</title>
-    </head>
-    <body>
-        <h2>PostgreSQL</h2>
-        <select>
+
+<head>
+    <title>PostgreSQL</title>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
+</head>
+
+<body>
+    <h2>PostgreSQL</h2>
+    <select id="postgre" name="postgre" onchange="getPostgreDB(this)">
+        <option selected>Select</option>
         {% for d in databases %}
         <option>{{d}}</option>
         {%endfor%}
     </select>
-    </body>
+
+    <form action="{{ url_for('postgreScripts.getTables')}}" method="post">
+        <input hidden type="text" id="selectedPostgre" name="selectedPostgre">
+        <button id="listTables">List tables</button>
+    </form>
+    <!--showtables boolean määritellään python funktiossa-->
+    <form action="{{ url_for('postgreScripts.showPostgreTable')}}" method="post">
+
+        <!--template tagin ja javascriptin voi yhdistää, tässä tapauksessa suoritetan script
+        lohko jos python boolean showtables on tosi-->
+        {% if showtables==True %}
+        <script>
+            document.getElementById("postgre").hidden=true
+            document.getElementById("listTables").hidden=true
+        </script>
+
+        <select id="postgreTables" name="postgreTables" onchange="getPostgeTable(this)">
+            <option selected>Select</option>
+            {% for t in tables %}
+            <option>{{t}}</option>
+            {%endfor%}
+        </select>
+
+        <input hidden type="text" name="postgreTable" id="postgreTable">
+        <button>Show data</button>
+        {%endif%}
+        <table border="1">
+            <tr>
+               
+                <th>{{columnname}}</th>
+            </tr>
+            
+            {% for td in tabledata%}
+            <tr>
+                <td>{{td}}</td>
+
+            </tr>
+            {%endfor%}
+        </table>
+    </form>
+    <label for="postgreQuery">Write query</label>
+    <input type="checkbox" id="postgreQueryCB" name="postgreQueryCB" onchange="writePostgre()">
+    <form action="{{ url_for('postgreScripts.writePostgreQuery')}}" method="post">
+    <textarea hidden id="writePostgre" name="writePostgre" placeholder="Write SQL query"></textarea>
+    <button>Run query</button>
+</form>
+</body>
+
 </html>
