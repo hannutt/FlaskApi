@@ -102,10 +102,11 @@ white-space: nowrap;
     text-align: left;
     background-color: lightblue;
 }
+/*
 .sqldata {
     font-weight: bold;
     background-color: lightblue;
-}
+}*/
 .cancelBtn {
     font-weight: bolder;
     padding: 5px;

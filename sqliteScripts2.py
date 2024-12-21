@@ -28,13 +28,21 @@ def searchFromFolder():
     #saman nimistä listaa käytetään myös sqliteScripts readdbname funktiossa, jonka jälkeen
     #löydetyt tietodston käydään index.htmlssä for silmukalla läpi, kun myös käytetään
     #samaa listaa, saadaan myös tämän tulokset näkymään samassa table.elementissä
+    restriction=request.form.get("numberofsearch")
+    if restriction=="":
+        restriction=1
+    restrictInt=int(restriction)
     tables=[]
     dbSizes=[]
     folder = request.form.get("srcFolder")
+    folder=folder.replace(" ","")
+    
+    i=0
     for root, dirs, files in os.walk(folder):
         for file in files:
             if file.endswith(".db"):
                 dbvar=root+"\\"+file
+                i+=1
                 
                 dbSize=os.stat(dbvar)
            
@@ -46,9 +54,9 @@ def searchFromFolder():
                 sizeInMbStr = str(roundedSize)
                 finalDBvar=dbvar+' | Size: '+sizeInMbStr + ' MB'
                 tables.append(finalDBvar)
-                
-    return render_template("index.html",sqliteDatabases=tables)
+                if i == restrictInt:
 
+                    return render_template("index.html",sqliteDatabases=tables)
 
             
   

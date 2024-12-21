@@ -27,6 +27,8 @@ def readDBname():
     sqliteTables=True
     #käyttäjän syöttämä määrä, montako db tiedostoa etsitään
     restriction = request.form.get('restriction')
+    if restriction==0:
+       restriction=1
     
     #muunto int-tietotyyppiin eli luvuksi.
     restrictionInt = int(restriction)

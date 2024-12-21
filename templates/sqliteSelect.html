@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
+       
         <title>SQLite</title>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
     </head>
     <body>
         <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
@@ -28,10 +29,12 @@
     <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
         <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
         <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
-        <input type="text" name="srcFolder" id="srcFolder" onchange="getInputValue()">
+        <label id="srcRestLbl" for="numberofsearch">Set the number of files to search:</label>
+        <input hidden type="text" id="numberofsearch" name="numberofsearch" onchange="checkFields(document.getElementById('numberofsearch').value)">
+        <input hidden type="text" name="srcFolder" id="srcFolder" onchange="getInputValue();checkFields(document.getElementById('srcFolder').value)">
         <br>
       
-        <button class="runBtn" hidden id="searchFolderBtn">Search from </button>
+        <button hidden class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
         
     </form>
 </div>

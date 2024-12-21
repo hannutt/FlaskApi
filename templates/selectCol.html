@@ -111,30 +111,8 @@
 
 
   <br>
-  <h4>Customization options</h4>
-  <div class="CBforTable">
-    <label id="tableCBLbl" for="tableCB">Remove table borders</label>
-    <input type="checkbox" name="tableCB" id="tableCB" onclick="removeTable()">
-    <label id="tableCBLbltxt" for="prettytxtCB">Pretty text</label>
-    <input type="checkbox" name="prettytxtCB" id="prettytxtCB" onclick="prettyText()">
-  </div>
-  <select id="colors" class="colors" onclick="MenuOpened()" onchange="changeBGcolor(this)">
-    <option value="default">Select table bgcolor</option>
-    <option value="white">White</option>
-    <option value="lightblue">Lightblue</option>
-  </select>
-  <!--parametri this.value on colorcode inputtiin kirjoitettu teksti-->
-  <input hidden type="text" id="colorCode" placeholder="color name or code" onchange="changeBGcolorInputField(this.value)">
+  {% include 'customs.html' %}
  
-
-  <select id="font" class="font" onclick="fontMenuOpened()" onchange="changeFont(this)">
-    <option value="default">Select font size</option>
-    <option value="small">Small</option>
-    <option value="medium">medium</option>
-    <option value="large">Large</option>
-  </select>
-  <input hidden type="text" id="fontFam" placeholder="Font" onchange="changeFontFamily(this.value)">
-
 
 </body>
 <script>

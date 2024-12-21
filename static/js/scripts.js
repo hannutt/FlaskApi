@@ -145,14 +145,13 @@ function removeTable() {
 function prettyText() {
   var table = document.getElementById("dbTable")
   var originalText = table.innerHTML
-
+  var prettyText=originalText
   var txtCB = document.getElementById("prettytxtCB")
-
-
   var total = document.getElementById("total").innerHTML
+  var marks=["{","}","ObjectId",")","(","'","'","'"]
   var records = Number(total)
   console.log(typeof (records))
-  console.log('pretty text')
+
   //for-silmukan avulla käydään koko taulukon tekstisisältö läpi ja poistetaan määritellyt merkit
   //replace metodilla. records on näytettävien dokumenttien määrä ja se saadaan alunperin pyMongo count
   //metodilla, joka suoritetaan python funktiossa ja lähetetään html-sivulle ja otetaan käyttöön
@@ -161,8 +160,12 @@ function prettyText() {
     for (var i = 0; i < records; i++) {
       //tämän avulla teksti voidaan palauttaa alkuperäiseen muotoon
       table.setAttribute('data-orig', originalText);
-      var prettytxt = document.getElementById("dbTable").innerHTML.replace('{', '',).replace("}", "").replace('ObjectId', "").replace("(", "").replace(")", "")
-      document.getElementById("dbTable").innerHTML = prettytxt
+      for (j=0;j<marks.length;j++)
+      {
+       prettyText= prettyText.replace(marks[j],"")
+      }
+      //var prettytxt = document.getElementById("dbTable").innerHTML.replace('{', '',).replace("}", "").replace('ObjectId', "").replace("(", "").replace(")", "")
+      document.getElementById("dbTable").innerHTML = prettyText
 
 
     }

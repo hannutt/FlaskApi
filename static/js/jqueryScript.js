@@ -63,7 +63,7 @@ $(document).ready(function () {
         }
 
 
-        $('#dbPath').autocomplete({
+        $('#srcFolder').autocomplete({
             source: newPathList
         })
     })

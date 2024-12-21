@@ -2,7 +2,7 @@ import psycopg2
 from flask import Blueprint, render_template, request
 showtables=False
 postgreScripts = Blueprint('postgreScripts',__name__,static_folder='static',template_folder='templates')
-
+tableSelected=False
 def connection():
 
     conn = psycopg2.connect(database="",
@@ -32,9 +32,11 @@ def readPostgre():
 def getTables():
     showtables=True
     tables=[]
+    sizes=[]
     #talletetaan valitun tietokannan nimi 
-    global db
+    
     db=request.form.get('selectedPostgre')
+    
     conn = psycopg2.connect(database=db,
                             
                             host="localhost",
@@ -51,10 +53,18 @@ def getTables():
     for table in cursor.fetchall():
         print(table)
         tables.append(table)
-    return render_template("postgresql.html",showtables=showtables,tables=tables)
+        #valitun tietokannan koko
+    cursor.execute(f"SELECT pg_size_pretty (pg_database_size ('{db}')) size;")
+    for j in cursor:
+        print(j)
+        sizes.append(j)
+    return render_template("postgresql.html",showtables=showtables,tables=tables,j=j,db=db)
 
-@postgreScripts.route("/showpostgretable",methods=['POST','GET'])
-def showPostgreTable():
+@postgreScripts.route("/showpostgretable/<db>",methods=['POST','GET'])
+def showPostgreTable(db):
+    global postgredb
+    postgredb=db
+    tableSelected=True
     tabledata=[]
     columnname=[]
  
@@ -74,12 +84,12 @@ def showPostgreTable():
         tabledata.append(i)
     for j in column_names:
         columnname.append(j)
-    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname)
+    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected)
 
 @postgreScripts.route("/writepostgre",methods=['POST','GET'])
 def writePostgreQuery():
      tabledata=[]
-     conn = psycopg2.connect(database=db,
+     conn = psycopg2.connect(database=postgredb,
                             host="localhost",
                             user="postgres",
                             password="SkaneBorg12!",

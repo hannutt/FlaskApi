@@ -148,3 +148,15 @@ function googleChart() {
     }
    
 }
+
+function removeMarksMySql() {
+  var marks=[")","(",","]
+  var origin=document.getElementById("dbTable")
+  var content=origin.innerText
+  for (var i=0;i<marks.length;i++)
+  {
+    content=content.replace(marks[i],"")
+  }
+  console.log(content)
+
+}
