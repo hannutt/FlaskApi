@@ -3,10 +3,11 @@ import mysql.connector
 
 mysqlScripts = Blueprint('mysqlScripts',__name__,static_folder='static',template_folder='templates')
 
-
+tablesShown=False
 @mysqlScripts.route("/mysql",methods=['POST','GET'])
 def readSelectedSql():
        tables=[]
+       
        global dbname
        dbname=request.form.get('selectedSQL')
       
@@ -63,7 +64,7 @@ def runSQLScript():
 
 @mysqlScripts.route("/mysqlTable/<dbname>",methods=['POST','GET'])
 def readTableData(dbname):
-     
+      tablesShown=True
       data=[]
       ids=[]
       sqltable=request.form.get("selectedTable")
@@ -91,4 +92,4 @@ def readTableData(dbname):
         data.append(x)
       
 
-      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames)
+      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames,tablesShown=tablesShown)
