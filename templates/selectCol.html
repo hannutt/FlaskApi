@@ -10,10 +10,11 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/WordSearch.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/mongoScripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
   
 </head>
 
-<body class="formPageBody">
+<body class="formPageBody" onload="checkDbType();">
   <nav>
   <form action="{{ url_for('showIndex')}}" method="post">
     <button class="fpBtn">Front page</button> |
@@ -29,6 +30,7 @@
       {{objects}}</p> <p hidden id="total"> {{objects}}</p>
       <p class="databaseFields">{{dbKeysList}}</p>
   </div>
+  <h2 id="dbHeader">MongoDB</h2>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
   <select name="cols" id="cols" onchange="GetSelectionFromSelect(this)">
 

@@ -57,7 +57,7 @@ function directoriesToAvoid() {
 
 }
 function checkFields(numoffiles,dir) {
-    if (numoffiles!="" && dir!="")
+    if (numoffiles!==null && dir!==null)
     {
         document.getElementById("searchFolderBtn").disabled=false
     }

@@ -78,13 +78,16 @@ def showSqliteTables():
     sql_query = """SELECT name FROM sqlite_master 
     WHERE type='table';"""
    
-# Create a cursor object using the cursor() method
+
     cursor = conn.cursor()
     cursor.execute(sql_query)
     
     for x in cursor:
-       print(x)
-       sqlTables.append(x)
+        #i:n tietotyyppi on tuple, joten join metodin avulla muutetaan se merkkijonoksi
+    #että voidaan käyttää replace metodia poistamaan ylim. merkit.
+        result = "".join(x)
+        finalres=result.replace("(","").replace(")","")
+        sqlTables.append(finalres)
     conn.close()
 
     return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables,dbname=dbname)

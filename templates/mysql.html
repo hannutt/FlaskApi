@@ -7,6 +7,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/mysqlScripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -17,7 +18,7 @@
 </nav>
 
 <body class="sqlView">
-  <h3>MySQL Tables </h3>
+  <h2 id="dbHeader">MySQL Tables </h2>
   <p id="tableTotal">{{lng}}</p>
   <p id="dbname">{{dbname}}</p>
   <p id="fields">{{numfields}}</p>
@@ -50,31 +51,34 @@
     <tr>
       <th id="sqlHeaders" class="sqlHeaders">{{finalHeaders}}</th>
     </tr>
+   
     {% for d in data %}
     <tr>
-      <td id="sqldata" class="sqldata">{{d}}</td>
+      <td id="data{{loop.index}}" class="data{{loop.index}}" >{{d}}</td>
     </tr>
+    <script>
+      //jquery funktio hakee testin valitusta sqldata rivistä
+      jQuery("#data{{loop.index}}").click(function () {
+        event.preventDefault();
+        //valitun rivin teksti talletetaan muuttujaan
+        var text = jQuery(this).text();
+        //korvataan ( ) merkit tyhjällä
+        var textreplace = text.replace("(", "").replace(")", "")
+        //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
+        const textToArray = textreplace.split(",");
+  
+        createMySqlFields(textToArray)
+  
+      });
+  
+    </script>
+     <p hidden id="loopLast">{{loop.length}}</p>
     {%endfor%}
   </table>
   {% for s in sqldata %}
   <p id="sqltextarea" name="sqltextarea">{{s}}</p>
   {%endfor%}
-  <script>
-    //jquery funktio hakee testin valitusta sqldata rivistä
-    jQuery(".sqldata").click(function () {
-      event.preventDefault();
-      //valitun rivin teksti talletetaan muuttujaan
-      var text = jQuery(this).text();
-      //korvataan ( ) merkit tyhjällä
-      var textreplace = text.replace("(", "").replace(")", "")
-      //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
-      const textToArray = textreplace.split(",");
-
-      createMySqlFields(textToArray)
-
-    });
-
-  </script>
+ 
   <br>
   <label for="edit">Edit</label>
   <input type="checkbox" name="edit" id="edit">
@@ -87,7 +91,7 @@
   </div>
   <div hidden id="dbChart" style="max-width:400px; height:300px"></div>
   {% include 'customs.html'%}
-  </script>
+  
 </body>
 
 </html>

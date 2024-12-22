@@ -22,10 +22,13 @@ def readPostgre():
     #haetaan kaikki tietokannat
     cursor.execute("SELECT datname FROM pg_database;")
     for i in cursor.fetchall():
-        print(i)
-        databases.append(i)
+    #i:n tietotyyppi on tuple, joten join metodin avulla muutetaan se merkkijonoksi
+    #että voidaan käyttää replace metodia poistamaan ylim. merkit.
+        result = "".join(i)
+        finalres=result.replace("(","").replace(")","")
+        databases.append(finalres)
    
-
+    
     return render_template("postgresql.html",databases=databases)
 
 @postgreScripts.route("/postgretables",methods=['POST','GET'])
@@ -51,8 +54,9 @@ def getTables():
     WHERE table_schema = 'public'
 """)
     for table in cursor.fetchall():
-        print(table)
-        tables.append(table)
+        result = "".join(table)
+        finalres=result.replace("(","").replace(")","")
+        tables.append(finalres)
         #valitun tietokannan koko
     cursor.execute(f"SELECT pg_size_pretty (pg_database_size ('{db}')) size;")
     for j in cursor:

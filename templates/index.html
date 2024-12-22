@@ -59,8 +59,8 @@
     {% include 'mysqlSelect.html' %}
     {% include 'sqliteSelect.html' %}
    
-
-    <input hidden type="text" id="dbPath">
+    <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
+    <input hidden type="text" id="dbPath" name="sqliteFile">
     <button hidden class="runBtn" id="accessBtn">Access</button>
     <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
     jossa se on true, näytetään alla oleva select  komponentti-->
@@ -71,6 +71,7 @@
         {%endfor%}
     </select>
     {%endif%}
+</form>
 
 
     <select hidden name="sqliteInput" id="sqliteInput" onclick="sqliteSelection(this.value)">
@@ -146,17 +147,7 @@
         {%endif%}
         <br>
     </form>
-    <form action="{{ url_for('sqliteScripts.selfWriteQuery',dbname=dbname)}}" method="post">
-        <input hidden type="text" id="selectedTable2" name="selectedTable">
-        {% if sqliteTables==True%}
-        <label id="queryLbl" for="query">Write SQLite query</label>
-        <input type="checkbox" id="queryCB" name="queryCB" onclick="showQueryBox()">
-        {%endif%}
-        <br>
-        <textarea hidden id="sqliteQuery" name="sqliteQuery"></textarea>
-        <br>
-        <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
-    </form>
+   
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
         <div hidden id="mysqlForm">
             <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">

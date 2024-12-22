@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-       
-        <title>SQLite</title>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
-    </head>
-    <body>
-        <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
+
+<head>
+
+    <title>SQLite</title>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
+</head>
+
+<body>
+    <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         <div hidden id="sqliteStart">
             <div class="avoidInputs">
                 <br>
-        <label id="restrictionLbl" for="restriction" class="restLbl">Set the number of files to search:</label>
-        <input type="text" name="restriction" id="restriction" size="4">
-        <br>
-       
-        <label for="avoidInput">Enter directories not to be searched</label>
-        <input type="text" id="avoidInput" onchange="directoriesToAvoid()">
-    </div>
-    <br>
-        <button id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
-        <input hidden type="text" name="avoiding" id="avoiding" placeholder="avoiding">
+                <label id="restrictionLbl" for="restriction" class="restLbl">Set the number of files to search:</label>
+                <input type="text" name="restriction" id="restriction" size="4">
+                <br>
+
+                <label for="avoidInput">Enter directories not to be searched</label>
+                <input type="text" id="avoidInput" onchange="directoriesToAvoid()">
+            </div>
+            <br>
+            <button id="sqliteShow" name="sqliteShow" class="runBtn">Search</button>
+            <input hidden type="text" name="avoiding" id="avoiding" placeholder="avoiding">
     </form>
-       
-    
+
+
     <div id="avoidList" class="avoidList">
     </div>
-    
+
     <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
         <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
         <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
         <label id="srcRestLbl" for="numberofsearch">Set the number of files to search:</label>
-        <input hidden type="text" id="numberofsearch" name="numberofsearch" onchange="checkFields(document.getElementById('numberofsearch').value)">
-        <input hidden type="text" name="srcFolder" id="srcFolder" onchange="getInputValue();checkFields(document.getElementById('srcFolder').value)">
+        <input hidden type="text" id="numberofsearch" name="numberofsearch">
+        <input hidden type="text" name="srcFolder" id="srcFolder"
+            onchange="getInputValue();checkFields(document.getElementById('srcFolder').value,document.getElementById('numberofsearch').value)">
         <br>
-      
+
         <button hidden class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
-        
+
     </form>
-</div>
+    </div>
+</body>
 
-
-    </body>
 </html>

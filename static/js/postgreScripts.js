@@ -41,3 +41,35 @@ function removeExtraMarks() {
     document.getElementById("dbSize").innerText = ""
     document.getElementById("dbSize").innerText = originalText
 }
+
+function removeMarksMySql() {
+    var loopLast=document.getElementById("loopLast").innerText
+    var looplastInt=parseInt(loopLast)
+    var cleardata=""
+    for (var i=1;i<=looplastInt;i++)
+    {
+        //silmukassa haetaan jokainen data+numero idllä nimetty td elementti eli elementit
+        //käydään yksitellen läpi ja niistä poistetaan ylim merkit
+        var data =document.getElementById("data"+i).innerText
+        //elementistä poistetaan replacen avulla ylim. merkit
+        cleardata=data.replace("(","").replace(")","").replace("'","").replace("'","")
+        //suodatettu teksti lisätään data+numero td elementteihin
+        document.getElementById("data"+i).innerText=cleardata   
+    } 
+}
+
+//tarkistetaan h2 elementin sisältämä teksti ja sen perusteella näytetään oikeat labelit ja cb:t
+function checkDbType() {
+    var dbtype = document.getElementById("dbHeader").innerText
+    console.log(dbtype)
+    if (dbtype.includes("SQL")) {
+        document.getElementById("tableCBLbltxt").hidden=true
+        document.getElementById("prettytxtCB").hidden=true
+
+    }
+    else if (dbtype.includes("MongoDB")){
+        document.getElementById("tableCBLbltxt2").hidden=true
+        document.getElementById("prettytxtCBSql").hidden=true
+
+    }
+}

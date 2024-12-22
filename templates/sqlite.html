@@ -100,6 +100,8 @@
     <input type="checkbox" id="createRecord" name="createRecord" onchange="createSqlFields()">
     <label for="editSqlRecord" class="editSqlRecord">Edit record</label>
     <input type="checkbox" id="editSqlRecord" onchange="createSqlEditFields()">
+    <label for="createColumn">Create new column</label>
+    <input type="checkbox" id="createColumn" onchange="createNewColumn()">
  
     <!--sarakkeiden määrä lähetetään python funktiolle parametrina amount=columnInt-->
     <form action="{{ url_for('sqliteScripts.createSqliteRec',amount=columnInt,db=dbname,table=table)}}" method="post">
@@ -113,8 +115,7 @@
 
         </div>
     </form>
-    <label for="createColumn">Create new column</label>
-    <input type="checkbox" id="createColumn" onchange="createNewColumn()">
+   
     <form action="{{ url_for('sqliteScripts2.createColumn',dbname=dbname,table=table)}}" method="post">
     <div hidden id="columnCreate">
         <input type="text" id="columnName" name="columnName" placeholder="Column name">
@@ -142,6 +143,17 @@
     </form>
     <br>
     <button id="reloadBtn" onclick="location.reload(true)">Reload</button>
+    <form action="{{ url_for('sqliteScripts.selfWriteQuery',dbname=dbname)}}" method="post">
+        <input hidden type="text" id="selectedTable2" name="selectedTable">
+      
+        <label id="queryLbl" for="query">Write SQLite query</label>
+        <input type="checkbox" id="queryCB" name="queryCB" onclick="showQueryBox()">
+        <button>Run query</button>
+        <br>
+        <textarea hidden id="sqliteQuery" name="sqliteQuery"></textarea>
+        <br>
+        <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
+    </form>
     
 
 </body>

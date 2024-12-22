@@ -4,12 +4,14 @@
 <head>
     <title>PostgreSQL</title>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'js/Scripts.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
-<body onload="removeExtraMarks()">
-    <h2>PostgreSQL</h2>
+<body>
+    <h2 id="dbHeader">Postgre SQL</h2>
     <select id="postgre" name="postgre" onchange="getPostgreDB(this)">
         <option selected>Select</option>
         {% for d in databases %}
@@ -50,11 +52,22 @@
 
             {% for td in tabledata%}
             <tr>
-                <td>{{td}}</td>
+                <td id="data{{loop.index}}" class="postgredata">{{td}}</td>
 
             </tr>
+            <script>
+                $(document).ready(function () {
+                    jQuery("#data{{loop.index}}").dblclick(function () {
+                        var text = jQuery(this).text()
+                        var textList =text.split(",")
+                        alert(textList)
+                    })
+                })
+            </script>
+            <p id="loopLast" hidden>{{loop.length}}</p>
             {%endfor%}
         </table>
+
     </form>
     {% if tableSelected==True %}
     <label for="postgreQuery">Write query</label>

@@ -2,12 +2,12 @@ from flask import Blueprint, render_template, request
 import mysql.connector
 
 mysqlScripts = Blueprint('mysqlScripts',__name__,static_folder='static',template_folder='templates')
-
+sqlDB=False
 tablesShown=False
 @mysqlScripts.route("/mysql",methods=['POST','GET'])
 def readSelectedSql():
        tables=[]
-       
+       sqlDB=True
        global dbname
        dbname=request.form.get('selectedSQL')
       
@@ -38,7 +38,7 @@ def readSelectedSql():
        lng=len(tables)
 
       
-       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng,dbsize=dbsize[1])
+       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng,dbsize=dbsize[1],sqlDB=sqlDB)
 
 @mysqlScripts.route("/runScript",methods=['POST','GET'])
 def runSQLScript():
