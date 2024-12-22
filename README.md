@@ -109,7 +109,9 @@ You can also search for db files by typing the folder path. for example C:\folde
 If desired, the user can also enter the path of the db file in the html input field. 
 This function also uses predictive text input implemented with jQuery auto-completion and Python Os.Walk & next functions. The Python functions search all the main folders on the C drive, and jQuery's autocomplete recognizes the search terms entered by the user and provides folders that match the search terms.
 
+EXPORT SQLITE TABLE TO CSV FILE
 
+The program can export SQLITE database table data to a csv file. The opened database and database table are passed to the python function, after which the function uses the Pandas library's read_sql and to_csv methods to read the table data and transfer it to the csv file.
 
 BACKUP SQLITE DATABASE
 

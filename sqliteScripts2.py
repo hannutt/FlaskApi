@@ -2,6 +2,7 @@
 import os
 from flask import Blueprint, redirect, render_template, request, url_for
 import sqlite3
+import pandas as pd
 
 
 sqliteScripts2 = Blueprint('sqliteScripts2',__name__,static_folder='static',template_folder='templates')
@@ -58,5 +59,13 @@ def searchFromFolder():
 
                     return render_template("index.html",sqliteDatabases=tables)
 
-            
+@sqliteScripts2.route("/exportcsv",methods=['POST','GET'])
+def exportCsv():
+     database=request.form.get('dbname')
+     table=request.form.get('tablename')
+     conn=sqlite3.connect(database)
+     df = pd.read_sql(f'SELECT * from {table}', conn)
+     df.to_csv('data.csv', index = False)
+     return render_template("sqlite.html")
+
   

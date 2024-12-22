@@ -95,7 +95,7 @@ def showSqliteTables():
 @sqliteScripts.route("/opentable/<dbname>",methods=['POST','GET'])
 def runsqlite(dbname):
    #dbname = request.form.get("dataBname")
-
+  
    table=request.form.get("selectedTable")
    
    #selectedTable=request.form.get('selectedTable')

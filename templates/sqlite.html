@@ -11,7 +11,7 @@
     <title>SQLite</title>
 </head>
 
-<body class="sqliteBody">
+<body class="sqliteBody" onload="insertTableName()">
     <nav>
         <form action="{{ url_for('showIndex')}}" method="post">
             <button class="fpBtn">Front page</button> |
@@ -24,7 +24,7 @@
     </nav>
     <h3>SQLite Databases</h3>
     <p>sqlite.html</p>
-    <p>{{changes}}</p>
+   
     <p id="tableName" class="tableName">{{table}} table Selected</p>
 
 
@@ -154,6 +154,18 @@
         <br>
         <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
     </form>
+    <form action="{{ url_for('sqliteScripts2.exportCsv')}}" method="post">
+        <input hidden type="text" name="dbname" value="{{dbname}}">
+        <input hidden type="text" id="tname" name="tablename" value="{{table}}">
+    <button id="exportBtn"></button>
+</form>
+<script>
+    function insertTableName() {
+        var tablename=document.getElementById("tname").value
+        
+        document.getElementById("exportBtn").textContent="Export "+tablename+" table to csv"
+    }
+</script>
     
 
 </body>
