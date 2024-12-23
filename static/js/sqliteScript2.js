@@ -29,19 +29,23 @@ function showSearchOptions() {
     var cb=document.getElementById("searchFolderCB")
     if (cb.checked==true)
     {
-        
+        document.getElementById("options").hidden=false
+        /*
+        document.getElementById("srcRestLbl").hidden=false
         document.getElementById("srcFolder").hidden=false
         document.getElementById("srcFolder").placeholder="ENTER PATH"
         document.getElementById("searchFolderBtn").hidden=false
         document.getElementById("srcRestLbl").hidden=false
-        document.getElementById("numberofsearch").hidden=false
+        document.getElementById("numberofsearch").hidden=false*/
         
     }
     if (cb.checked==false) {
+        document.getElementById("options").hidden=true
+        /*
         document.getElementById("srcFolder").hidden=true
         document.getElementById("searchFolderBtn").hidden=true
         document.getElementById("srcRestLbl").hidden=true
-        document.getElementById("numberofsearch").hidden=true
+        document.getElementById("numberofsearch").hidden=true*/
 
     }
 }
@@ -62,5 +66,16 @@ function checkFields(numoffiles,dir) {
         document.getElementById("searchFolderBtn").disabled=false
     }
    
+
+}
+function insertTableName() {
+    var tablename=document.getElementById("tname").value
+    
+    document.getElementById("exportBtn").textContent="Export "+tablename+" table to csv"
+}
+
+function getSeparatorChar(char) {
+    var c = document.getElementById("sep").value = char.options[char.selectedIndex].text
+    document.getElementById("sepChar").value=c
 
 }

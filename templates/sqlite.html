@@ -155,17 +155,20 @@
         <button hidden id="runsqlitequery" name="runsqlitequery" class="runsqlitequery">Run query</button>
     </form>
     <form action="{{ url_for('sqliteScripts2.exportCsv')}}" method="post">
+        <label for="removeHeaders">No headers</label>
+        <input type="checkbox" id="removeHeaders" name="removeHeaders" value="noHeaders">
+        <select id="sep" name="sep" onchange="getSeparatorChar(this)">
+            <option selected>Select separator</option>
+            <option value=":">:</option>
+            <option value="/">/</option>
+            <option value=";">;</option>
+        </select>
         <input hidden type="text" name="dbname" value="{{dbname}}">
         <input hidden type="text" id="tname" name="tablename" value="{{table}}">
+        <input hidden type="text" id="sepChar" name="sepChar">
     <button id="exportBtn"></button>
 </form>
-<script>
-    function insertTableName() {
-        var tablename=document.getElementById("tname").value
-        
-        document.getElementById("exportBtn").textContent="Export "+tablename+" table to csv"
-    }
-</script>
+
     
 
 </body>

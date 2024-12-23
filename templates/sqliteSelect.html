@@ -29,15 +29,19 @@
     </div>
 
     <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
+       
         <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
         <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
+        <div hidden id="options">
         <label id="srcRestLbl" for="numberofsearch">Set the number of files to search:</label>
-        <input hidden type="text" id="numberofsearch" name="numberofsearch">
-        <input hidden type="text" name="srcFolder" id="srcFolder"
+        <input type="text" id="numberofsearch" name="numberofsearch">
+        <label for="srcFolder">Dir path:</label>
+        <input type="text" name="srcFolder" id="srcFolder"
             onchange="getInputValue();checkFields(document.getElementById('srcFolder').value,document.getElementById('numberofsearch').value)">
         <br>
 
-        <button hidden class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
+        <button class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
+    </div>
 
     </form>
     </div>

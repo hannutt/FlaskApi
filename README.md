@@ -5,7 +5,7 @@ The main idea is that you can access MongoDB, MySQL, PostgreSQL or SQLite databa
 
 It is possible to read, update, add new records and delete records to all the mentioned databases.
 You can also create new document collections in Mongo databases and tables and columns in SQL databases.
-You can also make your own SQL and NoSQL queries to the databases.
+You can also make your own SQL and NoSQL queries to the databases and save data to csv-files.
 
 The Mongo Cloud Atlas username and password are stored in the .env environment file and retrieved with the os.getenv function. The .env file is in gitignore mode for security reasons.
 
@@ -86,7 +86,11 @@ The selected value of the dropdown is obtained by the request.form.get method an
 After selecting a database, click the selection button and the program will go to a new html page, where the available collections are from the drop-down menu. select a collection and click the View button to see the contents of the collection.
 The available collections are retrieved using the list_collection_names method
 
+EXPORT MONGODB COLLECTION TO CSV-FILE
 
+The contents of the selected MongoDB collection can be saved to a csv-file using the Panda library.
+The Python function retrieves the collection using the PyMongo find method and saves the found content
+using the Panda library's to_csv method.
 
 ACCESS TO LOCAL MySQL DATABASE USING HTML-UI
 
@@ -111,7 +115,9 @@ This function also uses predictive text input implemented with jQuery auto-compl
 
 EXPORT SQLITE TABLE TO CSV FILE
 
-The program can export SQLITE database table data to a csv file. The opened database and database table are passed to the python function, after which the function uses the Pandas library's read_sql and to_csv methods to read the table data and transfer it to the csv file.
+The program can export SQLITE database table data to a csv file. The opened database and database table are passed to the python function, after which the function uses the Pandas library's read_sql and to_csv methods to read the table data and transfer it to the csv file. The user can also omit the column names from the csv-file by clicking the checkbox and selecting the desired separator from the drop-down menu. The delimiter defaults to , if the user does not make a selection.
+
+User selections are passed as parameters to Panda's to_csv method.
 
 BACKUP SQLITE DATABASE
 

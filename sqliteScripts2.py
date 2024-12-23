@@ -61,11 +61,24 @@ def searchFromFolder():
 
 @sqliteScripts2.route("/exportcsv",methods=['POST','GET'])
 def exportCsv():
+     sepchar=request.form.get("sepChar")
+     #jos käyttäjä ei ole valinnut valikosta mitään vaihtoehtoa niin sepchar saa arvoksi , merkin
+     if sepchar=="":
+         sepchar=","
      database=request.form.get('dbname')
      table=request.form.get('tablename')
      conn=sqlite3.connect(database)
-     df = pd.read_sql(f'SELECT * from {table}', conn)
-     df.to_csv('data.csv', index = False)
+     #cb muuttujaan talletetaan checkboksin value jonka name arvo on removeheaders name arvo saadaan
+     #jos cb:tä on klikattu
+     cb=request.form.getlist("removeHeaders")
+     if cb == ['noHeaders']:
+         df = pd.read_sql(f'SELECT * from {table}', conn)
+         df.to_csv('data.csv', index = False, header=False,sep=sepchar)
+     else:
+          df = pd.read_sql(f'SELECT * from {table}', conn)
+          df.to_csv('data.csv', index = False, header=True,sep=sepchar)
+         
+     
      return render_template("sqlite.html")
 
   

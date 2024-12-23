@@ -20,7 +20,7 @@ function selectionSqlite(dbtable) {
     document.getElementById("selectedTable2").value=rep
     document.getElementById("selfWriteBtn").hidden=false
     document.getElementById("selfWriteBtn").textContent="Access "+rep
-    document.getElementById("dataBname").value=sessionStorage.getItem("dbname")
+    //document.getElementById("dataBname").value=sessionStorage.getItem("dbname")
   
   
     

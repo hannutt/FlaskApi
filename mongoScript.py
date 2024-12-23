@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 import pymongo
+import pandas as pd
 
 mongoScript = Blueprint('mongoScript',__name__,static_folder='static',template_folder='templates')
 
@@ -26,6 +27,20 @@ def dropCollection():
     delCol = dbname[colName]
     delCol.drop()
 
+    return render_template("selectCol.html")
+@mongoScript.route("/mongocsv",methods=['POST','GET'])
+#mongo kokoelman vienti csv-tiedostoon.
+def exportMongoCsv():
+    client = pymongo.MongoClient('mongodb://localhost:27017/')
+    #valittu tietokanta
+    dbname=request.form.get('mongodb')
+    #valittu kokoelma
+    collection=request.form.get('mongocol')
+    db=client[dbname]
+    col=db[collection]
+    cursor=col.find()
+    df =  pd.DataFrame(list(cursor))
+    df.to_csv('data.csv')
     return render_template("selectCol.html")
 
 

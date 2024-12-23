@@ -106,6 +106,14 @@
   <br>
   <button hidden id="runMongo" name="runMongo" class="showBtn">Run Mongo query</button>
 </form>
+<div>
+  
+  <form action="{{ url_for('mongoScript.exportMongoCsv')}}" method="post">
+    <button onclick="getCollectionName()">Export collection to csv</button>
+  <input hidden type="text" name="mongodb" id="mongodb" value="{{selectedDB}}">
+  <input hidden type="text" name="mongocol" id="mongocol">
+</form>
+</div>
 
 {% for dm in dataMongo %}
 <p>{{dm}}</p>

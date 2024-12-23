@@ -31,3 +31,7 @@ function deleteCollection() {
 
     }
 }
+function getCollectionName() {
+    var col=document.getElementById("colname").value
+    document.getElementById("mongocol").value=col
+}
