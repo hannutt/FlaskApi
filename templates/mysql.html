@@ -11,18 +11,25 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"
+    integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css"
+    integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <nav>
   <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+  <button id="backtoSel" onclick="history.forward()" class="fpBtn">Go to forward page</button>
 </nav>
 
 <body class="sqlView">
   <h2 id="dbHeader">MySQL Tables </h2>
   <p hidden id="tableTotal">{{lng}}</p>
   <p hidden id="dbname">{{dbname}}</p>
-  <p id="fields">{{numfields}}</p>
-  <p id="fieldnames">{{fieldnames}}</p>
+  <p hidden id="fields">{{numfields}}</p>
+  <p hidden id="fieldnames">{{fieldnames}}</p>
   <p hidden id="dbsize">{{dbsize}}</p>
   <p id="total"></p>
 
@@ -43,18 +50,35 @@
   <input onclick="query()" type="checkbox" id="freequery"><br>
   {%endif%}
   <form action="{{ url_for('mysqlScripts.runSQLScript')}}" method="post">
-    <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"></textarea><br>
+    <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"
+      onchange="blocks()"></textarea><br>
     <button hidden id="runBtn" class="runBtn">Run</button>
   </form>
+  <script>
+ 
+    $(function () {
+      var availableCommands = [
+        'insert',
+        'into',
+        'where',
+        'update',
+        'set'
+
+      ];
+      $("#querytext").autocomplete({
+        source: availableCommands
+      });
+    });
+  </script>
 
   <table id="dbTable" class="sqlTable" border="1">
     <tr>
       <th id="sqlHeaders" class="sqlHeaders">{{finalHeaders}}</th>
     </tr>
-   
+
     {% for d in data %}
     <tr>
-      <td id="data{{loop.index}}" class="data{{loop.index}}" >{{d}}</td>
+      <td id="data{{loop.index}}" class="data{{loop.index}}">{{d}}</td>
     </tr>
     <script>
       //jquery funktio hakee testin valitusta sqldata rivistä
@@ -66,19 +90,19 @@
         var textreplace = text.replace("(", "").replace(")", "")
         //split katkaisee tekstin osiin tässä tapauksessa aina välilyönnin kohdalta.
         const textToArray = textreplace.split(",");
-  
+
         createMySqlFields(textToArray)
-  
+
       });
-  
+
     </script>
-     <p hidden id="loopLast">{{loop.length}}</p>
+    <p hidden id="loopLast">{{loop.length}}</p>
     {%endfor%}
   </table>
   {% for s in sqldata %}
   <p id="sqltextarea" name="sqltextarea">{{s}}</p>
   {%endfor%}
- 
+
   <br>
   <label for="edit">Edit</label>
   <input type="checkbox" name="edit" id="edit">
@@ -91,7 +115,7 @@
   </div>
   <div hidden id="dbChart" style="max-width:400px; height:300px"></div>
   {% include 'customs.html'%}
-  
+
 </body>
 
 </html>

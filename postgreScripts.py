@@ -90,7 +90,7 @@ def showPostgreTable(db):
     #sarakeiden nimet
     for j in column_names:
         columnname.append(j)
-    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected)
+    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected,tablename=tablename)
 
 @postgreScripts.route("/writepostgre",methods=['POST','GET'])
 def writePostgreQuery():
@@ -108,6 +108,9 @@ def writePostgreQuery():
      if query.startswith("INSERT") or query.startswith("insert"):
         cursor.execute(query)
         conn.commit()
+     elif query.startswith("UPDATE") or query.startswith("update"):
+           cursor.execute(query)
+           conn.commit()
      else:
         cursor.execute(query)
         for c in cursor.fetchall():

@@ -15,11 +15,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css"
         integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        
+
 </head>
+<nav>
+    <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+    <button id="backtoSel" onclick="history.forward()" class="fpBtn">Go to forward page</button>
+</nav>
 
 <body class="postgre">
     <h2 id="dbHeader">Postgre SQL</h2>
+    <p>Table <b>{{tablename}}</b> selected</p>
     <select id="postgre" name="postgre" onchange="getPostgreDB(this)">
         <option selected>Select</option>
         {% for d in databases %}
@@ -48,6 +53,7 @@
             <option>{{t}}</option>
             {%endfor%}
         </select>
+       
 
         <input hidden type="text" name="postgreTable" id="postgreTable">
         <button>Show data</button>
@@ -130,7 +136,7 @@
     <input type="checkbox" id="postgreQueryCB" name="postgreQueryCB" onchange="writePostgre()">
     <form action="{{ url_for('postgreScripts.writePostgreQuery')}}" method="post">
 
-        <textarea hidden id="writePostgre" name="writePostgre" placeholder="Write SQL query"></textarea>
+        <textarea hidden id="writePostgre" name="writePostgre" placeholder="Write SQL query" onchange="blockspg()"></textarea>
         <button>Run query</button>
         {%endif%}
     </form>
@@ -139,19 +145,20 @@
     {%endif%}
     {% include 'customs.html ' %}
     <script>
-         $( function() {
-    var availableCommands = [
-        'insert',
-        'into',
-        'where',
-        'update',
-        'set'
-   
-    ];
-    $( "#writePostgre" ).autocomplete({
-      source: availableCommands
-    });
-  } );
+        $(function () {
+            var availableCommands = [
+                'insert',
+                'into',
+                'where',
+                'update',
+                'set',
+                'select'
+
+            ];
+            $("#writePostgre").autocomplete({
+                source: availableCommands
+            });
+        });
     </script>
 </body>
 

@@ -16,6 +16,7 @@ function getPostgeTable(table) {
     var sel = document.getElementById("postgreTables").value = table.options[table.selectedIndex].text
     var cleartext = sel.replace("(", "").replace(")", "").replace("'", "").replace("'", "").replace(",", "")
     document.getElementById("postgreTable").value = cleartext
+    
 
 
 }
@@ -73,3 +74,12 @@ function checkDbType() {
 
     }
 }
+   //funktio lisää sulkumerkit aina, jos tekstistä löydetään = merkki
+   function blockspg() {
+    var txt = document.getElementById("writePostgre").value
+    if (txt.includes("=")) {
+      var txtBlock=txt+"()"
+      document.getElementById("writePostgre").value=txtBlock
+
+    }
+  }

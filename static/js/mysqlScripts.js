@@ -160,3 +160,11 @@ function removeMarksMySql() {
   console.log(content)
 
 }
+function blocks() {
+  var txt = document.getElementById("querytext").value
+  if (txt.includes("=")) {
+    var txtBlock=txt+"()"
+    document.getElementById("querytext").value=txtBlock
+
+  }
+}

@@ -44,20 +44,23 @@ def readSelectedSql():
 def runSQLScript():
      sqldata=[]
      script = request.form.get('querytext')
-     print(script)
-     print("db "+dbname)
      mydb = mysql.connector.connect(
        
         host="localhost",
         user="root",
         password="Root512!",
         database=dbname
-)
+)    
      cursor=mydb.cursor()
-     cursor.execute(script)
-     for x in cursor:
-          print(x)
-          sqldata.append(x)
+     if script.startswith("update"):
+          cursor.execute(script)
+          #commit eli toteutetaan muutos
+          mydb.commit()
+     else:
+          cursor.execute(script)
+          for x in cursor:
+               print(x)
+               sqldata.append(x)
      
 
      return render_template("mysql.html",sqldata=sqldata,script=script)

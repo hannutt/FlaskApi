@@ -131,6 +131,12 @@ SELF-WRITING SQL QUERIES
 You can also write sql queries yourself by clicking the "write sql query" check box.
 the query is written to the textarea element, which is sent to the Python function. The Python function performs a search according to the query and returns the result to the html page.
 
+if the user wants to add or update table data with self-written queries, parentheses should be used in the syntax. for example update pages like this: UPDATE pages SET url=('yahoo.com') WHERE id=4.
+
+the application's textarea elements, where queries are written, have an onchange event handler that executes a JavaScript function. The function uses the include method to search for the = sign in the text. If the character is found, the function automatically adds parentheses after the = sign.
+
+the application's textarea elements, where queries are written, have an onchange event handler that executes a JavaScript function. The function uses the include method to search for the = sign in the text. If the character is found, the function automatically adds parentheses after the = sign.
+
 Self-written queries are facilitated by the jQuery auto-completion method, which provides the user with the most common sql commands
 
 ![alt text](static/images/postgreAC.png)
