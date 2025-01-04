@@ -19,11 +19,11 @@
 
 <body class="sqlView">
   <h2 id="dbHeader">MySQL Tables </h2>
-  <p id="tableTotal">{{lng}}</p>
-  <p id="dbname">{{dbname}}</p>
+  <p hidden id="tableTotal">{{lng}}</p>
+  <p hidden id="dbname">{{dbname}}</p>
   <p id="fields">{{numfields}}</p>
   <p id="fieldnames">{{fieldnames}}</p>
-  <p id="dbsize">{{dbsize}}</p>
+  <p hidden id="dbsize">{{dbsize}}</p>
   <p id="total"></p>
 
   <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">

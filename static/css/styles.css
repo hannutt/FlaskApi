@@ -16,7 +16,7 @@ white-space: nowrap;
     border: white;
     color: blue;
 }
-.indexbody {
+.indexbody,.postgre {
     background-image:  url('/static/images/FlaskAppBg.jpg');
     
 }

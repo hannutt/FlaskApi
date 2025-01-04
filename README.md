@@ -21,7 +21,10 @@ The view also uses customization, the font size is set to medium, the background
 
 Example picture where the data of the MySQL database table is displayed in the table element and the first row of the element is selected for editing. The Jquery function stores the text of the clicked element and adds it to the input field as shown in the image for editing.
 
-The JavaScript function always creates the correct number of html input fields using the for-loop and createElement method. The MySQL table selected in the example image has a total of 5 columns, so editing its records requires the same number of input fields
+
+The JavaScript function always creates the correct number of html input fields using the for-loop and createElement methods. The MySQL table selected in the example image has a total of 5 columns, so editing its records requires the same number of input fields
+
+You can select a record to edit by double-clicking the record. klikkauk activates a jQuery function that transfers the data of the record to the input fields.
 
 ![alt text](static/images/flaskSQL.png)
 
@@ -127,6 +130,10 @@ SELF-WRITING SQL QUERIES
 
 You can also write sql queries yourself by clicking the "write sql query" check box.
 the query is written to the textarea element, which is sent to the Python function. The Python function performs a search according to the query and returns the result to the html page.
+
+Self-written queries are facilitated by the jQuery auto-completion method, which provides the user with the most common sql commands
+
+![alt text](static/images/postgreAC.png)
 
 SELF-WRITING MONGODB QUERIES
 
