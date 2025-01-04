@@ -119,6 +119,14 @@ white-space: nowrap;
     padding: 5px;
     background-color: lightgreen;
 }
+
+.delBtn {
+    font-weight: bolder;
+    margin-top:10px;
+    margin-right: 10px;
+    padding: 5px;
+    background-color: red;
+}
 .showBtn {
     font-weight: bolder;
     border-radius: 5px;
@@ -181,4 +189,7 @@ white-space: nowrap;
 .avoidInputs label{
     font-weight: bold;
 
+}
+.pgTable button {
+    float: right;
 }

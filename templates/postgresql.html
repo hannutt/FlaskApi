@@ -5,7 +5,8 @@
     <title>PostgreSQL</title>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
-    
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/mysqlScripts.js') }}"></script>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -44,31 +45,77 @@
         <input hidden type="text" name="postgreTable" id="postgreTable">
         <button>Show data</button>
         {%endif%}
-        <table id="dbTable" border="1">
+        <table id="dbTable" border="1" class="pgTable">
             <tr>
 
                 <th>{{columnname}}</th>
             </tr>
 
             {% for td in tabledata%}
-            <tr>
-                <td id="data{{loop.index}}" class="postgredata">{{td}}</td>
+            <tr><form action="{{ url_for('postgreScripts.deletePostgreRecord')}}" method="post">
+                <td id="data{{loop.index}}" class="postgredata">{{td}} <button class="delBtn">X</button><input name="id" hidden type="text" value="{{td[0]}}"></td>
+            </form>
+                
 
             </tr>
             <script>
                 $(document).ready(function () {
                     jQuery("#data{{loop.index}}").dblclick(function () {
                         var text = jQuery(this).text()
-                        var textList =text.split(",")
-                        alert(textList)
+                        var textrep = text.replace("(", "").replace(")", "")
+                        var textList = textrep.split(",")
+                        var fields = textList.length
+                        //textlist annetaan parametrina funktiolle, että sen sisältö voidaan
+                        //hyödyntää input kentissä fields on listan pituus eli tarvittavien 
+                        //inputtien määrä
+                        createFieldsPostgre(fields, textList)
                     })
                 })
+                function createFieldsPostgre(fields, textList) {
+                    var editBtn = document.createElement("button")
+                    editBtn.textContent = "Edit record"
+                    editBtn.name = "editBtn"
+                    editBtn.value = "editBtn"
+
+                    var deleteBtn = document.createElement("button")
+                    deleteBtn.textContent = "Delete record"
+                    deleteBtn.name = "delBtn"
+                    deleteBtn.value = "delBtn"
+                    deleteBtn.setAttribute("class", "delBtn")
+
+                    var linebreak = document.createElement("br")
+                    editBtn.setAttribute("class", "editBtn")
+                    var fieldsToInt = parseInt(fields)
+                    for (var i = 0; i < fieldsToInt; i++) {
+                        var field = document.createElement("INPUT")
+                        field.id = i
+                        field.name=i
+                        //setattributella lisätää value attriubuutti ja sille arvoksi textlistin sisältö
+                        field.setAttribute("value", textList[i])
+                        document.getElementById("editPostgre").appendChild(field)
+                    }
+
+                    document.getElementById("editPostgre").appendChild(linebreak)
+                    document.getElementById("editPostgre").appendChild(editBtn)
+                    document.getElementById("editPostgre").appendChild(deleteBtn)
+                    document.getElementById("fieldsNum").value = fieldsToInt
+
+                }
             </script>
             <p id="loopLast" hidden>{{loop.length}}</p>
             {%endfor%}
         </table>
 
     </form>
+    <form action="{{ url_for('postgreScripts.postgreCrud')}}" method="post">
+
+        <div id="editPostgre">
+            <input hidden type="text" id="fieldsNum" name="fieldsNum">
+
+
+        </div>
+    </form>
+    <br>
     {% if tableSelected==True %}
     <label for="postgreQuery">Write query</label>
     <input type="checkbox" id="postgreQueryCB" name="postgreQueryCB" onchange="writePostgre()">
