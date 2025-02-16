@@ -5,6 +5,7 @@ mysqlScripts = Blueprint('mysqlScripts',__name__,static_folder='static',template
 sqlDB=False
 tablesShown=False
 @mysqlScripts.route("/mysql",methods=['POST','GET'])
+
 def readSelectedSql():
        tables=[]
        sqlDB=True
@@ -56,6 +57,12 @@ def runSQLScript():
           cursor.execute(script)
           #commit eli toteutetaan muutos
           mydb.commit()
+          #insert eli uuden tietueen lisäys
+     elif script.startswith("insert"):
+          cursor.execute(script)
+          #commit eli toteutetaan muutos
+          mydb.commit()
+
      else:
           cursor.execute(script)
           for x in cursor:

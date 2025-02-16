@@ -80,6 +80,7 @@
                         var textrep = text.replace("(", "").replace(")", "")
                         var textList = textrep.split(",")
                         var fields = textList.length
+                        console.log(textList)
                         //textlist annetaan parametrina funktiolle, että sen sisältö voidaan
                         //hyödyntää input kentissä fields on listan pituus eli tarvittavien 
                         //inputtien määrä
@@ -112,7 +113,7 @@
 
                     document.getElementById("editPostgre").appendChild(linebreak)
                     document.getElementById("editPostgre").appendChild(editBtn)
-                    document.getElementById("editPostgre").appendChild(deleteBtn)
+                   // document.getElementById("editPostgre").appendChild(deleteBtn)
                     document.getElementById("fieldsNum").value = fieldsToInt
 
                 }

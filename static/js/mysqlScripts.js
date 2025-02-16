@@ -160,10 +160,11 @@ function removeMarksMySql() {
   console.log(content)
 
 }
+ //funktio lisää sulkumerkit aina, jos tekstistä löydetään = merkki
 function blocks() {
   var txt = document.getElementById("querytext").value
   if (txt.includes("=")) {
-    var txtBlock=txt+"()"
+    var txtBlock=txt+"('')"
     document.getElementById("querytext").value=txtBlock
 
   }

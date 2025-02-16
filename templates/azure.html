@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Access Azure</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    </head>
+    <body class="indexbody">
+        <h2>Access to Azure SQL database</h2>
+        <table class="dbTable" border="1">
+            {%for d in data%}
+            <tr>
+                <td>{{d}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </body>
+</html>

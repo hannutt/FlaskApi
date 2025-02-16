@@ -1,15 +1,19 @@
+import os
+from dotenv import load_dotenv
 import psycopg2
 from flask import Blueprint, redirect, render_template, request
 showtables=False
 postgreScripts = Blueprint('postgreScripts',__name__,static_folder='static',template_folder='templates')
 tableSelected=False
+load_dotenv("c:/codes/Python/FlaskApi/.env")
+postgrepsw=os.getenv('postgrePsw')
 def connection():
 
     conn = psycopg2.connect(database="",
                             
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
     return conn
 
@@ -44,7 +48,7 @@ def getTables():
                             
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
     cursor = conn.cursor()
     #haetaan kaikki taulut valitusta tietokannasta.
@@ -76,7 +80,7 @@ def showPostgreTable(db):
     conn = psycopg2.connect(database=db,
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
     global tablename
     tablename=request.form.get("postgreTable")
@@ -98,7 +102,7 @@ def writePostgreQuery():
      conn = psycopg2.connect(database=postgredb,
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
      
      query=request.form.get("writePostgre")
@@ -142,7 +146,7 @@ def postgreCrud():
          conn = psycopg2.connect(database=postgredb,
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
          conn = cursor=conn.cursor()
          sql=f"UPDATE {tablename} set model={data[2]} WHERE id=1"
@@ -162,7 +166,7 @@ def deletePostgreRecord():
     conn = psycopg2.connect(database=postgredb,
                             host="localhost",
                             user="postgres",
-                            password="SkaneBorg12!",
+                            password=postgrepsw,
                             port=5433)
     sql=f"DELETE FROM {tablename} WHERE ID ={idToInt}"
     cursor=conn.cursor()

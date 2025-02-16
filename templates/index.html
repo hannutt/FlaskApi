@@ -19,6 +19,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/statistic.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/azureScripts.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Flask-APi</title>
@@ -58,6 +59,15 @@
     </div>
     {% include 'mysqlSelect.html' %}
     {% include 'sqliteSelect.html' %}
+    <br>
+    <form action="{{ url_for('azureScripts.azureStart')}}" method="post">
+        <label for="azureCB" class="atlasLbl">Access to Azure Database</label>
+        <input type="checkbox" class="azureCB" id="azureCB" name="azureCB" onclick="GoAzurePage()">
+        <br><button id="azureBtn" hidden id="gobtn">Go</button>
+        
+    </form>
+
+
    
     <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
     <input hidden type="text" id="dbPath" name="sqliteFile">

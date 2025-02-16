@@ -2,12 +2,12 @@
 <html>
 
 <head>
-    <title>COllection select</title>
+    <title>Collection select</title>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
-<body>
+<body class="indexbody">
     <nav>
 
         <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
@@ -27,9 +27,13 @@
         <option value="">{{c}}</option>
         {%endfor%}
     </select>
+    <table class="dbTable"  border="1">
     {% for i in l %}
-    <p>{{i}}</p>
+    <tr>
+    <td>{{i}}</td>
+</tr>
     {%endfor%}
+    </table>
 
 
 </body>

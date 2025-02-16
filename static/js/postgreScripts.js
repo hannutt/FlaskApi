@@ -78,7 +78,7 @@ function checkDbType() {
    function blockspg() {
     var txt = document.getElementById("writePostgre").value
     if (txt.includes("=")) {
-      var txtBlock=txt+"()"
+      var txtBlock=txt+"('')"
       document.getElementById("writePostgre").value=txtBlock
 
     }

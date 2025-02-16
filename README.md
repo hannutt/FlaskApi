@@ -1,7 +1,7 @@
-Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, MongoDB Cloud Atlas
+Project keywords: Python Flask, JavaScript, jQuery, NoSQL, MySQL, SQLite, HTML, MongoDB Cloud Atlas, Azure
 
 
-The main idea is that you can access MongoDB, MySQL, PostgreSQL or SQLite databases with a single program using an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL, PostgreSQL & SQLite) and MongoDB Atlas cloud databases.
+The main idea is that you can access MongoDB, MySQL, PostgreSQL or SQLite databases with a single program using an html interface. With the Html user interface, the user can access both local databases (MongoDB, MySQL, PostgreSQL & SQLite) and MongoDB Atlas & Azure SQL cloud databases.
 
 It is possible to read, update, add new records and delete records to all the mentioned databases.
 You can also create new document collections in Mongo databases and tables and columns in SQL databases.
