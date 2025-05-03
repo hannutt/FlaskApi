@@ -148,7 +148,7 @@ def read_form():
    
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     #client = MongoClient('localhost', 27017)
-    global selectedDB
+    #global selectedDB
     selectedDB = request.form.get('DBname')
     
    
@@ -166,9 +166,8 @@ def read_form():
    
 
     app.config['MONGO_URI']='mongodb://localhost:27017/'+selectedDB
-    #global mongodb
+    
     mongodb=PyMongo(app).db
-    #global cols
     cols=mongodb.list_collection_names()
     # Get the form data as Python ImmutableDict datatype  
     data = request.form
@@ -181,20 +180,16 @@ def read_form():
 @app.route("/readcollection/<selectedDB>",methods=['POST'])
 def show_data(selectedDB):
 
-    global showdata
     showdata=True
-    l=[]
+    data=[]
+    ids=[]
     dbKeys=[]
     client = pymongo.MongoClient('mongodb://localhost:27017/')
     dataBaseNameStr = str(selectedDB)
     collectionName = request.form.get("colname")
-    global collectionNameStr
     collectionNameStr=str(collectionName)
     findLimit = request.form.get("DBlimit")
-    print("collection name ",collectionNameStr)
    
-        
-
     dbname=client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
     #jos dblimit syötekntän arvo on muu kuin tyhjä, ja sisältö on mumeroita,käytetään haussa limit metodia.
@@ -211,22 +206,26 @@ def show_data(selectedDB):
         result = collection.find({"$text": {"$search":findLimit}})
         count = collection.find().count()
     else:
+        #haetaan vain id numerot
+        resultid=collection.find({}, {"_id": 1})
+        for j in resultid:
+            ids.append(j)
+
+        #data ilman id kenttää
         result=collection.find()
         count = collection.find().count()
-    for i in result: 
-        print(i)
-        l.append(i)
+        for i in result: 
+            data.append(i)
         #tietokannan kenttien nimet muunnetaan listamuotoon.
         dbKeysList=list(i.keys())
-        print(dbKeysList)
+
 
     
     #lasketaan kokoelman kenttien määrä
-        global keysTotal
         keysTotal = len(i.keys())
     
         
-    return render_template("selectCol.html",l=l,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count)
+    return render_template("selectCol.html",data=data,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count,ids=ids)
 
 @app.route("/mongo-query/<selectedDB>/<collection>", methods=['POST','GET']) 
 def runMongoQuery(selectedDB,collection):

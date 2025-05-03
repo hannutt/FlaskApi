@@ -50,8 +50,7 @@
   <input onclick="query()" type="checkbox" id="freequery"><br>
   {%endif%}
   <form action="{{ url_for('mysqlScripts.runSQLScript')}}" method="post">
-    <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"
-      onchange="blocks()"></textarea><br>
+    <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"></textarea><br>
     <button hidden id="runBtn" class="runBtn">Run</button>
   </form>
   <script>

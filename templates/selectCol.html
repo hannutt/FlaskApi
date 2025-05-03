@@ -29,6 +29,7 @@
     <p class="infoParagraph">{{selectedDB}} has {{collections}} collections and database size is: {{datasizeRound}} Mb. Records in db:
       {{objects}}</p> <p hidden id="total"> {{objects}}</p>
       <p class="databaseFields">{{dbKeysList}}</p>
+    
   </div>
   <h2 id="dbHeader">MongoDB</h2>
   <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
@@ -69,14 +70,23 @@
     <!--kokoelman kenttien kokonaismäärä-->
     <p id="keystotal" name="keystotal">{{keysTotal}}</p>
     <table id="dbTable" class="dbTable" border="1">
-      {% for r in l %}
+      <!--ids sisältää jokaisen viestin-->
+    
+      {% for d in data %}
       <tr>
         <!--_id omalla rivillään, että jquery funktio osaa poimia vain id numeron-->
-        <td id="oid" class="oid">{{r._id}}</td>
-        <td id="data">{{r}}</td>
-      </tr>
+        <td id="oid" class="oid">{{d._id}}</td>
+        <td id="data{{loop.index}}">{{d}}</td>
+        <script>
+          var text=document.getElementById("data{{loop.index}}").innerText
+          // 2 viimeinestä replacea on regex-kaava joka poistaa merkkijonon joka alkaa loppuu suluilla ja [] merkeilä
+          text=text.replace("ObjectId","").replace("'_id'","").replace('{',"").replace('}',"").replace(":","").replace(/(\(.*?\))/gi,"").replace(/(\[.*?\])/gi,"")
+          document.getElementById("data{{loop.index}}").innerText=text
+        </script>
+        
+      
       {%endfor%}
-
+     
     </table>
   </form>
   <br><br>

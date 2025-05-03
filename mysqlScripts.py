@@ -1,9 +1,15 @@
+import os
+from dotenv import load_dotenv
 from flask import Blueprint, render_template, request
 import mysql.connector
 
 mysqlScripts = Blueprint('mysqlScripts',__name__,static_folder='static',template_folder='templates')
 sqlDB=False
 tablesShown=False
+load_dotenv("c:/codes/Python/FlaskApi/.env")
+mysqluser=os.getenv('mySQLuser')
+mysqlpsw=os.getenv('mySQLpsw')
+dbhost=os.getenv('dbhost')
 @mysqlScripts.route("/mysql",methods=['POST','GET'])
 
 def readSelectedSql():
@@ -14,9 +20,9 @@ def readSelectedSql():
       
        mydb = mysql.connector.connect(
        
-        host="localhost",
-        user="root",
-        password="Root512!",
+        host=dbhost,
+        user=mysqluser,
+        password=mysqlpsw,
         database=dbname
 )
        
@@ -47,9 +53,9 @@ def runSQLScript():
      script = request.form.get('querytext')
      mydb = mysql.connector.connect(
        
-        host="localhost",
-        user="root",
-        password="Root512!",
+        host=dbhost,
+        user=mysqluser,
+        password=mysqlpsw,
         database=dbname
 )    
      cursor=mydb.cursor()
@@ -81,9 +87,9 @@ def readTableData(dbname):
       #dbName=request.form.get("dbname")
       mydb = mysql.connector.connect(
        
-        host="localhost",
-        user="root",
-        password="Root512!",
+        host=dbhost,
+        user=mysqluser,
+        password=mysqlpsw,
         database=dbname
 )
     
