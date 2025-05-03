@@ -148,7 +148,8 @@ function prettyText() {
   var prettyText=originalText
   var txtCB = document.getElementById("prettytxtCB")
   var total = document.getElementById("total").innerHTML
-  var marks=["{","}","ObjectId",")","(","'","'","'"]
+  //2 viimeistä on regex lausekkeita, jotka poistaa kaiken sisällön joka on () tai [] merkkien sisällä
+  var marks=["{","}","ObjectId",")","(","'","'","'",'_id',":",/(\(.*?\))/gi,/(\[.*?\])/gi,]
   var records = Number(total)
   console.log(typeof (records))
 

@@ -24,7 +24,7 @@ Example picture where the data of the MySQL database table is displayed in the t
 
 The JavaScript function always creates the correct number of html input fields using the for-loop and createElement methods. The MySQL table selected in the example image has a total of 5 columns, so editing its records requires the same number of input fields
 
-You can select a record to edit by double-clicking the record. klikkauk activates a jQuery function that transfers the data of the record to the input fields.
+You can select a record to edit by double-clicking the record. Click activates a jQuery function that transfers the data of the record to the input fields.
 
 ![alt text](static/images/flaskSQL.png)
 
@@ -170,8 +170,9 @@ In this program, the field names are obtained using the for loop and the keys me
 
 The selected component contains an onChange event handler that calls a JavaScript function. The JavaScript function transfers the name of the field selected by the user to a hidden html input field, from which the Python function performing the search retrieves it using the request.form.get method.
 
-JQUERY functions facilitate CRUD operations. With this program, you don't need to enter the object ID, just click on it and it will go to the input field. speeds up, for example, the deletion of records from the database. This is done with jquery click and these methods.
-The application also uses the same jQuery method to modify and delete records in SQL databases.
+ABOUT JQUERY
+
+JQUERY functions make CRUD operations easier. you don't have to enter the object ID separately in the input field. just click on it and it will go into the input field. for example, it speeds up deleting records from the database. This is done with jquery click and these methods. The application also uses the same jQuery method to edit and delete records in SQL databases.
 
 ADDING a NEW RECORD OR EDITING AN EXISTING ONE 
 
@@ -192,9 +193,8 @@ CUSTOMIZATION OPTIONS
 in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
 
 Make the text more readable. Normally, MongoDB displays characters like { }, () etc. next to the data.
-The checkbox option pretty text removes these characters using a for-loop and a javaScript replace methods
+The checkbox option beautiful text removes these characters using for-loops, RegEX statements, and JavaScript replacement methods.
 
-JavaScript search function. The function uses the window.find method and highlights the found words in yellow.
 
 
 

@@ -77,13 +77,7 @@
         <!--_id omalla rivillään, että jquery funktio osaa poimia vain id numeron-->
         <td id="oid" class="oid">{{d._id}}</td>
         <td id="data{{loop.index}}">{{d}}</td>
-        <script>
-          var text=document.getElementById("data{{loop.index}}").innerText
-          // 2 viimeinestä replacea on regex-kaava joka poistaa merkkijonon joka alkaa loppuu suluilla ja [] merkeilä
-          text=text.replace("ObjectId","").replace("'_id'","").replace('{',"").replace('}',"").replace(":","").replace(/(\(.*?\))/gi,"").replace(/(\[.*?\])/gi,"")
-          document.getElementById("data{{loop.index}}").innerText=text
-        </script>
-        
+      
       
       {%endfor%}
      
