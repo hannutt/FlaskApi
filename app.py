@@ -31,6 +31,9 @@ app.register_blueprint(sqliteScripts2,url_prefix='')
 app.register_blueprint(postgreScripts,url_prefix='')
 app.register_blueprint(azureScripts,url_prefix='')
 load_dotenv("c:/codes/Python/FlaskApi/.env")
+mysqluser=os.getenv('mySQLuser')
+mysqlpsw=os.getenv('mySQLpsw')
+dbhost=os.getenv('dbhost')
 showdata = False
 connect=False
 
@@ -39,9 +42,9 @@ def showSQLDataBases():
 
     mydb = mysql.connector.connect(
        
-        host="localhost",
-        user="root",
-        password="Root512!",
+        host=dbhost,
+        user=mysqluser,
+        password=mysqlpsw,
 )
     cursor = mydb.cursor()
     databases = ("show databases")

@@ -7,12 +7,14 @@ postgreScripts = Blueprint('postgreScripts',__name__,static_folder='static',temp
 tableSelected=False
 load_dotenv("c:/codes/Python/FlaskApi/.env")
 postgrepsw=os.getenv('postgrePsw')
+postgreuser=os.getenv('postgreuser')
+dbhost=os.getenv('dbhost')
 def connection():
 
     conn = psycopg2.connect(database="",
                             
-                            host="localhost",
-                            user="postgres",
+                            host=dbhost,
+                            user=postgreuser,
                             password=postgrepsw,
                             port=5433)
     return conn
