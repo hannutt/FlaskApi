@@ -35,3 +35,16 @@ function getCollectionName() {
     var col=document.getElementById("colname").value
     document.getElementById("mongocol").value=col
 }
+function showMongoOptions(cb) {
+    if (cb.checked==true)
+    {
+        document.getElementById("mongoSelect").hidden=false
+        document.getElementById("statsBtn").hidden=false
+    }
+    if (cb.checked==false)
+    {
+        document.getElementById("mongoSelect").hidden=true
+        document.getElementById("statsBtn").hidden=true
+    }
+
+}

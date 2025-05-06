@@ -21,7 +21,7 @@ function stats() {
       dbsizes.push(arrNums[i])
 
     }
- 
+
 
 
 
@@ -82,7 +82,17 @@ function getSelectedText(sel) {
 }
 
 function getMysqlDb(selection) {
-  document.getElementById("selectedSQL").value = selection.options[selection.selectedIndex].text
+  var selected = document.getElementById("selectedSQL").value = selection.options[selection.selectedIndex].text
+  if (selected == "Select Database") {
+    document.getElementById("showsql").textContent = "Show"
+
+  }
+  else {
+    document.getElementById("showsql").textContent = "Show " + selected + " database"
+
+  }
+
+
 
 
 }
@@ -120,7 +130,7 @@ function changeFont(sel) {
   document.getElementById("dbTable").style.fontSize = size
 }
 function changeFontFamily(font) {
-  document.getElementById("dbTable").style.fontFamily=font
+  document.getElementById("dbTable").style.fontFamily = font
 }
 
 //funktiolla poistetaan/näytetään checkboksin statesta(checked) riippuen table elementtied tietokannan datan
@@ -145,11 +155,11 @@ function removeTable() {
 function prettyText() {
   var table = document.getElementById("dbTable")
   var originalText = table.innerHTML
-  var prettyText=originalText
+  var prettyText = originalText
   var txtCB = document.getElementById("prettytxtCB")
   var total = document.getElementById("total").innerHTML
   //2 viimeistä on regex lausekkeita, jotka poistaa kaiken sisällön joka on () tai [] merkkien sisällä
-  var marks=["{","}","ObjectId",")","(","'","'","'",'_id',":",/(\(.*?\))/gi,/(\[.*?\])/gi,]
+  var marks = ["{", "}", "ObjectId", ")", "(", "'", "'", "'", '_id', ":", /(\(.*?\))/gi, /(\[.*?\])/gi,]
   var records = Number(total)
   console.log(typeof (records))
 
@@ -161,11 +171,10 @@ function prettyText() {
     for (var i = 0; i < records; i++) {
       //tämän avulla teksti voidaan palauttaa alkuperäiseen muotoon
       table.setAttribute('data-orig', originalText);
-      for (j=0;j<marks.length;j++)
-      {
-       prettyText= prettyText.replace(marks[j],"")
+      for (j = 0; j < marks.length; j++) {
+        prettyText = prettyText.replace(marks[j], "")
       }
-      //var prettytxt = document.getElementById("dbTable").innerHTML.replace('{', '',).replace("}", "").replace('ObjectId', "").replace("(", "").replace(")", "")
+
       document.getElementById("dbTable").innerHTML = prettyText
 
 

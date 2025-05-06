@@ -1,41 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-    </head>
-    <body>
-        <label class="dbsLbl" for="dbs">Access to local Mongo database:</label>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <label class="dbsLbl" for="mongocb" >Access to local Mongo database:</label>
+    <input type="checkbox" id="mongocb" class="mongocb" onclick="showMongoOptions(document.getElementById('mongocb'))">
+    <div id="mongoSelect" hidden>
+
 
         <form action="{{ url_for('read_form')}}" method="post">
             <select name="dbs" id="dbs" onchange="getSelectedText(this)">
-    
+
                 <option value="default" selected>Select Database</option>
-                <!--
-              <option value="mongodb://localhost:27017/quizDB">quizDB</option>
-              kokoelmien nimien lisäys pudotusvalikkoon-->
+                <br>
+
+                <!--kokoelmien nimien lisäys pudotusvalikkoon-->
                 {% for dbname in dbsList %}
                 <option value="mongodb://localhost:27017/{{dbname}}">{{dbname}}</option>
                 {% endfor %}
-              
+
             </select>
-            <select hidden name="atlasDB" id="atlasDB" onchange="getSelectedDataBase(this)">
-                <option value="default" selected>Select Atlas DB</option>
-                {% for i in dbsAtlas %}
-                <option value="">{{i}}</option>
-                {%endfor%}
-            </select>
-            <script>
-                //jquery-funktio buttonin piilottamiseen
-                $("#hideBtn").click(function () {
-                    $(".hideAll").hide("slow");
-                });
-            </script>
-         
-            <input hidden type="text" name="selectedDB" id="selectedDB">
             <!--tässä näytetään dropdown valittu database-->
             {% set s = dbname%}
             <input type="text" name="DBname" id="DBname" value="{{dbname}}">
             <button class="selectBtn">Select</button>
-        </form>
-    </body>
+    </div>
+    <select hidden name="atlasDB" id="atlasDB" onchange="getSelectedDataBase(this)">
+        <option value="default" selected>Select Atlas DB</option>
+        {% for i in dbsAtlas %}
+        <option value="">{{i}}</option>
+        {%endfor%}
+    </select>
+    <script>
+        //jquery-funktio buttonin piilottamiseen
+        $("#hideBtn").click(function () {
+            $(".hideAll").hide("slow");
+        });
+    </script>
+
+    <!--
+            <input type="text" name="selectedDB" id="selectedDB">-->
+
+    </form>
+    <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
+    <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
+    <form action="{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
+        <div class="atlasForm" id="atlasForm">
+        </div>
+    </form>
+    </div>
+    <br>
+</body>
+
 </html>

@@ -20,6 +20,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/azureScripts.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/mongoScripts.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Flask-APi</title>
@@ -40,10 +41,7 @@
     </div>
     <!--näytetään mongolocalin html-koodi tässä-->
     {% include 'mongoLocal.html' %}
-    <br><br>
-    <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
-    <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
-    <br><br>
+   
     
     <form action="{{ url_for('postgreScripts.readPostgre')}}" method="post">
         <label for="postgreCB" class="postgreLbl">Access to PostgreSQL DataBase</label>
@@ -51,11 +49,7 @@
         <br><button hidden id="gobtn">Go</button>
     </form>
     <br>
-
-    <form action="{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
-        <div class="atlasForm" id="atlasForm">
-        </div>
-    </form>
+   
     </div>
     {% include 'mysqlSelect.html' %}
     {% include 'sqliteSelect.html' %}
@@ -167,7 +161,7 @@
                 <option value="">{{s}}</option>
                 {% endfor %}
             </select>
-            <input type="text" id="selectedSQL" name="selectedSQL">
+            <input hidden type="text" id="selectedSQL" name="selectedSQL">
         </div>
     </form>
     <!--näytetään stats.html sivu-->

@@ -16,7 +16,7 @@ function getPostgeTable(table) {
     var sel = document.getElementById("postgreTables").value = table.options[table.selectedIndex].text
     var cleartext = sel.replace("(", "").replace(")", "").replace("'", "").replace("'", "").replace(",", "")
     document.getElementById("postgreTable").value = cleartext
-    
+
 
 
 }
@@ -32,54 +32,49 @@ function writePostgre() {
 
 function removeExtraMarks() {
 
-    var originalText = document.getElementById("dbSize").innerText
-    //käydään for-silmukalla läpi originaltext muuttuja ja marks lista
-    //silmukka poistaa listalla olevat merkit lopputuloksesta
-    var marks = ["(", ")", ",","'","'"]
-    for (var i = 0; i < marks.length; i++) {
-        originalText= originalText.replace(marks[i], "")
+    var totalrecords = document.getElementById("totalsql").innerText
+    var recordsInt = Number(totalrecords)
+    var table = document.getElementById("dbTable")
+    var marks = [")", "(", ","]
+    var originalText = table.innerText
+    var prettytext = originalText
+    for (var i = 0; i < recordsInt; i++) {
+
+        //tämän avulla teksti voidaan palauttaa alkuperäiseen muotoon
+        table.setAttribute('data-orig', originalText);
+        for (j = 0; j < marks.length; j++) {
+
+            prettytext = prettytext.replace(marks[j], "")
+        }
+
+        document.getElementById("dbTable").innerText = prettytext
     }
-    document.getElementById("dbSize").innerText = ""
-    document.getElementById("dbSize").innerText = originalText
 }
 
-function removeMarksMySql() {
-    var loopLast=document.getElementById("loopLast").innerText
-    var looplastInt=parseInt(loopLast)
-    var cleardata=""
-    for (var i=1;i<=looplastInt;i++)
-    {
-        //silmukassa haetaan jokainen data+numero idllä nimetty td elementti eli elementit
-        //käydään yksitellen läpi ja niistä poistetaan ylim merkit
-        var data =document.getElementById("data"+i).innerText
-        //elementistä poistetaan replacen avulla ylim. merkit
-        cleardata=data.replace("(","").replace(")","").replace("'","").replace("'","")
-        //suodatettu teksti lisätään data+numero td elementteihin
-        document.getElementById("data"+i).innerText=cleardata   
-    } 
-}
+
+
 
 //tarkistetaan h2 elementin sisältämä teksti ja sen perusteella näytetään oikeat labelit ja cb:t
 function checkDbType() {
     var dbtype = document.getElementById("dbHeader").innerText
     console.log(dbtype)
     if (dbtype.includes("SQL")) {
-        document.getElementById("tableCBLbltxt").hidden=true
-        document.getElementById("prettytxtCB").hidden=true
+        document.getElementById("tableCBLbltxt").hidden = true
+        document.getElementById("prettytxtCB").hidden = true
 
     }
-    else if (dbtype.includes("MongoDB")){
-        document.getElementById("tableCBLbltxt2").hidden=true
-        document.getElementById("prettytxtCBSql").hidden=true
+    else if (dbtype.includes("MongoDB")) {
+        document.getElementById("tableCBLbltxt2").hidden = true
+        document.getElementById("prettytxtCBSql").hidden = true
 
     }
 }
-   //funktio lisää sulkumerkit aina, jos tekstistä löydetään = merkki
-   function blockspg() {
+//funktio lisää sulkumerkit aina, jos tekstistä löydetään = merkki
+function blockspg() {
     var txt = document.getElementById("writePostgre").value
     if (txt.includes("=")) {
-      var txtBlock=txt+"('')"
-      document.getElementById("writePostgre").value=txtBlock
+        var txtBlock = txt + "('')"
+        document.getElementById("writePostgre").value = txtBlock
 
     }
-  }
+}

@@ -8,6 +8,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/scripts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/DynamicCreate.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename = 'js/jqueryScript.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -27,11 +28,12 @@
 <body class="sqlView">
   <h2 id="dbHeader">MySQL Tables </h2>
   <p hidden id="tableTotal">{{lng}}</p>
-  <p hidden id="dbname">{{dbname}}</p>
+  <p id="dbname">{{dbname}}</p>
+  <p id="table">{{sqltable}}</p>
   <p hidden id="fields">{{numfields}}</p>
   <p hidden id="fieldnames">{{fieldnames}}</p>
   <p hidden id="dbsize">{{dbsize}}</p>
-  <p id="total"></p>
+  <p id="totalsql">{{i}}</p>
 
   <select name="sqltables" id="sqltables" onchange="getSqlTable(this)">
     <option value="default" selected>Select</option>
@@ -41,8 +43,8 @@
     {% endfor %}
   </select>
   <form action="{{ url_for('mysqlScripts.readTableData',dbname=dbname)}}" method="post">
-    <input type="text" name="selectedTable" id="selectedTable">
-    <input hidden type="text" name="dbname" id="dbname" value="{{dbname}}">
+    <input type="text" name="selectedTable" id="selectedTable" value={{sqltable}}>
+    <input type="text" name="dbname" id="dbname" value="{{dbname}}">
     <button class="showBtn">Show table data</button>
   </form>
   {% if tablesShown==True %}
@@ -50,11 +52,35 @@
   <input onclick="query()" type="checkbox" id="freequery"><br>
   {%endif%}
   <form action="{{ url_for('mysqlScripts.runSQLScript')}}" method="post">
+    
     <textarea hidden type="text" id="querytext" name="querytext" placeholder="SQL query"></textarea><br>
+    
+    
+    
+    <script>
+      $(document).ready(function(){
+        $(".sqlOption").click(function(){
+          var text = jQuery(this).text()
+          document.getElementById("querytext").innerText=text
+          text=""
+       
+        });
+      });
+      </script>
+   
     <button hidden id="runBtn" class="runBtn">Run</button>
   </form>
-  <script>
+  <div class="dropdown">
+  <button class="dropbtn">SQL examples</button>
  
+    <div class="dropdown-content">
+    <a href="#" class="sqlOption">SELECT * FROM {{sqltable}} WHERE id=</a>
+    <a href="#" class="sqlOption">SELECT * FROM {{sqltable}}</a>
+    <a href="#" class="sqlOption">SELECT COUNT(*) FROM {{sqltable}}</a>
+    </div>
+  </div>
+  <script>
+
     $(function () {
       var availableCommands = [
         'insert',
@@ -71,7 +97,7 @@
     });
   </script>
 
-  <table id="dbTable" class="sqlTable" border="1">
+  <table id="dbTable" class="dbTable" border="1">
     <tr>
       <th id="sqlHeaders" class="sqlHeaders">{{finalHeaders}}</th>
     </tr>

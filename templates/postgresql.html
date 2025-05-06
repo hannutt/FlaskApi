@@ -23,6 +23,7 @@
 </nav>
 
 <body class="postgre">
+    <p id="totalsql">{{x}}</p>
     <h2 id="dbHeader">Postgre SQL</h2>
     <p>Table <b>{{tablename}}</b> selected</p>
     <select id="postgre" name="postgre" onchange="getPostgreDB(this)">
@@ -137,7 +138,7 @@
     <input type="checkbox" id="postgreQueryCB" name="postgreQueryCB" onchange="writePostgre()">
     <form action="{{ url_for('postgreScripts.writePostgreQuery')}}" method="post">
 
-        <textarea hidden id="writePostgre" name="writePostgre" placeholder="Write SQL query" onchange="blockspg()"></textarea>
+        <textarea hidden id="writePostgre" name="writePostgre" placeholder="Write SQL query"></textarea>
         <button>Run query</button>
         {%endif%}
     </form>

@@ -193,7 +193,7 @@ CUSTOMIZATION OPTIONS
 in the reading view you can choose whether you want to see the database data in the table, in small or large font, and the background color of the table can also be changed.
 
 Make the text more readable. Normally, MongoDB displays characters like { }, () etc. next to the data.
-The checkbox option beautiful text removes these characters using for-loops, RegEX statements, and JavaScript replacement methods.
+The checkbox option pretty text removes these characters using for-loops, RegEX statements, and JavaScript replace methods.
 
 
 

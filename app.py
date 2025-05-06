@@ -108,9 +108,6 @@ def showIndex():
      #print(collections)
      for i in dbs:
           dbsList.append(i)
-        
-          print(i)
-     
           db=client[i]
           call = db.command("dbstats")
           datasize = call['dataSize'] / 1024
@@ -128,11 +125,7 @@ def showIndex():
         
     #listan alkioiden muunto int-tyyppiseksi
      for j in range(0, len(statsNums)):
-
-    
         statsNums[j] = int(statsNums[j])    
-          
-  
      return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections,dirsFinal=dirsFinal)
 
 

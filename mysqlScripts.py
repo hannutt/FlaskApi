@@ -10,11 +10,15 @@ load_dotenv("c:/codes/Python/FlaskApi/.env")
 mysqluser=os.getenv('mySQLuser')
 mysqlpsw=os.getenv('mySQLpsw')
 dbhost=os.getenv('dbhost')
+
+
+
 @mysqlScripts.route("/mysql",methods=['POST','GET'])
 
 def readSelectedSql():
        tables=[]
        sqlDB=True
+
        global dbname
        dbname=request.form.get('selectedSQL')
       
@@ -49,6 +53,7 @@ def readSelectedSql():
 
 @mysqlScripts.route("/runScript",methods=['POST','GET'])
 def runSQLScript():
+     tablesShown=True
      sqldata=[]
      script = request.form.get('querytext')
      mydb = mysql.connector.connect(
@@ -72,17 +77,18 @@ def runSQLScript():
      else:
           cursor.execute(script)
           for x in cursor:
-               print(x)
                sqldata.append(x)
      
 
-     return render_template("mysql.html",sqldata=sqldata,script=script)
+     return render_template("mysql.html",sqldata=sqldata,script=script,tablesShown=tablesShown,sqltable=sqltable)
 
 @mysqlScripts.route("/mysqlTable/<dbname>",methods=['POST','GET'])
 def readTableData(dbname):
+      i=0
       tablesShown=True
       data=[]
       ids=[]
+      global sqltable
       sqltable=request.form.get("selectedTable")
       #dbName=request.form.get("dbname")
       mydb = mysql.connector.connect(
@@ -106,6 +112,5 @@ def readTableData(dbname):
       for x in myresult:
         print(x)
         data.append(x)
-      
-
-      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames,tablesShown=tablesShown)
+        i=i+1
+      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames,tablesShown=tablesShown,i=i,sqltable=sqltable)

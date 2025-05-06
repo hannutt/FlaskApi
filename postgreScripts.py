@@ -72,6 +72,7 @@ def getTables():
 
 @postgreScripts.route("/showpostgretable/<db>",methods=['POST','GET'])
 def showPostgreTable(db):
+    x=0
     global postgredb
     postgredb=db
     tableSelected=True
@@ -96,7 +97,8 @@ def showPostgreTable(db):
     #sarakeiden nimet
     for j in column_names:
         columnname.append(j)
-    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected,tablename=tablename)
+        x=x+1
+    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected,tablename=tablename,x=x)
 
 @postgreScripts.route("/writepostgre",methods=['POST','GET'])
 def writePostgreQuery():
