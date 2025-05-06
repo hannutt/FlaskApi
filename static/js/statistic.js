@@ -24,8 +24,7 @@ function getNumValues() {
     var numValues = document.getElementsByClassName("statsNums")
     for (i = 0; i < 7; i++) {
         arrNums.push(parseInt(numValues[i].innerHTML))
-        console.log(arrNums)
-
+    
 
     }
     minVal = Math.min(...arrNums)
@@ -34,9 +33,7 @@ function getNumValues() {
     // listan järjestys on sama, näin saadaan käyttöön chartJs:ssä suurin kannan koko ja sen nimi
     indexNum = arrNums.indexOf(maxVal)
     indexNumMin = arrNums.indexOf(4)
-    console.log(indexNum)
-    console.log(maxVal)
-    console.log(minVal)
+   
 }
 function getAllValues() {
     var all = document.getElementsByClassName("allStat")

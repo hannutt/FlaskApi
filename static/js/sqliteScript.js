@@ -3,12 +3,17 @@ function runSqlite() {
     var cb = document.getElementById("sqlite")
     if (cb.checked==true)
     {  
+        document.getElementById("choice").hidden=false
+        /*
         document.getElementById("sqliteStart").hidden=false
-        document.getElementById("sqliteStart2").hidden=false
+        document.getElementById("sqliteStart2").hidden=false*/
     }
     else {
+        document.getElementById("choice").hidden=true
+        document.getElementById("sqliteTable").hidden=true
+        /*
         document.getElementById("sqliteStart").hidden=true
-        document.getElementById("sqliteStart2").hidden=true
+        document.getElementById("sqliteStart2").hidden=true*/
 
     }
 }
@@ -30,6 +35,7 @@ function showQueryBox() {
     var cb = document.getElementById("queryCB")
     if (cb.checked==true)
     {
+        
         document.getElementById("sqliteQuery").hidden=false
         document.getElementById("showTableBtn").hidden=true
         document.getElementById("runsqlitequery").hidden=false

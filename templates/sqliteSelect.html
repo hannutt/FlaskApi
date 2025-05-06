@@ -8,7 +8,17 @@
 </head>
 
 <body>
+    <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
+    <input type="checkbox" id="sqlite" name="sqlite" onchange="runSqlite()">
+    
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
+        <div id="choice" hidden>
+            <button class="selectBtn" id="first10">Find first 10 files from C:\ drive</button>
+          
+            <label for="Advanced">Advanced search</label>
+            <input type="checkbox" id="Advanced">
+        </div>
+       
         <div hidden id="sqliteStart">
             <div class="avoidInputs">
                 <br>
