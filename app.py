@@ -1,7 +1,7 @@
 
 from http.client import InvalidURL
 from variables import Variables
-from flask import Flask, request, json, Response,jsonify,render_template
+from flask import Flask, flash, request, json, Response,jsonify,render_template
 from flask_pymongo import PyMongo,MongoClient
 from string import Template
 from bson.objectid import ObjectId
@@ -19,6 +19,7 @@ from mongoScript import mongoScript
 from sqliteScripts2 import sqliteScripts2
 from postgreScripts import postgreScripts
 from azureScripts import azureScripts
+from tinydbScripts import tinyDB
 
 import urllib
 app = Flask(__name__)
@@ -31,6 +32,7 @@ app.register_blueprint(mongoScript,url_prefix='')
 app.register_blueprint(sqliteScripts2,url_prefix='')
 app.register_blueprint(postgreScripts,url_prefix='')
 app.register_blueprint(azureScripts,url_prefix='')
+app.register_blueprint(tinyDB,url_prefix='')
 
 showdata = False
 connect=False
@@ -108,7 +110,8 @@ def showIndex():
         
     #listan alkioiden muunto int-tyyppiseksi
      for j in range(0, len(var.statsNums)):
-        var.statsNums[j] = int(var.statsNums[j])    
+        var.statsNums[j] = int(var.statsNums[j])
+   
      return render_template('index.html',dbsList=dbsList,stats=var.statsNames,statsNums=var.statsNums,allStats=var.allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=var.collections,dirsFinal=dirsFinal)
 
 
@@ -134,7 +137,7 @@ def read_form():
     var.collections = call['collections']
     var.objects = call['objects']
    
-
+    
     app.config['MONGO_URI']='mongodb://localhost:27017/'+selectedDB
     
     mongodb=PyMongo(app).db

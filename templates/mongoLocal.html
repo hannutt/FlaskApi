@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <label class="dbsLbl" for="mongocb" >Access to local Mongo database:</label>
+    <label class="dbLabels" for="mongocb" >Access to local Mongo database:</label>
     <input type="checkbox" id="mongocb" class="mongocb" onclick="showMongoOptions(document.getElementById('mongocb'))">
     <div id="mongoSelect" hidden>
 
@@ -45,7 +45,7 @@
             <input type="text" name="selectedDB" id="selectedDB">-->
 
     </form>
-    <label for="atlas" class="atlasLbl">Access to Atlas DB</label>
+    <label for="atlas" class="dbLabels">Access to Atlas DB</label>
     <input type="checkbox" class="atlasCB" id="atlas" name="atlas" onclick="createAtlas()">
     <form action="{{ url_for('cloudConnection.readAtlasDB')}}" method="post">
         <div class="atlasForm" id="atlasForm">

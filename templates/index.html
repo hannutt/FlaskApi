@@ -21,6 +21,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/postgreScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/azureScripts.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/mongoScripts.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/tinydbScripts.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <title>Flask-APi</title>
@@ -41,41 +42,46 @@
     </div>
     <!--näytetään mongolocalin html-koodi tässä-->
     {% include 'mongoLocal.html' %}
-   
-    
+
+
     <form action="{{ url_for('postgreScripts.readPostgre')}}" method="post">
-        <label for="postgreCB" class="postgreLbl">Access to PostgreSQL DataBase</label>
-        <input type="checkbox" class="postgreCB" id="postgreCB" name="postgreCB" onclick="goPostgrePage()">
+        <label for="postgreCB" class="dbLabels">Access to PostgreSQL DataBase</label>
+        <input type="checkbox" id="postgreCB" name="postgreCB" onclick="goPostgrePage()">
         <br><button hidden id="gobtn">Go</button>
     </form>
     <br>
-   
+
     </div>
     {% include 'mysqlSelect.html' %}
     {% include 'sqliteSelect.html' %}
     <br>
     <form action="{{ url_for('azureScripts.azureStart')}}" method="post">
-        <label for="azureCB" class="atlasLbl">Access to Azure Database</label>
-        <input type="checkbox" class="azureCB" id="azureCB" name="azureCB" onclick="GoAzurePage()">
+        <label for="azureCB" class="dbLabels">Access to Azure Database</label>
+        <input type="checkbox" id="azureCB" name="azureCB" onclick="GoAzurePage()">
         <br><button id="azureBtn" hidden id="gobtn">Go</button>
-        
+    </form>
+    <form action="{{ url_for('tinyDB.openTinyDBPage')}}" method="post">
+        <label for="tinydbCB" class="dbLabels">Access to TinyDB</label>
+        <input type="checkbox" id="tinydbCB" name="tinydbCB" onclick="GoTinyDB(document.getElementById('tinydbBtn'))">
+        <button hidden id="tinydbBtn">GO</button>
     </form>
 
 
-   
+
+
     <form action="{{ url_for('sqliteScripts.showSqliteTables')}}" method="post">
-    <input hidden type="text" id="dbPath" name="sqliteFile">
-    <button hidden class="runBtn" id="accessBtn">Access</button>
-    <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
+        <input hidden type="text" id="dbPath" name="sqliteFile">
+        <button hidden class="runBtn" id="accessBtn">Access</button>
+        <!--searched boolean lähetetään html sivulle sqlitescript.py readiput funktiossa
     jossa se on true, näytetään alla oleva select  komponentti-->
-    {% if searched==True %}
-    <select id="selSQLite" onchange="selectionSqlite(this)">
-        {% for t in tables %}
-        <option>{{t}}</option>
-        {%endfor%}
-    </select>
-    {%endif%}
-</form>
+        {% if searched==True %}
+        <select id="selSQLite" onchange="selectionSqlite(this)">
+            {% for t in tables %}
+            <option>{{t}}</option>
+            {%endfor%}
+        </select>
+        {%endif%}
+    </form>
 
 
     <select hidden name="sqliteInput" id="sqliteInput" onclick="sqliteSelection(this.value)">
@@ -151,7 +157,7 @@
         {%endif%}
         <br>
     </form>
-   
+
     <form action="{{ url_for('mysqlScripts.readSelectedSql')}}" method="post">
         <div hidden id="mysqlForm">
             <select name="sqlDbs" id="sqlDbs" onchange="getMysqlDb(this)">

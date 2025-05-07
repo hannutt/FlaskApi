@@ -40,7 +40,7 @@ For the selected MongoDB database, an info row is displayed, which tells the num
 
 ![alt text](static/images/inforow.png)
 
-Example image where the user has limited the number of sqlite database files to be searched to five. The first 5 sqlite files found are displayed in the Table element. The size of the database files is displayed in megabytes using the stats method of the Python OS library.
+Example image where the user has limited the number of sqlite database files to be searched to five. The first 5 sqlite files found are displayed in the Table element. The size of the database files is displayed in megabytes using the stats method of the Python OS library. Db files can be easily opened with a mouse click.
 
 ![alt text](static/images/sqliteTable.png)
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="{{ url_for('static', filename = 'js/tinydbScripts.js') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <title>TinyDB</title>
+    </head>
+    <body class="indexbody">
+        <h3>TinyDB</h3>
+        <label for="create">Create file</label>
+        <input type="checkbox" id="create" onclick="showCreate(document.getElementById('create'))">
+        <div id="createDiv" hidden>
+            <p>Create json file</p>
+            <form action="{{ url_for('tinyDB.createFile')}}" method="post">
+            <input type="text" id="fileName" name="fileName">
+            <button>Create</button>
+            </form>
+        </div>
+        <label for="create">Find files</label>
+        <input type="checkbox" id="findfile" onclick="showFind(document.getElementById('findfile'))">
+        <div id="findFiles" hidden>
+            <form action="{{ url_for('tinyDB.getJsonFiles')}}" method="post">
+            <button>Get</button>
+        </form>
+        </div>
+
+    </body>
+</html>

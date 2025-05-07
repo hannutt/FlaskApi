@@ -28,11 +28,7 @@ white-space: nowrap;
     background-color: lightblue;
 }
 
-.dbsLbl {
-    font-weight: bold;
-    font-size: larger;
-    color: black;
-}
+
 
 .selectBtn {
     background-color: lightblue;
@@ -75,7 +71,7 @@ white-space: nowrap;
     position: absolute;
     top:300px;
 }
-.atlasLbl,.postgreLbl {
+.dbLabels {
     color: black;
     text-transform: uppercase;
     font-weight: bold;

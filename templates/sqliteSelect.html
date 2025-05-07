@@ -10,15 +10,16 @@
 <body>
     <label for="sqlite" class="mysqlLbl">Access to local SQLite Database</label>
     <input type="checkbox" id="sqlite" name="sqlite" onchange="runSqlite()">
-    
+    <br>
+
     <form action="{{ url_for('sqliteScripts.readDBname')}}" method="post">
         <div id="choice" hidden>
             <button class="selectBtn" id="first10">Find first 10 files from C:\ drive</button>
-          
+            <br>
             <label for="Advanced">Advanced search</label>
             <input type="checkbox" id="Advanced">
         </div>
-       
+
         <div hidden id="sqliteStart">
             <div class="avoidInputs">
                 <br>
@@ -39,19 +40,19 @@
     </div>
 
     <form action="{{ url_for('sqliteScripts2.searchFromFolder')}}" method="post">
-       
+
         <label for="srcFolder" id="searchFolderLbl">Search the folder:</label>
         <input type="checkbox" id="searchFolderCB" onchange="showSearchOptions()">
         <div hidden id="options">
-        <label id="srcRestLbl" for="numberofsearch">Set the number of files to search:</label>
-        <input type="text" id="numberofsearch" name="numberofsearch">
-        <label for="srcFolder">Dir path:</label>
-        <input type="text" name="srcFolder" id="srcFolder"
-            onchange="getInputValue();checkFields(document.getElementById('srcFolder').value,document.getElementById('numberofsearch').value)">
-        <br>
+            <label id="srcRestLbl" for="numberofsearch">Set the number of files to search:</label>
+            <input type="text" id="numberofsearch" name="numberofsearch">
+            <label for="srcFolder">Dir path:</label>
+            <input type="text" name="srcFolder" id="srcFolder"
+                onchange="getInputValue();checkFields(document.getElementById('srcFolder').value,document.getElementById('numberofsearch').value)">
+            <br>
 
-        <button class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
-    </div>
+            <button class="runBtn" hidden id="searchFolderBtn" disabled>Search from </button>
+        </div>
 
     </form>
     </div>
