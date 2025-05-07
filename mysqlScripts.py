@@ -2,14 +2,13 @@ import os
 from dotenv import load_dotenv
 from flask import Blueprint, render_template, request
 import mysql.connector
+from variables import Variables
 
 mysqlScripts = Blueprint('mysqlScripts',__name__,static_folder='static',template_folder='templates')
 sqlDB=False
 tablesShown=False
-load_dotenv("c:/codes/Python/FlaskApi/.env")
-mysqluser=os.getenv('mySQLuser')
-mysqlpsw=os.getenv('mySQLpsw')
-dbhost=os.getenv('dbhost')
+
+var = Variables()
 
 
 
@@ -18,20 +17,10 @@ dbhost=os.getenv('dbhost')
 def readSelectedSql():
        tables=[]
        sqlDB=True
-
-       global dbname
-       dbname=request.form.get('selectedSQL')
-      
-       mydb = mysql.connector.connect(
        
-        host=dbhost,
-        user=mysqluser,
-        password=mysqlpsw,
-        database=dbname
-)
-       
-       
-       cursor = mydb.cursor()
+       var.databaseName=request.form.get('selectedSQL')
+       var.MySqldbConnector.database=var.databaseName       
+       cursor = var.MySqldbConnector.cursor()
        cursor.execute("SHOW TABLES")
        #tämä sql lause hakee valitun tietokannan koon
        sizequery="SELECT table_schema '%(dbname)s', SUM(data_length + index_length) / 1024 FROM information_schema.TABLES GROUP BY table_schema LIMIT 1"
@@ -49,30 +38,24 @@ def readSelectedSql():
        lng=len(tables)
 
       
-       return render_template("mysql.html",tables=tables,dbname=dbname,lng=lng,dbsize=dbsize[1],sqlDB=sqlDB)
+       return render_template("mysql.html",tables=tables,dbname=var.databaseName,lng=lng,dbsize=dbsize[1],sqlDB=sqlDB)
 
 @mysqlScripts.route("/runScript",methods=['POST','GET'])
 def runSQLScript():
      tablesShown=True
      sqldata=[]
      script = request.form.get('querytext')
-     mydb = mysql.connector.connect(
-       
-        host=dbhost,
-        user=mysqluser,
-        password=mysqlpsw,
-        database=dbname
-)    
-     cursor=mydb.cursor()
+
+     cursor=var.MySqldbConnector.cursor()
      if script.startswith("update"):
           cursor.execute(script)
           #commit eli toteutetaan muutos
-          mydb.commit()
+          var.MySqldbConnector.commit()
           #insert eli uuden tietueen lisäys
      elif script.startswith("insert"):
           cursor.execute(script)
           #commit eli toteutetaan muutos
-          mydb.commit()
+          var.MySqldbConnector.commit()
 
      else:
           cursor.execute(script)
@@ -80,7 +63,7 @@ def runSQLScript():
                sqldata.append(x)
      
 
-     return render_template("mysql.html",sqldata=sqldata,script=script,tablesShown=tablesShown,sqltable=sqltable)
+     return render_template("mysql.html",sqldata=sqldata,script=script,tablesShown=tablesShown,sqltable=var.sqltable)
 
 @mysqlScripts.route("/mysqlTable/<dbname>",methods=['POST','GET'])
 def readTableData(dbname):
@@ -88,20 +71,10 @@ def readTableData(dbname):
       tablesShown=True
       data=[]
       ids=[]
-      global sqltable
-      sqltable=request.form.get("selectedTable")
-      #dbName=request.form.get("dbname")
-      mydb = mysql.connector.connect(
-       
-        host=dbhost,
-        user=mysqluser,
-        password=mysqlpsw,
-        database=dbname
-)
-    
-
-      cursor = mydb.cursor()
-      cursor.execute("SELECT * FROM "+sqltable)
+      var.sqltable=request.form.get("selectedTable")
+      var.MySqldbConnector.database=dbname
+      cursor = var.MySqldbConnector.cursor()
+      cursor.execute("SELECT * FROM "+var.sqltable)
       #sql taulujen sarakkeiden nimet
       numfields = len(cursor.description)
       fieldnames = [i[0] for i in cursor.description]
@@ -113,4 +86,4 @@ def readTableData(dbname):
         print(x)
         data.append(x)
         i=i+1
-      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames,tablesShown=tablesShown,i=i,sqltable=sqltable)
+      return render_template("mysql.html",data=data,finalHeaders=finalHeaders,numfields=numfields,fieldnames=fieldnames,tablesShown=tablesShown,i=i,sqltable=var.sqltable)

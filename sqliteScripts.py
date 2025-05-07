@@ -66,10 +66,10 @@ def readDBname():
 def showSqliteTables():
     sqliteTables=True 
     sqlTables=[]
-    global dbname
-    dbname=request.form.get('sqliteFile')
     
-    conn = sqlite3.connect(dbname)
+    sqlitedbname=request.form.get('sqliteFile')
+    
+    conn = sqlite3.connect(sqlitedbname)
     
   
      #määritetään tietokantatiedosto, johon yhdistetään
@@ -90,7 +90,7 @@ def showSqliteTables():
         sqlTables.append(finalres)
     conn.close()
 
-    return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables,dbname=dbname)
+    return render_template("index.html",sqlTables=sqlTables,sqliteTables=sqliteTables,dbname=sqlitedbname)
 
 @sqliteScripts.route("/opentable/<dbname>",methods=['POST','GET'])
 def runsqlite(dbname):
