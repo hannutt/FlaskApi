@@ -25,7 +25,7 @@
 <body class="postgre">
     <p id="totalsql">{{x}}</p>
     <h2 id="dbHeader">Postgre SQL</h2>
-    <p>Table <b>{{tablename}}</b> selected</p>
+    <p>Table <b>{{sqltable}}</b> selected</p>
     <select id="postgre" name="postgre" onchange="getPostgreDB(this)">
         <option selected>Select</option>
         {% for d in databases %}
@@ -134,6 +134,7 @@
     </form>
     <br>
     {% if tableSelected==True %}
+    {% include 'dropdown.html' %}
     <label for="postgreQuery">Write query</label>
     <input type="checkbox" id="postgreQueryCB" name="postgreQueryCB" onchange="writePostgre()">
     <form action="{{ url_for('postgreScripts.writePostgreQuery')}}" method="post">
@@ -142,6 +143,17 @@
         <button>Run query</button>
         {%endif%}
     </form>
+     
+    <script>
+        $(document).ready(function(){
+          $(".sqlOption").click(function(){
+            var text = jQuery(this).text()
+            document.getElementById("writePostgre").innerText=text
+            text=""
+         
+          });
+        });
+        </script>
     {% if showtables==true %}
     <h3 id="dbSize">{{db}} selected. Size: {{j}}</h3>
     {%endif%}

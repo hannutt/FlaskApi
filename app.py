@@ -1,5 +1,6 @@
 
 from http.client import InvalidURL
+from variables import Variables
 from flask import Flask, request, json, Response,jsonify,render_template
 from flask_pymongo import PyMongo,MongoClient
 from string import Template
@@ -30,23 +31,15 @@ app.register_blueprint(mongoScript,url_prefix='')
 app.register_blueprint(sqliteScripts2,url_prefix='')
 app.register_blueprint(postgreScripts,url_prefix='')
 app.register_blueprint(azureScripts,url_prefix='')
-load_dotenv("c:/codes/Python/FlaskApi/.env")
-mysqluser=os.getenv('mySQLuser')
-mysqlpsw=os.getenv('mySQLpsw')
-dbhost=os.getenv('dbhost')
+
 showdata = False
 connect=False
-
+var = Variables()
+var.client
 def showSQLDataBases():
     sqlDataBases = []
 
-    mydb = mysql.connector.connect(
-       
-        host=dbhost,
-        user=mysqluser,
-        password=mysqlpsw,
-)
-    cursor = mydb.cursor()
+    cursor = var.MySqldbConnector.cursor()
     databases = ("show databases")
     cursor.execute(databases)
     for (databases) in cursor:
@@ -85,17 +78,9 @@ def showIndex():
     
      
      dbsList = []
-     global statsNames
-     statsNames=[]
-     global statsNums
-     statsNums=[]
-     global allStats
-     allStats=[]
-    
-     
      #tietokanta nimien listaus
      dbs=MongoClient().list_database_names()
-     client = MongoClient('localhost', 27017)
+     #client = MongoClient('localhost', 27017)
      #haetaan vain pääkansiot ilman alikansioita c-asemalta
      dirs=next(os.walk('c:\\'))[1]
      #lisätään merkki c:\\ jokaisen lista-alkion eteen. kenoviivoja on 4, että ne voidaan
@@ -108,54 +93,46 @@ def showIndex():
      #print(collections)
      for i in dbs:
           dbsList.append(i)
-          db=client[i]
+          db=var.client[i]
           call = db.command("dbstats")
           datasize = call['dataSize'] / 1024
-          collections = call['collections']
-          print('Collections:', str(collections))
-          print('Size:', str(datasize) + 'Mb')
+          var.collections = call['collections']
           roundedSize = round(datasize,2)
         
-          statsNames.append(i)
+          var.statsNames.append(i)
       
-          statsNums.append(roundedSize)
-          allStats.append(i)
-          allStats.append(datasize)
+          var.statsNums.append(roundedSize)
+          var.allStats.append(i)
+          var.allStats.append(datasize)
           amountOfdb=len(dbsList)
         
     #listan alkioiden muunto int-tyyppiseksi
-     for j in range(0, len(statsNums)):
-        statsNums[j] = int(statsNums[j])    
-     return render_template('index.html',dbsList=dbsList,stats=statsNames,statsNums=statsNums,allStats=allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=collections,dirsFinal=dirsFinal)
+     for j in range(0, len(var.statsNums)):
+        var.statsNums[j] = int(var.statsNums[j])    
+     return render_template('index.html',dbsList=dbsList,stats=var.statsNames,statsNums=var.statsNums,allStats=var.allStats,dbsAtlas=dbsAtlas,amountOfdb=amountOfdb,sqls=sqls,collections=var.collections,dirsFinal=dirsFinal)
 
 
 
 @app.route("/statistic",methods=['POST'])
 def DB_Statistics():
-    print(statsNames)
 
-    return render_template('index.html',stats=statsNames)
+    return render_template('index.html',stats=var.statsNames)
 
 @app.route('/mongodb/', methods=['POST','GET']) 
 def read_form():
    
-    client = pymongo.MongoClient('mongodb://localhost:27017/')
+   
     #client = MongoClient('localhost', 27017)
     #global selectedDB
     selectedDB = request.form.get('DBname')
-    
-   
-    
     #db-statistiikka koodi, collectionien määrä, koko jne.
-    dbname=client[selectedDB]
+    dbname=var.client[selectedDB]
     call = dbname.command("dbstats")
     datasize = call['dataSize'] / 1024
-    global datasizeRound
-    datasizeRound=round(datasize,2)
-    global collections
-    collections = call['collections']
-    global objects
-    objects = call['objects']
+   
+    var.datasizeRound=round(datasize,2)
+    var.collections = call['collections']
+    var.objects = call['objects']
    
 
     app.config['MONGO_URI']='mongodb://localhost:27017/'+selectedDB
@@ -166,7 +143,7 @@ def read_form():
     data = request.form
     
     
-    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=collections,datasizeRound=datasizeRound,objects=objects)
+    return render_template('selectCol.html',dbname=dbname,cols=cols,selectedDB=selectedDB,collections=var.collections,datasizeRound=var.datasizeRound,objects=var.objects)
 
 
 #näyttää kaiken datan kokoelmasta
@@ -177,13 +154,12 @@ def show_data(selectedDB):
     data=[]
     ids=[]
     dbKeys=[]
-    client = pymongo.MongoClient('mongodb://localhost:27017/')
     dataBaseNameStr = str(selectedDB)
     collectionName = request.form.get("colname")
     collectionNameStr=str(collectionName)
     findLimit = request.form.get("DBlimit")
    
-    dbname=client[dataBaseNameStr]
+    dbname=var.client[dataBaseNameStr]
     collection=dbname[collectionNameStr]
     #jos dblimit syötekntän arvo on muu kuin tyhjä, ja sisältö on mumeroita,käytetään haussa limit metodia.
     if findLimit !="" and findLimit.isdigit():
@@ -211,20 +187,15 @@ def show_data(selectedDB):
             data.append(i)
         #tietokannan kenttien nimet muunnetaan listamuotoon.
         dbKeysList=list(i.keys())
-
-
-    
     #lasketaan kokoelman kenttien määrä
         keysTotal = len(i.keys())
-    
         
-    return render_template("selectCol.html",data=data,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=datasizeRound,objects=objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count,ids=ids)
+    return render_template("selectCol.html",data=data,dbKeysList=dbKeysList,showdata=showdata,keysTotal=keysTotal,datasizeRound=var.datasizeRound,objects=var.objects,selectedDB=selectedDB,collectionNameStr=collectionNameStr,count=count,ids=ids)
 
 @app.route("/mongo-query/<selectedDB>/<collection>", methods=['POST','GET']) 
 def runMongoQuery(selectedDB,collection):
     dataMongo=[]
-    client = pymongo.MongoClient('mongodb://localhost:27017/')
-    dbname=client[selectedDB]
+    dbname=var.client[selectedDB]
     col=dbname[collection]
     text=request.form.get("mongodata")
     #katkaistaan teksti kaksoispisteen kohdalta 2 lista-alkioksi

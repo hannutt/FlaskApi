@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import psycopg2
 from flask import Blueprint, redirect, render_template, request
+
+from variables import Variables
 showtables=False
 postgreScripts = Blueprint('postgreScripts',__name__,static_folder='static',template_folder='templates')
 tableSelected=False
@@ -9,6 +11,7 @@ load_dotenv("c:/codes/Python/FlaskApi/.env")
 postgrepsw=os.getenv('postgrePsw')
 postgreuser=os.getenv('postgreuser')
 dbhost=os.getenv('dbhost')
+var=Variables()
 def connection():
 
     conn = psycopg2.connect(database="",
@@ -44,14 +47,16 @@ def getTables():
     sizes=[]
     #talletetaan valitun tietokannan nimi 
     
-    db=request.form.get('selectedPostgre')
+    var.DBname=request.form.get('selectedPostgre')
+    #var.postgreConnector.database=db
     
-    conn = psycopg2.connect(database=db,
+    conn = psycopg2.connect(database=var.DBname,
                             
                             host="localhost",
                             user="postgres",
                             password=postgrepsw,
                             port=5433)
+    
     cursor = conn.cursor()
     #haetaan kaikki taulut valitusta tietokannasta.
     cursor.execute(f"""
@@ -64,32 +69,32 @@ def getTables():
         finalres=result.replace("(","").replace(")","")
         tables.append(finalres)
         #valitun tietokannan koko
-    cursor.execute(f"SELECT pg_size_pretty (pg_database_size ('{db}')) size;")
+    cursor.execute(f"SELECT pg_size_pretty (pg_database_size ('{var.DBname}')) size;")
     for j in cursor:
         print(j)
         sizes.append(j)
-    return render_template("postgresql.html",showtables=showtables,tables=tables,j=j,db=db)
+    return render_template("postgresql.html",showtables=showtables,tables=tables,j=j,db=var.DBname)
 
 @postgreScripts.route("/showpostgretable/<db>",methods=['POST','GET'])
 def showPostgreTable(db):
     x=0
-    global postgredb
-    postgredb=db
+    
+    var.DBname=db
     tableSelected=True
     tabledata=[]
     global columnname
     columnname=[]
  
-    conn = psycopg2.connect(database=db,
+    conn = psycopg2.connect(database=var.DBname,
                             host="localhost",
                             user="postgres",
                             password=postgrepsw,
                             port=5433)
-    global tablename
-    tablename=request.form.get("postgreTable")
+  
+    var.postgretable=request.form.get("postgreTable")
     cursor=conn.cursor()
     
-    cursor.execute(f"SELECT * FROM {tablename}")
+    cursor.execute(f"SELECT * FROM {var.postgretable}")
     #sarakkeiden otsikot
     column_names = [desc[0] for desc in cursor.description] 
     for i in cursor.fetchall():
@@ -98,12 +103,12 @@ def showPostgreTable(db):
     for j in column_names:
         columnname.append(j)
         x=x+1
-    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected,tablename=tablename,x=x)
+    return render_template("postgresql.html",tabledata=tabledata,columnname=columnname,tableSelected=tableSelected,sqltable=var.postgretable,x=x)
 
 @postgreScripts.route("/writepostgre",methods=['POST','GET'])
 def writePostgreQuery():
      tabledata=[]
-     conn = psycopg2.connect(database=postgredb,
+     conn = psycopg2.connect(database=var.DBname,
                             host="localhost",
                             user="postgres",
                             password=postgrepsw,
@@ -147,13 +152,13 @@ def postgreCrud():
          print(columnname)           
          
         
-         conn = psycopg2.connect(database=postgredb,
+         conn = psycopg2.connect(database=var.DBname,
                             host="localhost",
                             user="postgres",
                             password=postgrepsw,
                             port=5433)
          conn = cursor=conn.cursor()
-         sql=f"UPDATE {tablename} set model={data[2]} WHERE id=1"
+         sql=f"UPDATE {var.postgretable} set model={data[2]} WHERE id=1"
          cursor.execute(sql)
          conn.close()
          
@@ -167,12 +172,12 @@ def deletePostgreRecord():
     id=request.form.get("id")
     idToInt=int(id)
  
-    conn = psycopg2.connect(database=postgredb,
+    conn = psycopg2.connect(database=var.DBname,
                             host="localhost",
                             user="postgres",
                             password=postgrepsw,
                             port=5433)
-    sql=f"DELETE FROM {tablename} WHERE ID ={idToInt}"
+    sql=f"DELETE FROM {var.sqltable} WHERE ID ={idToInt}"
     cursor=conn.cursor()
     cursor.execute(sql)
     conn.commit()

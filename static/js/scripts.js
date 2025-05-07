@@ -49,7 +49,7 @@ function stats() {
     document.getElementById("chart").hidden = false
     document.getElementById("statsBtn").textContent = 'Hide chart'
     //muutetaan buttonin tyyliluokka määrettä
-    document.getElementById("statsBtn").setAttribute("class", 'statsBtnHide')
+    
 
   }
   if (clicks % 2 == 0) {
