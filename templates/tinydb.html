@@ -22,11 +22,12 @@
     </div>
     <label for="create">Find JSON files</label>
     <input type="checkbox" id="findfile" onclick="showFind(document.getElementById('findfile'))">
-    <div id="findFiles" hidden>
+    <span id="findFilesSpan" hidden>
+    <div id="findFiles">
 
     </div>
     <div>
-        <table id="jsontable" hidden border="1">
+        <table id="jsontable" border="1">
             <tr>
                 <th>JSON files</th>
             </tr>
@@ -40,9 +41,6 @@
                             var text = jQuery(this).text()
                             document.getElementById("selectedfile").hidden = false
                             document.getElementById("selectedfile").value = text
-                            document.getElementById("selectedfile2").value = text
-                            document.getElementById("selectedfile3").value = text
-                        
                             text = ""
 
 
@@ -53,29 +51,35 @@
             </tr>
             {%endfor%}
         </table>
+        </span> 
         <form action="{{ url_for('tinyDB.saveToDb')}}" method="post">
             <input hidden type="text" id="selectedfile" name="selectedfile">
             <br>
             <label for="multiple">Add multiple</label>
-            <input type="checkbox" id="multiple" name="multiple"
-                onchange="addMultiple(document.getElementById('multiple'))">
+            <input type="checkbox" id="multiple" name="multiple" onchange="addMultiple(document.getElementById('multiple'))">
             <br>
+            <span id="dataFields">
             <input type="text" id="datafield" name="datafield" placeholder="field name">
             <input type="text" id="data" name="data" placeholder="Data">
-            <button id="saveSingle">Save</button>
+            </span>
+            <input type="submit" name="action" value="Save" id="saveSingle">
+            <input type="submit" name="action" value="Show data">
            
 
         </form>
         <form action="{{ url_for('tinyDB.addMultipleItems')}}" method="post">
-            <input hidden type="text" id="selectedfile3" name="selectedfile3">
-            <textarea hidden id="txtmultiple" name="txtmultiple"></textarea>
-            <button hidden id="saveMultiple">Save multiple</button>
+            
+            <span id="multipleSpan" hidden>
+            <textarea id="txtmultiple" name="txtmultiple"></textarea>
+            <button id="saveMultiple">Save multiple</button>
+            </span>
+           
         </form>
-        <form action="{{ url_for('tinyDB.readData')}}" method="post">
-            <input hidden type="text" id="selectedfile2" name="selectedfile2">
+        <button onclick="createNewLine()">new line</button>
+        <div id="newlines" name="newlines">
 
-            <button>Show data</button>
-        </form>
+        </div>
+      
         <button>Update data</button>
         <p id="dataAdded"></p>
     </div>

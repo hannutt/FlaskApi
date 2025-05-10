@@ -21,15 +21,15 @@ function showFind(cbShow) {
 
 
     if (cbShow.checked == true) {
-        document.getElementById("findFiles").hidden = false
-        document.getElementById("jsontable").hidden = false
+        document.getElementById("findFilesSpan").hidden = false
+        
 
 
 
     }
     if (cbShow.checked == false) {
-        document.getElementById("findFiles").hidden = true
-        document.getElementById("jsontable").hidden = true
+        document.getElementById("findFilesSpan").hidden = true
+    
     }
 
 }
@@ -42,19 +42,23 @@ function dataAdded() {
 
 function addMultiple(cb) {
     if (cb) {
-        document.getElementById("datafield").hidden = true
-        document.getElementById("data").hidden = true
-        document.getElementById("txtmultiple").hidden=false
-        document.getElementById("saveMultiple").hidden=false
+        document.getElementById("dataFields").hidden=true
+        document.getElementById("multipleSpan").hidden=false
         document.getElementById("saveSingle").hidden=true
     }
     if (cb.checked==false) {
-        document.getElementById("datafield").hidden = false
-        document.getElementById("data").hidden = false
-        document.getElementById("txtmultiple").hidden=true
-        document.getElementById("saveMultiple").hidden=true
+        document.getElementById("dataFields").hidden=false
+        document.getElementById("multipleSpan").hidden=true
+       //document.getElementById("saveMultiple").hidden=true
         document.getElementById("saveSingle").hidden=false
 
     }
 
+}
+var idnum=1
+function createNewLine() {
+    var input = document.createElement("input");
+    input.id=idnum
+    document.getElementById("newlines").appendChild(input);
+    idnum=idnum+1
 }

@@ -1,14 +1,19 @@
 
 import os
-from flask import Blueprint, render_template, request
+from flask import Blueprint, redirect, render_template, request, url_for
 from tinydb import TinyDB, Query
 from variables import Variables
 from localStoragePy import localStoragePy
 
 var=Variables()
-storage_backend = "text"
-localStorage = localStoragePy("flaskapi", storage_backend)
+
 tinyDB = Blueprint('tinyDB',__name__,static_folder='static',template_folder='templates')
+
+
+def returnPath():
+    path=request.form.get("selectedfile")
+    return path
+    
 
 @tinyDB.route("/openPage",methods=['POST','GET'])
 def openTinyDBPage():
@@ -30,20 +35,25 @@ def createFile():
 
 @tinyDB.route("/savetodb",methods=['POST','GET'])
 def saveToDb():
-    tinydbName=request.form.get("selectedfile")
-    datafield=request.form.get("datafield")
-    data=request.form.get("data")
-    db=TinyDB(tinydbName)
-    db.insert({datafield:data})
-    return render_template("tinydb.html")
+    
+    if request.form['action']=="Save":
+        var.tinydbName=request.form.get("selectedfile")
+        datafield=request.form.get("datafield")
+        var.data=request.form.get("data")
+        db=TinyDB(var.tinydbName)
+        db.insert({datafield:var.data})
+        return render_template("tinydb.html")
+    if request.form['action']=="Show data":
+        var.tinydbName=request.form.get("selectedfile")
+        return redirect(url_for('tinyDB.readData'))
 
 @tinyDB.route("/showdata",methods=['POST','GET'])
 def readData():
-
-    dbase=request.form.get("selectedfile2")
-    db=TinyDB(dbase)
+   
+    #dbase=request.form.get("selectedfile2")
+    db=TinyDB(var.tinydbName)
     data=db.all()
-    
+
     return render_template("tinydb.html",data=data)
 
 @tinyDB.route("/update",methods=['POST','GET'])
