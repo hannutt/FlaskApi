@@ -1,28 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script type="text/javascript" src="{{ url_for('static', filename = 'js/tinydbScripts.js') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-        <title>TinyDB</title>
-    </head>
-    <body class="indexbody">
-        <h3>TinyDB</h3>
-        <label for="create">Create file</label>
-        <input type="checkbox" id="create" onclick="showCreate(document.getElementById('create'))">
-        <div id="createDiv" hidden>
-            <p>Create json file</p>
-            <form action="{{ url_for('tinyDB.createFile')}}" method="post">
+
+<head>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'js/tinydbScripts.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>TinyDB</title>
+</head>
+
+<body class="indexbody">
+    <h3>TinyDB</h3>
+    <button id="backtoSel" onclick="history.back()" class="fpBtn">Back to previous page</button> |
+    <label for="create">Create file</label>
+    <input type="checkbox" id="create" onclick="showCreate(document.getElementById('create'))">
+    <div id="createDiv" hidden>
+        <p>Create json file</p>
+        <form action="{{ url_for('tinyDB.createFile')}}" method="post">
             <input type="text" id="fileName" name="fileName">
             <button>Create</button>
-            </form>
-        </div>
-        <label for="create">Find files</label>
-        <input type="checkbox" id="findfile" onclick="showFind(document.getElementById('findfile'))">
-        <div id="findFiles" hidden>
-            <form action="{{ url_for('tinyDB.getJsonFiles')}}" method="post">
-            <button>Get</button>
         </form>
-        </div>
+    </div>
+    <label for="create">Find JSON files</label>
+    <input type="checkbox" id="findfile" onclick="showFind(document.getElementById('findfile'))">
+    <div id="findFiles" hidden>
 
-    </body>
+    </div>
+    <div>
+        <table id="jsontable" hidden border="1">
+            <tr>
+                <th>JSON files</th>
+            </tr>
+            {%for j in jsonfiles %}
+            <tr>
+
+                <td id="file{{loop.index}}">{{j}}</td>
+                <script>
+                    $(document).ready(function () {
+                        jQuery("#file{{loop.index}}").click(function () {
+                            var text = jQuery(this).text()
+                            document.getElementById("selectedfile").hidden = false
+                            document.getElementById("selectedfile").value = text
+                            document.getElementById("selectedfile2").value = text
+                            document.getElementById("selectedfile3").value = text
+                        
+                            text = ""
+
+
+                        })
+                    })
+                </script>
+
+            </tr>
+            {%endfor%}
+        </table>
+        <form action="{{ url_for('tinyDB.saveToDb')}}" method="post">
+            <input hidden type="text" id="selectedfile" name="selectedfile">
+            <br>
+            <label for="multiple">Add multiple</label>
+            <input type="checkbox" id="multiple" name="multiple"
+                onchange="addMultiple(document.getElementById('multiple'))">
+            <br>
+            <input type="text" id="datafield" name="datafield" placeholder="field name">
+            <input type="text" id="data" name="data" placeholder="Data">
+            <button id="saveSingle">Save</button>
+           
+
+        </form>
+        <form action="{{ url_for('tinyDB.addMultipleItems')}}" method="post">
+            <input hidden type="text" id="selectedfile3" name="selectedfile3">
+            <textarea hidden id="txtmultiple" name="txtmultiple"></textarea>
+            <button hidden id="saveMultiple">Save multiple</button>
+        </form>
+        <form action="{{ url_for('tinyDB.readData')}}" method="post">
+            <input hidden type="text" id="selectedfile2" name="selectedfile2">
+
+            <button>Show data</button>
+        </form>
+        <button>Update data</button>
+        <p id="dataAdded"></p>
+    </div>
+    <div>
+        <table id="data" border="1">
+            {%for d in data %}
+            <tr>
+                <td>{{d}}</td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+
+</body>
+
 </html>
