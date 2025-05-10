@@ -49,7 +49,6 @@ function addMultiple(cb) {
     if (cb.checked==false) {
         document.getElementById("dataFields").hidden=false
         document.getElementById("multipleSpan").hidden=true
-       //document.getElementById("saveMultiple").hidden=true
         document.getElementById("saveSingle").hidden=false
 
     }
@@ -61,4 +60,16 @@ function createNewLine() {
     input.id=idnum
     document.getElementById("newlines").appendChild(input);
     idnum=idnum+1
+}
+function showDocId(cb) {
+    if (cb) {
+        document.getElementById("documentId").hidden=false
+
+    }
+    if (cb.checked==false)
+    {
+        document.getElementById("documentId").hidden=true
+
+    }
+
 }

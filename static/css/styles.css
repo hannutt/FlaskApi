@@ -242,3 +242,6 @@ white-space: nowrap;
   .mongocb {
     accent-color: #4CAF50;
   }
+  .dbDataRow {
+    white-space: nowrap;
+  }

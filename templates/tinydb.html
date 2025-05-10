@@ -57,6 +57,10 @@
             <br>
             <label for="multiple">Add multiple</label>
             <input type="checkbox" id="multiple" name="multiple" onchange="addMultiple(document.getElementById('multiple'))">
+            <label for="insertUsingid">Add using DocID</label>
+            <input type="checkbox" name="insertUsingid" id="insertUsingid" onchange="showDocId(document.getElementById('insertUsingid'))">
+            <br>
+            <input hidden type="text" name="documentId" id="documentId" placeholder="DOCUMENT ID">
             <br>
             <span id="dataFields">
             <input type="text" id="datafield" name="datafield" placeholder="field name">
@@ -64,33 +68,44 @@
             </span>
             <input type="submit" name="action" value="Save" id="saveSingle">
             <input type="submit" name="action" value="Show data">
-           
-
-        </form>
-        <form action="{{ url_for('tinyDB.addMultipleItems')}}" method="post">
-            
+            <br>
+            <input type="submit" name="action" value="Update data">
+            <br>
+            <input type="submit" name="action" value="Save multiple">
             <span id="multipleSpan" hidden>
-            <textarea id="txtmultiple" name="txtmultiple"></textarea>
-            <button id="saveMultiple">Save multiple</button>
+            <textarea id="txtmultiple" name="txtmultiple"></textarea>       
             </span>
-           
-        </form>
+        </form>  
+      
         <button onclick="createNewLine()">new line</button>
         <div id="newlines" name="newlines">
 
         </div>
       
-        <button>Update data</button>
+     
         <p id="dataAdded"></p>
     </div>
     <div>
+       
         <table id="data" border="1">
-            {%for d in data %}
+            {%for d in datalist %}
             <tr>
-                <td>{{d}}</td>
-            </tr>
+                <td id="dbData{{loop.index}}">{{d.doc_id}} {{d}}</td>
+                
+            
+            <script>
+                    $(document).ready(function () {
+                        jQuery("#dbData{{loop.index}}").click(function () {
+                            var text = jQuery(this).text()
+                            var arr=text.split(" ")
+                            console.log(arr[0])
+                        })
+                    })
+                </script>
+                </tr>
             {%endfor%}
         </table>
+        
     </div>
 
 </body>

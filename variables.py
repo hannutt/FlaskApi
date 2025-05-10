@@ -35,5 +35,6 @@ class Variables():
         self.objects=""
         self.tinydbName=""
         self.data=""
+        self.datafield=""
       
         self.postgreConnector=psycopg2.connect(database='',host=dbhost,user=postgreuser,password=postgrepsw,port=5433)
