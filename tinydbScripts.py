@@ -62,23 +62,25 @@ def readData():
     data=db.all()
     for i in data:
         #doc_id tietueen id-numero käydään ne läpi i-silmukkamuuttujassa
-        datalist.append(i.doc_id)
+        #datalist.append(i.doc_id)
         datalist.append(i)
     return render_template("tinydb.html",datalist=datalist)
 
 @tinyDB.route("/update",methods=['POST','GET'])
 def updateData():
 
+    
     db=TinyDB(var.tinydbName)
+    content=Query()
     
     datalist=var.data.split(":")
     print(datalist)
     listToDict = {datalist[i]: datalist[i + 1] for i in range(0, len(datalist), 2)} 
-    #tarkistus, löyyykö valitusta json-tietokannasta id-numero, jos läytyy toteutetaan päivitys.   
-    if db.contains(doc_id=var.recordid):
-        db.update(listToDict)
+    #db.update(listToDict,content.pid=='14')
+    
     return render_template("tinydb.html")
     
+
 
 
 

@@ -65,8 +65,11 @@
 
         </span>
         <br>
-        <input hidden type="text" name="recordId" id="recordId">
-        <textarea id="txtmultiple" name="txtmultiple"></textarea>
+        <input type="text" name="recordId" id="recordId">
+        <label for="write">Use writing assisstant</label>
+        <input type="checkbox" id="write">
+        <br>
+        <textarea id="txtmultiple" name="txtmultiple" onkeyup="writingAssistant(event,document.getElementById('write'))"></textarea>
         <br>
         <input hidden id="updateBtn" type="submit" name="action" value="Update data">
 
@@ -91,12 +94,12 @@
                         jQuery("#dbData{{loop.index}}").click(function () {
                             var text = jQuery(this).text()
                             var recordId = text.charAt(0)
-                        
-                            text = text.replace("{", "").replace("}", "").replace(recordId,"")
+
+                            text = text.replace("{", "").replace("}", "").replace(recordId, "")
                             document.getElementById("txtmultiple").hidden = false
                             document.getElementById("txtmultiple").innerText = text
                             document.getElementById("recordId").value = recordId
-                            document.getElementById("updateBtn").hidden=false
+                            document.getElementById("updateBtn").hidden = false
                             text = ""
                             recordId = ""
                         })

@@ -22,6 +22,7 @@ function showFind(cbShow) {
 
     if (cbShow.checked == true) {
         document.getElementById("findFilesSpan").hidden = false
+        
 
 
 
@@ -45,5 +46,21 @@ function cancelCrud() {
     document.getElementById("selectedfile").hidden=true
     document.getElementById("saveNshow").hidden = true
     document.getElementById("cancel").hidden = true
+}
+
+function writingAssistant(ev,cb) {
+ 
+
+    if (cb.checked==true&&ev.keyCode==32)
+    {
+    
+        var txt=document.getElementById("txtmultiple").value+=":"
+        //split ja join poistaa välilyönnit esim product : muuttuu muotoon product:
+        var txtNowhiteSpace=txt.split(" ").join("")
+        document.getElementById("txtmultiple").value=""
+        
+        document.getElementById("txtmultiple").value=txtNowhiteSpace
+    }
+
 }
 
