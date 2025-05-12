@@ -22,14 +22,14 @@ function showFind(cbShow) {
 
     if (cbShow.checked == true) {
         document.getElementById("findFilesSpan").hidden = false
-        
+
 
 
 
     }
     if (cbShow.checked == false) {
         document.getElementById("findFilesSpan").hidden = true
-    
+
     }
 
 }
@@ -40,36 +40,10 @@ function dataAdded() {
     }, 5000);
 }
 
-function addMultiple(cb) {
-    if (cb) {
-        document.getElementById("dataFields").hidden=true
-        document.getElementById("multipleSpan").hidden=false
-        document.getElementById("saveSingle").hidden=true
-    }
-    if (cb.checked==false) {
-        document.getElementById("dataFields").hidden=false
-        document.getElementById("multipleSpan").hidden=true
-        document.getElementById("saveSingle").hidden=false
-
-    }
-
+function cancelCrud() {
+    document.getElementById("selectedfile").value = ""
+    document.getElementById("selectedfile").hidden=true
+    document.getElementById("saveNshow").hidden = true
+    document.getElementById("cancel").hidden = true
 }
-var idnum=1
-function createNewLine() {
-    var input = document.createElement("input");
-    input.id=idnum
-    document.getElementById("newlines").appendChild(input);
-    idnum=idnum+1
-}
-function showDocId(cb) {
-    if (cb) {
-        document.getElementById("documentId").hidden=false
 
-    }
-    if (cb.checked==false)
-    {
-        document.getElementById("documentId").hidden=true
-
-    }
-
-}

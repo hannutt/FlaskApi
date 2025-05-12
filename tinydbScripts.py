@@ -1,11 +1,10 @@
 
 import os
-
 from flask import Blueprint, redirect, render_template, request, url_for
 from tinydb import TinyDB, Query
 from tinydb.table import Document
 from variables import Variables
-from localStoragePy import localStoragePy
+
 
 var=Variables()
 
@@ -33,18 +32,26 @@ def createFile():
 def saveToDb():
     #jos painettu painiketta jonka value on save
     if request.form['action']=="Save":
+        data=request.form.get('txtmultiple')
+        #splittaus : merkin kohdalta eli luodaan data muuttujan sisällöstä lista, jokainen sana : merkkien molemmin
+        #puolin on oma lista-alkionsa
+        datalist=data.split(":")
+        #Luo sanakirjan listasta yhdistämällä elementtejä käyttämällä joka toista elementtiä arvona ja toista avaimena
+        listToDict = {datalist[i]: datalist[i + 1] for i in range(0, len(datalist), 2)}    
         var.tinydbName=request.form.get("selectedfile")
-        datafield=request.form.get("datafield")
-        var.data=request.form.get("data")
         db=TinyDB(var.tinydbName)
-        db.insert({datafield:var.data})
+      
+        db.insert(listToDict)
         return render_template("tinydb.html")
+    
     if request.form['action']=="Show data":
         var.tinydbName=request.form.get("selectedfile")
         return redirect(url_for('tinyDB.readData'))
-    if request.form['action']=="Save multiple":
+    if request.form['action']=="Update data":
         var.tinydbName=request.form.get("selectedfile")
-        return redirect(url_for('tinyDB.addMultipleItems'))
+        var.recordid=request.form.get("recordId")
+        var.data=request.form.get('txtmultiple')
+        return redirect(url_for('tinyDB.updateData'))
 
     
 
@@ -61,23 +68,18 @@ def readData():
 
 @tinyDB.route("/update",methods=['POST','GET'])
 def updateData():
-    docid=request.form.get('docid')
+
     db=TinyDB(var.tinydbName)
-    db.update({var.datafield:var.data})
+    
+    datalist=var.data.split(":")
+    print(datalist)
+    listToDict = {datalist[i]: datalist[i + 1] for i in range(0, len(datalist), 2)} 
+    #tarkistus, löyyykö valitusta json-tietokannasta id-numero, jos läytyy toteutetaan päivitys.   
+    if db.contains(doc_id=var.recordid):
+        db.update(listToDict)
     return render_template("tinydb.html")
     
 
-@tinyDB.route("/multiple",methods=['POST','GET'])
-def addMultipleItems():
-    multipleData=[]
-    data=request.form.get("txtmultiple")
-    #multipleData.append(data)
-    print(data)
-    
-    #db=TinyDB(var.tinydbName)
-    #db.insert_multiple(multipleData)
-
-    return render_template("tinydb.html")
 
 
 

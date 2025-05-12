@@ -23,89 +23,89 @@
     <label for="create">Find JSON files</label>
     <input type="checkbox" id="findfile" onclick="showFind(document.getElementById('findfile'))">
     <span id="findFilesSpan" hidden>
-    <div id="findFiles">
-
-    </div>
-    <div>
-        <table id="jsontable" border="1">
-            <tr>
-                <th>JSON files</th>
-            </tr>
-            {%for j in jsonfiles %}
-            <tr>
-
-                <td id="file{{loop.index}}">{{j}}</td>
-                <script>
-                    $(document).ready(function () {
-                        jQuery("#file{{loop.index}}").click(function () {
-                            var text = jQuery(this).text()
-                            document.getElementById("selectedfile").hidden = false
-                            document.getElementById("selectedfile").value = text
-                            text = ""
-
-
-                        })
-                    })
-                </script>
-
-            </tr>
-            {%endfor%}
-        </table>
-        </span> 
-        <form action="{{ url_for('tinyDB.saveToDb')}}" method="post">
-            <input hidden type="text" id="selectedfile" name="selectedfile">
-            <br>
-            <label for="multiple">Add multiple</label>
-            <input type="checkbox" id="multiple" name="multiple" onchange="addMultiple(document.getElementById('multiple'))">
-            <label for="insertUsingid">Add using DocID</label>
-            <input type="checkbox" name="insertUsingid" id="insertUsingid" onchange="showDocId(document.getElementById('insertUsingid'))">
-            <br>
-            <input hidden type="text" name="documentId" id="documentId" placeholder="DOCUMENT ID">
-            <br>
-            <span id="dataFields">
-            <input type="text" id="datafield" name="datafield" placeholder="field name">
-            <input type="text" id="data" name="data" placeholder="Data">
-            </span>
-            <input type="submit" name="action" value="Save" id="saveSingle">
-            <input type="submit" name="action" value="Show data">
-            <br>
-            <input type="submit" name="action" value="Update data">
-            <br>
-            <input type="submit" name="action" value="Save multiple">
-            <span id="multipleSpan" hidden>
-            <textarea id="txtmultiple" name="txtmultiple"></textarea>       
-            </span>
-        </form>  
-      
-        <button onclick="createNewLine()">new line</button>
-        <div id="newlines" name="newlines">
+        <div id="findFiles">
 
         </div>
-      
-     
-        <p id="dataAdded"></p>
+        <div>
+            <table id="jsontable" border="1">
+                <tr>
+                    <th>JSON files</th>
+                </tr>
+                {%for j in jsonfiles %}
+                <tr>
+
+                    <td id="file{{loop.index}}">{{j}}</td>
+                    <script>
+                        $(document).ready(function () {
+                            jQuery("#file{{loop.index}}").click(function () {
+                                var text = jQuery(this).text()
+                                document.getElementById("selectedfile").hidden = false
+                                document.getElementById("selectedfile").value = text
+                                document.getElementById("saveNshow").hidden = false
+                                document.getElementById("cancel").hidden = false
+                                text = ""
+
+
+                            })
+                        })
+                    </script>
+
+                </tr>
+                {%endfor%}
+            </table>
+    </span>
+    <form action="{{ url_for('tinyDB.saveToDb')}}" method="post">
+        <input type="text" id="selectedfile" name="selectedfile">
+        <br>
+        <span id="saveNshow" hidden>
+            <input type="submit" name="action" value="Save" id="saveSingle">
+            <input type="submit" name="action" value="Show data">
+
+            <br>
+
+        </span>
+        <br>
+        <input hidden type="text" name="recordId" id="recordId">
+        <textarea id="txtmultiple" name="txtmultiple"></textarea>
+        <br>
+        <input hidden id="updateBtn" type="submit" name="action" value="Update data">
+
+
+    </form>
+    <span hidden id="cancel">
+        <button id="cancelBtn" onclick="cancelCrud()">Cancel</button>
+    </span>
+
+    <p id="dataAdded"></p>
     </div>
     <div>
-       
+
         <table id="data" border="1">
             {%for d in datalist %}
             <tr>
                 <td id="dbData{{loop.index}}">{{d.doc_id}} {{d}}</td>
-                
-            
-            <script>
+
+
+                <script>
                     $(document).ready(function () {
                         jQuery("#dbData{{loop.index}}").click(function () {
                             var text = jQuery(this).text()
-                            var arr=text.split(" ")
-                            console.log(arr[0])
+                            var recordId = text.charAt(0)
+                        
+                            text = text.replace("{", "").replace("}", "").replace(recordId,"")
+                            document.getElementById("txtmultiple").hidden = false
+                            document.getElementById("txtmultiple").innerText = text
+                            document.getElementById("recordId").value = recordId
+                            document.getElementById("updateBtn").hidden=false
+                            text = ""
+                            recordId = ""
                         })
                     })
                 </script>
-                </tr>
+            </tr>
             {%endfor%}
         </table>
-        
+
     </div>
 
 </body>
